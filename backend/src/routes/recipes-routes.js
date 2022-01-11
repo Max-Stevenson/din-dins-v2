@@ -2,8 +2,12 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/api/v1/recipes", (req, res, next) => {
-  res.json({ message: "working" });
+router.get("/", (req, res) => {
+  res.json({ message: "all recipes" });
+});
+
+router.get("/:id", (req, res) => {
+  res.json({ message: "single recipe" });
 });
 
 module.exports = router;
