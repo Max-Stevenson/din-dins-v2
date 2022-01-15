@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
+const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 
 const mongoServer = await MongoMemoryServer.create();
 
-exports.dbConnect = async () => {
+exports.dbConnect = (() => {
   const uri = mongoServer.getUri();
 
   const mongooseOpts = {
@@ -12,8 +12,9 @@ exports.dbConnect = async () => {
     useUnifiedTopology: true,
     useFindAndModify: false,
   };
+
   mongoose.connect(uri, mongooseOpts).catch(err => {console.error(err)});
-};
+});
 
 exports.dbDisconnect = async () => {
   await mongoose.connection.dropDatabase();

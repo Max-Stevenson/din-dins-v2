@@ -1,5 +1,5 @@
 // Contains middleware logic for recipes routes.
-const HttpError = require("../models/http-error");
+const HttpError = require("../models/httpError");
 const Recipe = require("../models/recipe");
 
 const getAllRecipes = ((req, res, next) => {

@@ -1,7 +1,7 @@
 // Contains only routing for recipes
 const express = require("express");
-const recipesController = require("../controllers/recipes-controller");
-const HttpError = require("../models/http-error");
+const recipesController = require("../controllers/recipesController");
+const HttpError = require("../models/httpError");
 
 const router = express.Router();
 

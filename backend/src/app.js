@@ -1,8 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const recipeRoutes = require("./routes/recipes-routes");
-const userRoutes = require("./routes/user-routes");
+const recipeRoutes = require("./routes/recipesRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 app.use(bodyParser.json());
