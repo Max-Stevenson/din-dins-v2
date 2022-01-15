@@ -1,32 +1,24 @@
 // Contains middleware logic for recipes routes.
 const HttpError = require("../models/http-error");
 
-const getAllRecipes = (() => {
+const getAllRecipes = ((req, res, next) => {
 
 });
 
 const getRecipeById = ((req, res, next) => {
-  const recipeId = req.params.id;
-  // database lookup
-  const recipe = {};
-  if (!recipe) {
-    const error = new HttpError("Could not find a recipe with the provided id.", 404);
-    next(error);
-  } else {
-    res.json({ message: "single recipe" });
-  }
-});
-
-
-const createRecipe = (() => {
 
 });
 
-const updateRecipe = (() => {
+
+const createRecipe = ((req, res, next) => {
 
 });
 
-const deleteRecipe =(() => {
+const updateRecipe = ((req, res, next) => {
+
+});
+
+const deleteRecipe =((req, res, next) => {
 
 });
 
