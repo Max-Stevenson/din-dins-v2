@@ -10,11 +10,15 @@ const getRecipeById = ((req, res, next) => {
 
 });
 
-
-const createRecipe = ((req, res, next) => {
+const createRecipe = async (req, res, next) => {
   const recipe = new Recipe(req.body);
-  
-});
+  try {
+    await recipe.save();
+  } catch(err) {
+
+  }
+  res.status(201).send({ recipe });
+};
 
 const updateRecipe = ((req, res, next) => {
 
