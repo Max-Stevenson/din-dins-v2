@@ -8,10 +8,10 @@
         "airbnb-base"
     ],
     "parserOptions": {
-        "ecmaVersion": 13
+        "ecmaVersion": 12
     },
     "rules": {
         "quotes": [2, "double", { "avoidEscape": true }],
-        "treatUndefinedAsUnspecified": true 
+        "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }]
     }
 }
