@@ -7,14 +7,14 @@ const getAllRecipes = (req, res, next) => {};
 const getRecipeById = (req, res, next) => {};
 
 const createRecipe = async (req, res, next) => {
-  const recipe = new Recipe(req.body);
-  console.log({ recipe });
   try {
-    await recipe.save();
+    const recipe = await new Recipe(req.body).save();
+    res.status(201).send(recipe);
   } catch (err) {
-    console.log(err);
+    console.log(err.errors.name);
+    const error = new HttpError("test", 400);
+    next(error);
   }
-  res.status(201).send({ recipe });
 };
 
 const updateRecipe = (req, res, next) => {};
