@@ -8,9 +8,12 @@ const getRecipeById = (req, res, next) => {};
 
 const createRecipe = async (req, res, next) => {
   const recipe = new Recipe(req.body);
+  console.log({ recipe });
   try {
     await recipe.save();
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
   res.status(201).send({ recipe });
 };
 

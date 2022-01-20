@@ -1,19 +1,41 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const { Schema } = mongoose;
 
 const recipeSchema = new Schema({
-  name: { type: String, required: true },
-  servings: { type: Number, required: true },
-  cookingTime: { type: Number, required: true },
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    validate(value) {
+      if (validator.isEmpty(value)) {
+        throw new Error("Name cannot be empty");
+      }
+    },
+  },
+  servings: {
+    type: Number,
+    required: true,
+    min: [1, "Must be at least one serving."],
+  },
+  cookingTime: {
+    type: Number,
+    required: true,
+    min: [1, "Cooking time must be at lease one minute."],
+  },
   isVegetarian: { type: Boolean, required: true },
   ingredients: {
     _id: false,
     type: [
       {
-        quantity: { type: Number, required: true },
-        measure: { type: String, required: true },
-        ingredient: { type: String, required: true },
+        quantity: {
+          type: Number,
+          required: true,
+          min: [1, "Ingredient quantity cannot be zero."],
+        },
+        measure: { type: String, required: true, trim: true },
+        ingredient: { type: String, required: true, trim: true },
       },
     ],
     required: true,
