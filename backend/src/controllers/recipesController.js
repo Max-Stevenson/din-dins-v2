@@ -11,12 +11,13 @@ const createRecipe = async (req, res, next) => {
     const recipe = await new Recipe(req.body).save();
     res.status(201).send(recipe);
   } catch (err) {
-    let errorMessage = "";
+    const errorObject = {};
     Object.keys(err.errors).forEach((key) => {
-      errorMessage += `${err.errors[`${key}`].message} `;
+      errorObject[key] = err.errors[key].message;
     });
-    const error = new HttpError(errorMessage, 400);
-    next(error);
+    res.status(400).send(errorObject);
+    // const error = new HttpError(errorObject, 400);
+    // next(error);
   }
 };
 
