@@ -1,7 +1,14 @@
 class HttpError extends Error {
-  constructor(message, code) {
-    super(message);
+  constructor(title, details, code) {
+    super(title);
+
+    // Maintains proper stack trace for where our error was thrown (only available on V8)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, HttpError);
+    }
+    this.name = title;
     this.code = code;
+    this.details = details;
   }
 }
 
