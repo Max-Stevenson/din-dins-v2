@@ -2,9 +2,31 @@
 const HttpError = require("../models/httpError");
 const Recipe = require("../models/recipe");
 
-const getAllRecipes = (req, res, next) => {};
+const getAllRecipes = async (req, res, next) => {
+  let recipes;
 
-const getRecipeById = (req, res, next) => {};
+  try {
+    recipes = await Recipe.find();
+    res.status(200).send({ recipes });
+  } catch (err) {
+    next(new HttpError("Could not get recipes, please try again.", 500));
+  }
+};
+
+const getRecipeById = async (req, res, next) => {
+  const { id } = req.params;
+  let recipe;
+
+  try {
+    recipe = await Recipe.findById(id);
+    if (!recipe) {
+      next(new HttpError("Recipe does not exist, please try again.", 404));
+    }
+    res.status(200).send({ recipe });
+  } catch (err) {
+    next(new HttpError("Could not get recipe, please try again.", 500));
+  }
+};
 
 const createRecipe = async (req, res, next) => {
   try {
