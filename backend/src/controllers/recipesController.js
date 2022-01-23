@@ -9,9 +9,9 @@ const getAllRecipes = async (_req, res, next) => {
   try {
     recipes = await Recipe.find();
   } catch (err) {
-    next(new HttpError("Could not get recipes, please try again.", 500));
+    return next(new HttpError("Could not get recipes, please try again.", 500));
   }
-  res.status(200).send({ recipes });
+  return res.status(200).send({ recipes });
 };
 
 const getRecipeById = async (req, res, next) => {
@@ -21,12 +21,12 @@ const getRecipeById = async (req, res, next) => {
   try {
     recipe = await Recipe.findById(id);
     if (!recipe) {
-      next(new HttpError("Recipe does not exist, please try again.", 404));
+      return next(new HttpError("Recipe does not exist, please try again.", 404));
     }
   } catch (err) {
-    next(new HttpError("Could not get recipe, please try again.", 500));
+    return next(new HttpError("Could not get recipe, please try again.", 500));
   }
-  res.status(200).send({ recipe });
+  return res.status(200).send({ recipe });
 };
 
 const createRecipe = async (req, res, next) => {
@@ -40,12 +40,44 @@ const createRecipe = async (req, res, next) => {
       errorDetails[key] = err.errors[key].message;
     });
     const error = new ValidationError("Invalid input", errorDetails, 400);
-    next(error);
+    return next(error);
   }
-  res.status(201).send(recipe);
+  return res.status(201).send(recipe);
 };
 
-const updateRecipe = (req, res, next) => {};
+const editRecipe = async (req, res, next) => {
+  const {
+    name, servings, cookingTime, isVegetarian, ingredients, method,
+  } = req.body;
+  const { id } = req.params;
+
+  let recipe;
+  try {
+    recipe = await Recipe.findById(id);
+    if (!recipe) {
+      return next(
+        new HttpError("Could not find recipe to edit, please try again.", 404),
+      );
+    }
+  } catch (err) {
+    return next(new HttpError("Could not edit recipe, please try again.", 500));
+  }
+
+  recipe.name = name;
+  recipe.servings = servings;
+  recipe.cookingTime = cookingTime;
+  recipe.isVegetarian = isVegetarian;
+  recipe.ingredients = ingredients;
+  recipe.method = method;
+
+  try {
+    await recipe.save();
+  } catch (err) {
+    return next(new HttpError("Could not edit recipe, please try again.", 500));
+  }
+
+  return res.status(200).send(recipe);
+};
 
 const deleteRecipe = async (req, res, next) => {
   let recipe;
@@ -53,19 +85,19 @@ const deleteRecipe = async (req, res, next) => {
   try {
     recipe = await Recipe.findByIdAndDelete(id);
     if (!recipe) {
-      next(
-        new HttpError("Could not find recipe to delete, please try again.", 404)
+      return next(
+        new HttpError("Could not find recipe to delete, please try again.", 404),
       );
     }
   } catch (err) {
-    next(new HttpError("Could not delete recipe, please try again.", 500));
+    return next(new HttpError("Could not delete recipe, please try again.", 500));
   }
 
-  res.status(200).send(recipe);
+  return res.status(200).send(recipe);
 };
 
 exports.getAllRecipes = getAllRecipes;
 exports.getRecipeById = getRecipeById;
 exports.createRecipe = createRecipe;
-exports.updateRecipe = updateRecipe;
+exports.editRecipe = editRecipe;
 exports.deleteRecipe = deleteRecipe;
