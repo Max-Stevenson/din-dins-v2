@@ -11,7 +11,7 @@ const getAllRecipes = async (_req, res, next) => {
   } catch (err) {
     return next(new HttpError("Could not get recipes, please try again.", 500));
   }
-  return res.status(200).send({ recipes });
+  return res.status(200).send(recipes);
 };
 
 const getRecipeById = async (req, res, next) => {
