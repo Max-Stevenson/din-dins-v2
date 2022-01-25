@@ -1,6 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
 const mongoose = require("mongoose");
-const expect = require("chai").expect;
+const { expect } = require("chai");
 const request = require("supertest");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const Recipe = require("../src/models/recipe");
@@ -12,6 +13,7 @@ before(async () => {
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
   mongoose.connect(mongoUri);
+  Recipe.deleteMany({});
 });
 
 after(async () => {
@@ -38,5 +40,21 @@ describe("GET /", () => {
     const res = await request(app).get("/api/v1/recipes/");
     expect(res.status).to.equal(200);
     expect(res.body.length).to.equal(1);
+  });
+});
+
+describe("GET/:id", () => {
+  it("should return a recipe if valid id is passed", async () => {
+    const recipe = await new Recipe(testData).save();
+    const res = await request(app).get(`/api/v1/recipes/${recipe._id}`);
+    expect(res.status).to.equal(200);
+    expect(res.body).to.have.property("name", recipe.name);
+  });
+});
+
+describe("POST /", () => {
+  it("should create a recipe with valid inputs", async () => {
+    
+    expect(res.status).to.equal(201);
   });
 });
