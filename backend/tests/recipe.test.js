@@ -70,3 +70,14 @@ describe("PUT/:id", () => {
     expect(res.body).to.have.property("name", "Changed");
   });
 });
+
+describe("DELETE/:id", () => {
+  it("should delete a recipe with valid id", async () => {
+    const recipe = await new Recipe(testData).save();
+    let res = await request(app).delete(`/api/v1/recipes/${recipe._id}`);
+    expect(res.status).to.equal(200);
+    expect(res.body).to.have.property("name", testData.name);
+    res = await request(app).get(`/api/v1/recipes/${recipe._id}`);
+    expect(res.status).to.be.equal(404);
+  });
+});
