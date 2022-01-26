@@ -63,8 +63,10 @@ describe("POST /", () => {
 describe("PUT/:id", () => {
   it("should modify a recipe with valid input", async () => {
     const recipe = await new Recipe(testData).save();
-    const res = await request(app).post("/api/v1/recipes/").send();
-    expect(res.status).to.equal(201);
-    expect(res.body).to.have.property("name", testData.name);
+    const alteredTestData = testData;
+    alteredTestData.name = "Changed";
+    const res = await request(app).put(`/api/v1/recipes/${recipe._id}`).send(alteredTestData);
+    expect(res.status).to.equal(200);
+    expect(res.body).to.have.property("name", "Changed");
   });
 });
