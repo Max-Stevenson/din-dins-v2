@@ -1,6 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import NavButton from "./NavButton";
+import "./Navbar.scss";
 
-const navbar = (props) => {
-  const [] = useState();
-};
-export default navbar;
+function Navbar() {
+  return (
+    <div className="navbar-container flex-container">
+      <NavButton icon="cog" />
+      <NavButton />
+      <NavButton />
+    </div>
+  );
+}
+export default Navbar;

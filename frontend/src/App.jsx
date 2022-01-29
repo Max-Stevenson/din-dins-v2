@@ -1,28 +1,13 @@
 import React from "react";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCog, faUtensils, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
+import Navbar from "./shared/Navbar";
+
+library.add(faCog, faUtensils, faCalendarAlt);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit
-          {" "}
-          <code>src/App.js</code>
-          {" "}
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <Navbar />;
 }
 
 export default App;
