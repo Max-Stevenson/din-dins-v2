@@ -4,10 +4,10 @@ import "./Navbar.scss";
 
 function Navbar() {
   return (
-    <div className="navbar-container flex-container">
+    <div className="navbar-container">
       <NavButton icon="cog" />
-      <NavButton />
-      <NavButton />
+      <NavButton icon="utensils" />
+      <NavButton icon="calendar-alt" />
     </div>
   );
 }
