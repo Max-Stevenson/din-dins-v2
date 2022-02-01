@@ -1,0 +1,13 @@
+.nav-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-button > svg {
+  font-size: 22px;
+}
+
+.nav-button__text {
+  margin: 5px 0;
+}

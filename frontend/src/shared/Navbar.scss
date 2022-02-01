@@ -4,16 +4,12 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    height: 40px;
+    height: 10vh;
     background: gray;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-  }
-
-  .navbar-container > * {
-    font-size: 22px;
   }
 }
