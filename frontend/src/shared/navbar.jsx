@@ -5,9 +5,9 @@ import "./Navbar.scss";
 function Navbar() {
   return (
     <div className="navbar-container">
-      <NavButton buttonText="Recipes" icon="utensils" />
-      <NavButton buttonText="Mealplanner" icon="calendar-alt" />
-      <NavButton buttonText="Settings" icon="cog" />
+      <NavButton location="recipes" buttonText="Recipes" icon="utensils" />
+      <NavButton location="mealplanner" buttonText="Mealplanner" icon="calendar-alt" />
+      <NavButton location="settings" buttonText="Settings" icon="cog" />
     </div>
   );
 }
