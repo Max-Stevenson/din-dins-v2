@@ -23,6 +23,6 @@ NavButton.propTypes = {
 };
 
 NavButton.defaultProps = {
-  size: "md"
+  size: "lg"
 };
 export default NavButton;
