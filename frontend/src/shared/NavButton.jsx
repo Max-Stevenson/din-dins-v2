@@ -8,9 +8,9 @@ function NavButton({
   icon, size, buttonText, location
 }) {
   return (
-    <NavLink to={`/${location}`}>
+    <NavLink className="nav-button" to={`/${location}`}>
       <FontAwesomeIcon size={size} icon={icon} />
-      <p>{buttonText}</p>
+      <p className="nav-button__text">{buttonText}</p>
     </NavLink>
   );
 }
