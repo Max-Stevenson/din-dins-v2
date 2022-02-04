@@ -8,7 +8,7 @@ function NavButton({
   icon, size, buttonText, location
 }) {
   return (
-    <NavLink className="nav-button" to={`/${location}`}>
+    <NavLink className={({ isActive }) => (isActive ? "nav-button nav-button__active" : "nav-button nav-button__inactive")} to={`/${location}`}>
       <FontAwesomeIcon size={size} icon={icon} />
       <p className="nav-button__text">{buttonText}</p>
     </NavLink>
