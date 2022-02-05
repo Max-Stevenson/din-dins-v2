@@ -19,6 +19,7 @@
     ],
     "rules": {
         "comma-dangle": ["error", "never"],
-        "quotes": [2, "double", { "avoidEscape": true }]
+        "quotes": [2, "double", { "avoidEscape": true }],
+        "func-names": ["error", "never"]
     }
 }

@@ -1,11 +1,9 @@
 import React from "react";
 
-const RecipeItem = () => {
+function RecipeItem() {
   return (
-    <div className="recipe-item__wrapper">
-
-    </div>
+    <div className="recipe-item__wrapper" />
   );
-};
+}
 
 export default RecipeItem;
