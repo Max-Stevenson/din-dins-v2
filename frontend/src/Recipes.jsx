@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useFetch from "./useFetchHook";
 
 function Recipes() {
-  const [recipes, setRecipes] = useState();
+  const { data, error, loading } = useFetch("http://localhost:3000/api/v1/recipes");
+  console.log(data);
 
-  useEffect(() => {
-    useFetch("http://localhost:3000/api/v1/recipes");
-  }, []);
   return (
-    <h2>Recipes Page</h2>
+    <>
+      {loading && <h1>Im loading</h1>}
+      <h2>Recipes Page</h2>
+      <div>{!error && data && data[1].name}</div>
+    </>
   );
 }
+
 export default Recipes;
