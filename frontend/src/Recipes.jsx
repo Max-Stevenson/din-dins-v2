@@ -1,16 +1,30 @@
 import React from "react";
+import { Grid } from "@mui/material";
 import useFetch from "./useFetchHook";
 
 function Recipes() {
   const { data, error, loading } = useFetch("http://localhost:3000/api/v1/recipes");
-  console.log(data);
+  if (!loading && error) {
+    return (
+      <h2>Error loading recipes</h2>
+    );
+  }
+
+  if (!loading && data) {
+    return (
+      <Grid container>
+        <Grid item xs={6}>
+          Hooray something is here!
+        </Grid>
+        <Grid item xs={6}>
+          Hooray something is too!
+        </Grid>
+      </Grid>
+    );
+  }
 
   return (
-    <>
-      {loading && <h1>Im loading</h1>}
-      <h2>Recipes Page</h2>
-      <div>{!error && data && data[1].name}</div>
-    </>
+    <h2>Loading</h2>
   );
 }
 
