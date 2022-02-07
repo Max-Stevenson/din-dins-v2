@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from "react";
 import { Grid } from "@mui/material";
 import useFetch from "./useFetchHook";
@@ -11,14 +12,17 @@ function Recipes() {
   }
 
   if (!loading && data) {
+    // eslint-disable-next-line array-callback-return
+    const recipeItems = data.map((recipe) => (
+      <Grid item>
+        <div key={recipe._id}>
+          <h3>{recipe.name}</h3>
+        </div>
+      </Grid>
+    ));
     return (
       <Grid container>
-        <Grid item xs={6}>
-          Hooray something is here!
-        </Grid>
-        <Grid item xs={6}>
-          Hooray something is too!
-        </Grid>
+        {recipeItems}
       </Grid>
     );
   }
