@@ -20,7 +20,7 @@ function Recipes() {
     const recipeItems = data.map((recipe) => (
       <Grid key={recipe._id} item xs={6} sm={6} md={3}>
         <Link to={`/recipes/view/${recipe._id}`}>
-          <div>
+          <div className="recipe-item__wrapper">
             <img alt="" src={logo} />
             <h3>{recipe.name}</h3>
           </div>
@@ -29,7 +29,7 @@ function Recipes() {
     ));
     return (
       <div className="wrapper">
-        <Grid container>{recipeItems}</Grid>
+        <Grid container spacing={1}>{recipeItems}</Grid>
       </div>
     );
   }
