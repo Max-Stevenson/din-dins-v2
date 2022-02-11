@@ -2,6 +2,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "./shared/LoadingSpinner";
 import useFetch from "./useFetchHook";
 import "./Recipes.scss";
 
@@ -11,8 +12,8 @@ function Recipes() {
   const { data, error, loading } = useFetch(
     "http://localhost:3000/api/v1/recipes"
   );
-  if (!loading && error) {
-    return <h2>Error loading recipes</h2>;
+  if (loading && !error) {
+    return <LoadingSpinner />;
   }
 
   if (!loading && data) {

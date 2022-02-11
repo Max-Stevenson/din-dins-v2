@@ -1,13 +1,22 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-import './LoadingSpinner.css';
+import "./LoadingSpinner.scss";
 
-const LoadingSpinner = props => {
+function LoadingSpinner({ asOverlay }) {
   return (
-    <div className={`${props.asOverlay && 'loading-spinner__overlay'}`}>
-      <div className="lds-dual-ring"></div>
+    <div className={`${asOverlay && "loading-spinner__overlay"}`}>
+      <div className="lds-dual-ring" />
     </div>
   );
+}
+
+LoadingSpinner.propTypes = {
+  asOverlay: PropTypes.bool
+};
+
+LoadingSpinner.defaultProps = {
+  asOverlay: false
 };
 
 export default LoadingSpinner;
