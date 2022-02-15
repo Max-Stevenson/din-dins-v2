@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Tab, Tabs, TabPanel } from "@mui/material";
+import { Tab, Tabs } from "@mui/material";
+import { TabPanel } from "@material-ui/lab";
 
 const logo = require("./recipe.jpg");
 
