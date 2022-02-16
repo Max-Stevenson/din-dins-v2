@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Tab, Tabs } from "@mui/material";
+import TabPanel from "./shared/TabPanel";
 
 const logo = require("./recipe.jpg");
 
@@ -20,9 +21,23 @@ function RecipeItem({ recipeItem }) {
         <Tab label="Ingredients" />
         <Tab label="Method" />
       </Tabs>
-      {tabValue === 0 && <h2>Ingredients</h2>}
-      {tabValue === 1 && <h2>Method</h2>}
-
+      <TabPanel value={tabValue} index={0}>
+        <h2>Ingredients</h2>
+        <ul>
+          {recipeItem.ingredients.map((i) => (
+            <li className="identified-recipe__ingredient">
+              {i.quantity}
+              {" "}
+              {i.measure}
+              {" "}
+              {i.ingredient}
+            </li>
+          ))}
+        </ul>
+      </TabPanel>
+      <TabPanel value={tabValue} index={1}>
+        <h2>Method</h2>
+      </TabPanel>
     </div>
   );
 }
