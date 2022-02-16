@@ -6,7 +6,8 @@ import {
   faUtensils,
   faCalendarAlt
 } from "@fortawesome/free-solid-svg-icons";
-import "./App.css";
+import "./App.scss";
+import Header from "./shared/Header";
 import Navbar from "./shared/Navbar";
 import Recipes from "./Recipes";
 import Mealplanner from "./Mealplanner";
@@ -18,13 +19,14 @@ library.add(faCog, faUtensils, faCalendarAlt);
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Header />
       <Routes>
         <Route path="/" element={<Recipes />} />
         <Route path="/mealplanner" element={<Mealplanner />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
       </Routes>
+      <Navbar />
     </Router>
   );
 }
