@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Tab, Tabs } from "@mui/material";
 
 const logo = require("./recipe.jpg");
 
 function RecipeItem({ recipeItem }) {
-  const onChange = () => {
+  const [tabValue, setTabValue] = useState(0);
+  const handleChange = (_event, value) => {
+    setTabValue(value);
   };
 
   return (
@@ -14,10 +16,13 @@ function RecipeItem({ recipeItem }) {
         <img alt="" src={logo} />
       </div>
       <h3>{recipeItem.name}</h3>
-      <Tabs onChange={() => onChange()} defaultSelectedIndex={1}>
-        <Tab label="Ingredients" value="1" />
-        <Tab label="Method" value="2" />
+      <Tabs value={tabValue} onChange={handleChange}>
+        <Tab label="Ingredients" />
+        <Tab label="Method" />
       </Tabs>
+      {tabValue === 0 && <h2>Ingredients</h2>}
+      {tabValue === 1 && <h2>Method</h2>}
+
     </div>
   );
 }
