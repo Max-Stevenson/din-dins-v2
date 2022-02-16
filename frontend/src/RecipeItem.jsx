@@ -25,7 +25,7 @@ function RecipeItem({ recipeItem }) {
         <h2>Ingredients</h2>
         <ul>
           {recipeItem.ingredients.map((i) => (
-            <li className="identified-recipe__ingredient">
+            <li>
               {i.quantity}
               {" "}
               {i.measure}
@@ -37,6 +37,13 @@ function RecipeItem({ recipeItem }) {
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
         <h2>Method</h2>
+        <ol>
+          {recipeItem.method.map((method) => (
+            <li>
+              {method}
+            </li>
+          ))}
+        </ol>
       </TabPanel>
     </div>
   );
