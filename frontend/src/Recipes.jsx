@@ -5,6 +5,7 @@ import LoadingSpinner from "./shared/LoadingSpinner";
 import useFetch from "./useFetchHook";
 import "./Recipes.scss";
 import RecipeItem from "./RecipeItem";
+import DisplayWrapper from "./shared/DisplayWrapper";
 
 const logo = require("./recipe.jpg");
 
@@ -35,7 +36,14 @@ function Recipes() {
   if (!loading && data) {
     // eslint-disable-next-line array-callback-return
     const recipeItems = data.map((recipe) => (
-      <Grid onClick={() => selectRecipe(recipe._id)} key={recipe._id} item xs={6} sm={6} md={3}>
+      <Grid
+        onClick={() => selectRecipe(recipe._id)}
+        key={recipe._id}
+        item
+        xs={6}
+        sm={6}
+        md={3}
+      >
         <div className="recipe-item__wrapper">
           <img alt="" src={logo} />
           <h3>{recipe.name}</h3>
@@ -43,11 +51,11 @@ function Recipes() {
       </Grid>
     ));
     return (
-      <div className="wrapper">
+      <DisplayWrapper>
         <Grid container spacing={1}>
           {recipeItems}
         </Grid>
-      </div>
+      </DisplayWrapper>
     );
   }
 
