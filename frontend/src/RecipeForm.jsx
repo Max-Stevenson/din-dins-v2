@@ -26,15 +26,26 @@ function RecipeForm() {
   // const handleChange = (input, event) => {
   //   setFormState((previous) => ({ ...previous, [input]: event.target }));
   // };
-
-  return (
-    <div>
-      <h2>{formState.step}</h2>
-      <h2>{formState.name}</h2>
-      <button type="button" onClick={nextStep}>Press me</button>
-      <button type="button" onClick={previousStep}>Press me</button>
-    </div>
-  );
+  switch (formState.step) {
+    case 1:
+      return (
+        <div>
+          <h2>Step 1</h2>
+          <button type="button" onClick={nextStep}>Press me</button>
+          <button type="button" onClick={previousStep}>Press me</button>
+        </div>
+      );
+    case 2:
+      return (
+        <div>
+          <h2>Step 2</h2>
+          <button type="button" onClick={nextStep}>Press me</button>
+          <button type="button" onClick={previousStep}>Press me</button>
+        </div>
+      );
+    default:
+      return (<div><h1>Default</h1></div>);
+  }
 }
 
 // RecipeForm.propTypes = {
