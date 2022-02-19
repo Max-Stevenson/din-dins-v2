@@ -1,14 +1,14 @@
 import React from "react";
 // import PropTypes from "prop-types";
 
-function CreateRecipe() {
+function FormList() {
   return (
     <div />
   );
 }
 
-CreateRecipe.propTypes = {
+FormList.propTypes = {
 
 };
 
-export default CreateRecipe;
+export default FormList;

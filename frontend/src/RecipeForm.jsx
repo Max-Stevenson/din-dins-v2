@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import FormInputs from "./FormInputs";
+import FormList from "./FormList";
+import DisplayWrapper from "./shared/DisplayWrapper";
 // import PropTypes from "prop-types";
 
 function RecipeForm() {
@@ -23,28 +26,38 @@ function RecipeForm() {
     setFormState((previous) => ({ ...previous, step: step - 1 }));
   };
 
-  // const handleChange = (input, event) => {
-  //   setFormState((previous) => ({ ...previous, [input]: event.target }));
-  // };
+  const handleChange = (input, event) => {
+    setFormState((previous) => ({ ...previous, [input]: event.target }));
+  };
+
   switch (formState.step) {
     case 1:
       return (
-        <div>
-          <h2>Step 1</h2>
-          <button type="button" onClick={nextStep}>Press me</button>
-          <button type="button" onClick={previousStep}>Press me</button>
-        </div>
+        <DisplayWrapper>
+          <FormInputs
+            nextStep={nextStep}
+            handleChange={handleChange}
+            formState={formState}
+          />
+        </DisplayWrapper>
       );
     case 2:
       return (
-        <div>
-          <h2>Step 2</h2>
-          <button type="button" onClick={nextStep}>Press me</button>
-          <button type="button" onClick={previousStep}>Press me</button>
-        </div>
+        <DisplayWrapper>
+          <FormList
+            previousStep={previousStep}
+            nextStep={nextStep}
+            handleChange={handleChange}
+            formState={formState}
+          />
+        </DisplayWrapper>
       );
     default:
-      return (<div><h1>Default</h1></div>);
+      return (
+        <div>
+          <h1>Default</h1>
+        </div>
+      );
   }
 }
 
