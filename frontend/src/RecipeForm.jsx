@@ -27,7 +27,7 @@ function RecipeForm() {
   };
 
   const handleChange = (input, event) => {
-    setFormState((previous) => ({ ...previous, [input]: event.target }));
+    setFormState((previous) => ({ ...previous, [input]: event.target.value }));
   };
 
   switch (formState.step) {

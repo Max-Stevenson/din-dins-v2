@@ -4,10 +4,15 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import PropTypes from "prop-types";
 import { TextField } from "@mui/material";
 
-function FormInputs({ nextStep, formState }) {
+function FormInputs({ nextStep, formState, handleChange }) {
   return (
     <div>
-      <TextField defaultValue={formState.name} label="Recipe Name" variant="outlined" />
+      <TextField
+        defaultValue={formState.name}
+        label="Recipe Name"
+        onChange={(event) => handleChange("name", event)}
+        variant="outlined"
+      />
       <TextField
         defaultValue={formState.servings}
         label="Servings"
@@ -16,11 +21,22 @@ function FormInputs({ nextStep, formState }) {
         InputLabelProps={{
           shrink: true
         }}
+        onChange={(event) => handleChange("servings", event)}
       />
-      <Button variant="contained" endIcon={<ArrowForwardIosOutlinedIcon />} onClick={nextStep}>
+      <TextField
+        type="number"
+        defaultValue={formState.cookingTime}
+        label="Cooking Time"
+        onChange={(event) => handleChange("cookingTime", event)}
+        variant="outlined"
+      />
+      <Button
+        variant="contained"
+        endIcon={<ArrowForwardIosOutlinedIcon />}
+        onClick={nextStep}
+      >
         Continue
       </Button>
-      <h2>{formState.servings}</h2>
     </div>
   );
 }
@@ -41,7 +57,8 @@ FormInputs.propTypes = {
     ),
     method: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(PropTypes.string)
-  }).isRequired
+  }).isRequired,
+  handleChange: PropTypes.func.isRequired
 };
 
 export default FormInputs;
