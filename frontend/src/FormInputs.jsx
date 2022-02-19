@@ -1,11 +1,25 @@
 import React from "react";
+import Button from "@mui/material/Button";
+import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import PropTypes from "prop-types";
+import { TextField } from "@mui/material";
 
 function FormInputs({ nextStep, formState }) {
   return (
     <div>
-      <h2>Its working</h2>
-      <button type="button" onClick={nextStep}>Continue</button>
+      <TextField defaultValue={formState.name} label="Recipe Name" variant="outlined" />
+      <TextField
+        defaultValue={formState.servings}
+        label="Servings"
+        type="number"
+        variant="outlined"
+        InputLabelProps={{
+          shrink: true
+        }}
+      />
+      <Button variant="contained" endIcon={<ArrowForwardIosOutlinedIcon />} onClick={nextStep}>
+        Continue
+      </Button>
       <h2>{formState.servings}</h2>
     </div>
   );

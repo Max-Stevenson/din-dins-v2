@@ -7,7 +7,7 @@ import DisplayWrapper from "./shared/DisplayWrapper";
 function RecipeForm() {
   const [formState, setFormState] = useState({
     step: 1,
-    name: "Default",
+    name: "",
     servings: 0,
     cookingTime: 0,
     isVegetarian: false,
