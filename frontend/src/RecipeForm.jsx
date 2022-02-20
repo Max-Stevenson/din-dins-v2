@@ -52,6 +52,17 @@ function RecipeForm() {
           />
         </DisplayWrapper>
       );
+    case 3:
+      return (
+        <DisplayWrapper>
+          <FormList
+            previousStep={previousStep}
+            nextStep={nextStep}
+            handleChange={handleChange}
+            formState={formState}
+          />
+        </DisplayWrapper>
+      );
     default:
       return (
         <div>

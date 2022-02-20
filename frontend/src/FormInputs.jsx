@@ -2,11 +2,13 @@ import React from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import PropTypes from "prop-types";
-import { TextField } from "@mui/material";
+import {
+  TextField, FormGroup, FormControlLabel, Checkbox, Container
+} from "@mui/material";
 
 function FormInputs({ nextStep, formState, handleChange }) {
   return (
-    <div>
+    <Container>
       <TextField
         defaultValue={formState.name}
         label="Recipe Name"
@@ -30,6 +32,9 @@ function FormInputs({ nextStep, formState, handleChange }) {
         onChange={(event) => handleChange("cookingTime", event)}
         variant="outlined"
       />
+      <FormGroup>
+        <FormControlLabel control={<Checkbox />} label="Meal is Vegeterain" />
+      </FormGroup>
       <Button
         variant="contained"
         endIcon={<ArrowForwardIosOutlinedIcon />}
@@ -37,7 +42,7 @@ function FormInputs({ nextStep, formState, handleChange }) {
       >
         Continue
       </Button>
-    </div>
+    </Container>
   );
 }
 
