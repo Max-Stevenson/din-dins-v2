@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FormInputs from "./FormInputs";
-import FormList from "./FormList";
+import IngredientList from "./IngredientList";
 import DisplayWrapper from "./shared/DisplayWrapper";
 // import PropTypes from "prop-types";
 
@@ -44,7 +44,7 @@ function RecipeForm() {
     case 2:
       return (
         <DisplayWrapper>
-          <FormList
+          <IngredientList
             previousStep={previousStep}
             nextStep={nextStep}
             handleChange={handleChange}
@@ -55,12 +55,7 @@ function RecipeForm() {
     case 3:
       return (
         <DisplayWrapper>
-          <FormList
-            previousStep={previousStep}
-            nextStep={nextStep}
-            handleChange={handleChange}
-            formState={formState}
-          />
+          <h2>Test</h2>
         </DisplayWrapper>
       );
     default:
