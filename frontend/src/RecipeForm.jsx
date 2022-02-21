@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import FormInputs from "./FormInputs";
 import IngredientList from "./IngredientList";
 import DisplayWrapper from "./shared/DisplayWrapper";
-// import PropTypes from "prop-types";
 
 function RecipeForm() {
   const [formState, setFormState] = useState({
@@ -30,6 +29,10 @@ function RecipeForm() {
     setFormState((previous) => ({ ...previous, [input]: event.target.value }));
   };
 
+  const handleAddToList = (list, listItem) => {
+    setFormState((previous) => ({ ...previous, [list]: [...list, listItem] }));
+  };
+
   switch (formState.step) {
     case 1:
       return (
@@ -47,7 +50,7 @@ function RecipeForm() {
           <IngredientList
             previousStep={previousStep}
             nextStep={nextStep}
-            handleChange={handleChange}
+            handleAddToList={handleAddToList}
             formState={formState}
           />
         </DisplayWrapper>
@@ -66,9 +69,5 @@ function RecipeForm() {
       );
   }
 }
-
-// RecipeForm.propTypes = {
-
-// };
 
 export default RecipeForm;

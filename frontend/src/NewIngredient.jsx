@@ -6,6 +6,10 @@ function NewIngredient({ handleAddIngredient }) {
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(false);
 
+  const handleAdd = () => {
+    
+  };
+
   return (
     <Container>
       {error && <p>{error}</p>}

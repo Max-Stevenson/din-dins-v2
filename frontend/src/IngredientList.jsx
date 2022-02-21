@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import NewIngredient from "./NewIngredient";
 
 function IngredientList({
-  formState, nextStep, previousStep, handleChange
+  formState, nextStep, previousStep, handleAddToList
 }) {
   const [ingredients, setIngredients] = useState(formState.ingredients);
   return (
@@ -28,7 +28,7 @@ IngredientList.propTypes = {
     method: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleAddToList: PropTypes.func.isRequired
 };
 
 export default IngredientList;
