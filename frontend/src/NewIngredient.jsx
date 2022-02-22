@@ -3,11 +3,17 @@ import PropTypes from "prop-types";
 import { Button, Container, TextField } from "@mui/material";
 
 function NewIngredient({ handleAddIngredient }) {
-  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(false);
 
-  const handleAdd = () => {
-    
+  const handleAdd = (event) => {
+    event.preventDefault();
+    console.log(event.target.parentElement.querySelectorAll("input"));
+    const ingredient = {
+      quantity: document.querySelector("#mui-10").value,
+      measure: "cups",
+      ingredient: "test"
+    };
+    setError(handleAddIngredient(ingredient));
   };
 
   return (
@@ -23,7 +29,7 @@ function NewIngredient({ handleAddIngredient }) {
       />
       <TextField variant="outlined" label="Measure" />
       <TextField variant="outlined" label="Ingredient" />
-      <Button onClick={handleAddIngredient}>Add Ingredient</Button>
+      <Button onClick={(event) => handleAdd(event)}>Add Ingredient</Button>
     </Container>
   );
 }
