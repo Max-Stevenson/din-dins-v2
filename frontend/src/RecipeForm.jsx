@@ -30,7 +30,10 @@ function RecipeForm() {
   };
 
   const handleAddToList = (list, listItem) => {
-    setFormState((previous) => ({ ...previous, [list]: [...list, listItem] }));
+    if (!listItem) {
+      return "Please add a valid ingredient";
+    }
+    return setFormState((previous) => ({ ...previous, [list]: [...list, listItem] }));
   };
 
   switch (formState.step) {

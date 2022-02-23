@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Button, Container } from "@mui/material";
 import NewIngredient from "./NewIngredient";
@@ -10,8 +10,6 @@ function IngredientList({
   handleAddToList
 }) {
   // eslint-disable-next-line no-unused-vars
-  const [ingredients, setIngredients] = useState(formState.ingredients);
-
   const handleAddIngredient = (ingredient) => {
     console.log(ingredient);
     handleAddToList("ingredients", ingredient);
@@ -19,7 +17,17 @@ function IngredientList({
 
   return (
     <Container>
-      {ingredients}
+      <ol>
+        {formState.ingredients.map((ingredient) => (
+          <li>
+            {ingredient.quantity}
+            {" "}
+            {ingredient.measure}
+            {" "}
+            {ingredient.ingredient}
+          </li>
+        ))}
+      </ol>
       <NewIngredient handleAddIngredient={handleAddIngredient} />
       <Button onClick={nextStep}>Continue</Button>
       <Button onClick={previousStep}>Previous</Button>
