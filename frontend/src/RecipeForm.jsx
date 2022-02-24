@@ -33,7 +33,9 @@ function RecipeForm() {
     if (!listItem) {
       return "Please add a valid ingredient";
     }
-    return setFormState((previous) => ({ ...previous, [list]: [...list, listItem] }));
+    return setFormState((previous) => ({
+      ...previous, [list]: [...previous[list], listItem]
+    }));
   };
 
   switch (formState.step) {
