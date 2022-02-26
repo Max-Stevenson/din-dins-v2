@@ -7,11 +7,10 @@ function IngredientList({
   formState,
   nextStep,
   previousStep,
-  handleAddToList
+  handleAddToList,
+  handleDeleteFromList
 }) {
-  // eslint-disable-next-line no-unused-vars
   const handleAddIngredient = (ingredient) => {
-    console.log(ingredient);
     handleAddToList("ingredients", ingredient);
   };
 
@@ -25,6 +24,7 @@ function IngredientList({
             {ingredient.measure}
             {" "}
             {ingredient.ingredient}
+            <Button onClick={() => { handleDeleteFromList(); }} />
           </li>
         ))}
       </ol>
@@ -53,7 +53,8 @@ IngredientList.propTypes = {
     method: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
-  handleAddToList: PropTypes.func.isRequired
+  handleAddToList: PropTypes.func.isRequired,
+  handleDeleteFromList: PropTypes.func.isRequired
 };
 
 export default IngredientList;

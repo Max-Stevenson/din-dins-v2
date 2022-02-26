@@ -29,12 +29,13 @@ function RecipeForm() {
     setFormState((previous) => ({ ...previous, [input]: event.target.value }));
   };
 
-  const handleAddToList = (list, listItem) => {
-    if (!listItem) {
-      return "Please add a valid ingredient";
-    }
-    return setFormState((previous) => ({
-      ...previous, [list]: [...previous[list], listItem]
+  const handleAddToList = (list, listItem) => setFormState((previous) => ({
+    ...previous, [list]: [...previous[list], listItem]
+  }));
+
+  const handleDeleteFromList = (list, listItem) => {
+    setFormState((previous) => ({
+      ...previous, [list]: [previous[list].filter((element) => element !== listItem)]
     }));
   };
 
@@ -56,6 +57,7 @@ function RecipeForm() {
             previousStep={previousStep}
             nextStep={nextStep}
             handleAddToList={handleAddToList}
+            handleDeleteFromList={handleDeleteFromList}
             formState={formState}
           />
         </DisplayWrapper>
