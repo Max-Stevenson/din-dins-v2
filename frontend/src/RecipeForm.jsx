@@ -35,7 +35,9 @@ function RecipeForm() {
 
   const handleDeleteFromList = (list, listItem) => {
     setFormState((previous) => ({
-      ...previous, [list]: [previous[list].filter((element) => element !== listItem)]
+      ...previous,
+      [list]: previous[list].filter((element) => (
+        element.quantity !== listItem.quantity && element.ingredient !== listItem.ingredient))
     }));
   };
 

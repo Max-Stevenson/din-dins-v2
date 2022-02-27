@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Container } from "@mui/material";
 import NewIngredient from "./NewIngredient";
+import Ingredient from "./Ingredient";
 
 function IngredientList({
   formState,
@@ -14,20 +15,24 @@ function IngredientList({
     handleAddToList("ingredients", ingredient);
   };
 
+  const handleRemoveIngredient = (ingredient) => {
+    handleDeleteFromList("ingredients", ingredient);
+  };
+
   return (
     <Container>
-      <ol>
-        {formState.ingredients.map((ingredient) => (
+      <ul>
+        {formState.ingredients.length > 0 && formState.ingredients.map((ingredient) => (
           <li>
-            {ingredient.quantity}
-            {" "}
-            {ingredient.measure}
-            {" "}
-            {ingredient.ingredient}
-            <Button onClick={() => { handleDeleteFromList(); }} />
+            <Ingredient
+              quantity={ingredient.quantity}
+              measure={ingredient.measure}
+              ingredient={ingredient.ingredient}
+              handleDelete={handleRemoveIngredient}
+            />
           </li>
         ))}
-      </ol>
+      </ul>
       <NewIngredient handleAddIngredient={handleAddIngredient} />
       <Button onClick={nextStep}>Continue</Button>
       <Button onClick={previousStep}>Previous</Button>
