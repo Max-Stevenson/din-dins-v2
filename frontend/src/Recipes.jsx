@@ -14,14 +14,11 @@ function Recipes() {
     "http://localhost:3000/api/v1/recipes"
   );
 
-  // const selectRecipe = (recipeId) => data.find((r) => r._id === recipeId);
-
   if (loading && !error) {
     return <LoadingSpinner />;
   }
 
   if (!loading && data) {
-    // eslint-disable-next-line array-callback-return
     const recipeItems = data.map((recipe) => (
       <Grid
         key={recipe._id}
