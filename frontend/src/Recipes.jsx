@@ -27,7 +27,7 @@ function Recipes() {
         sm={6}
         md={3}
       >
-        <Link to={`/recipes/view/${recipe._id}`} state={recipe}>
+        <Link to={`/recipes/view/${recipe._id}`}>
           <div className="recipe-item__wrapper">
             <img alt="" src={logo} />
             <h3>{recipe.name}</h3>

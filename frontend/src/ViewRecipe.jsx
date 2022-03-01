@@ -1,13 +1,22 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router";
+import LoadingSpinner from "./shared/LoadingSpinner";
+import useFetch from "./useFetchHook";
 
 function ViewRecipe() {
-  const location = useLocation();
-  console.log(location.state);
-
-  return (
-    <h2>View Recipe Page</h2>
+  const { recipeId } = useParams();
+  const { data, error, loading } = useFetch(
+    `http://localhost:3000/api/v1/recipes/${recipeId}`
   );
+
+  if (loading && !error) {
+    return <LoadingSpinner />;
+  }
+
+  if (!loading && data) {
+    return <h2>Data Loaded</h2>;
+  }
+  return <h2>Data Loaded</h2>;
 }
 
 export default ViewRecipe;
