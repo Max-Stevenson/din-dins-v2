@@ -5,10 +5,11 @@ import PropTypes from "prop-types";
 import {
   TextField, FormGroup, FormControlLabel, Checkbox, Container
 } from "@mui/material";
+import "./FormInputs.scss";
 
 function FormInputs({ nextStep, formState, handleChange }) {
   return (
-    <Container>
+    <Container className="recipe-form__input-wrapper">
       <TextField
         defaultValue={formState.name}
         label="Recipe Name"
@@ -35,13 +36,15 @@ function FormInputs({ nextStep, formState, handleChange }) {
       <FormGroup>
         <FormControlLabel control={<Checkbox />} label="Meal is Vegeterain" />
       </FormGroup>
-      <Button
-        variant="contained"
-        endIcon={<ArrowForwardIosOutlinedIcon />}
-        onClick={nextStep}
-      >
-        Continue
-      </Button>
+      <div className="recipe-form__button-wrapper">
+        <Button
+          variant="contained"
+          endIcon={<ArrowForwardIosOutlinedIcon />}
+          onClick={nextStep}
+        >
+          Continue
+        </Button>
+      </div>
     </Container>
   );
 }
