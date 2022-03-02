@@ -1,10 +1,18 @@
-.recipe-form__input-wrapper {
+.css-1oqqzyl-MuiContainer-root.recipe-form__input-wrapper {
   height: 100%;
   position: relative;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .recipe-form__button-wrapper {
+  display: flex;
+  justify-content: end;
   position: absolute;
   bottom: 0;
+  width: 100%;
 }
 
+.recipe-form__continue-button {
+
+}

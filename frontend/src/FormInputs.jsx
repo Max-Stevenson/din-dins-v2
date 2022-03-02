@@ -38,6 +38,7 @@ function FormInputs({ nextStep, formState, handleChange }) {
       </FormGroup>
       <div className="recipe-form__button-wrapper">
         <Button
+          className="recipe-form__continue-button"
           variant="contained"
           endIcon={<ArrowForwardIosOutlinedIcon />}
           onClick={nextStep}
