@@ -44,13 +44,11 @@ function RecipeForm() {
   switch (formState.step) {
     case 1:
       return (
-        <DisplayWrapper>
-          <FormInputs
-            nextStep={nextStep}
-            handleChange={handleChange}
-            formState={formState}
-          />
-        </DisplayWrapper>
+        <FormInputs
+          nextStep={nextStep}
+          handleChange={handleChange}
+          formState={formState}
+        />
       );
     case 2:
       return (

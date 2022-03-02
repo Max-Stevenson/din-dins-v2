@@ -3,40 +3,52 @@ import Button from "@mui/material/Button";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import PropTypes from "prop-types";
 import {
-  TextField, FormGroup, FormControlLabel, Checkbox, Container
+  TextField,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Grid
 } from "@mui/material";
 import "./FormInputs.scss";
 
 function FormInputs({ nextStep, formState, handleChange }) {
   return (
-    <Container className="recipe-form__input-wrapper">
-      <TextField
-        defaultValue={formState.name}
-        label="Recipe Name"
-        onChange={(event) => handleChange("name", event)}
-        variant="outlined"
-      />
-      <TextField
-        defaultValue={formState.servings}
-        label="Servings"
-        type="number"
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true
-        }}
-        onChange={(event) => handleChange("servings", event)}
-      />
-      <TextField
-        type="number"
-        defaultValue={formState.cookingTime}
-        label="Cooking Time"
-        onChange={(event) => handleChange("cookingTime", event)}
-        variant="outlined"
-      />
-      <FormGroup>
-        <FormControlLabel control={<Checkbox />} label="Meal is Vegeterain" />
-      </FormGroup>
-      <div className="recipe-form__button-wrapper">
+    <Grid container spacing={4} className="recipe-form__input-wrapper">
+      <Grid item xs={12}>
+        <TextField
+          defaultValue={formState.name}
+          label="Recipe Name"
+          onChange={(event) => handleChange("name", event)}
+          variant="outlined"
+        />
+      </Grid>
+      <Grid item>
+        <TextField
+          defaultValue={formState.servings}
+          label="Servings"
+          type="number"
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={(event) => handleChange("servings", event)}
+        />
+      </Grid>
+      <Grid item>
+        <TextField
+          type="number"
+          defaultValue={formState.cookingTime}
+          label="Cooking Time"
+          onChange={(event) => handleChange("cookingTime", event)}
+          variant="outlined"
+        />
+      </Grid>
+      <Grid item>
+        <FormGroup>
+          <FormControlLabel control={<Checkbox />} label="Meal is Vegeterain" />
+        </FormGroup>
+      </Grid>
+      <Grid item xs={12}>
         <Button
           className="recipe-form__continue-button"
           variant="contained"
@@ -45,8 +57,8 @@ function FormInputs({ nextStep, formState, handleChange }) {
         >
           Continue
         </Button>
-      </div>
-    </Container>
+      </Grid>
+    </Grid>
   );
 }
 
