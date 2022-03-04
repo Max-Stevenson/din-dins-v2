@@ -1,16 +1,10 @@
-.css-1oqqzyl-MuiContainer-root.recipe-form__input-wrapper {
-  height: 100%;
-  position: relative;
+.MuiGrid-container.recipe-form__input-wrapper {
+  padding-bottom: 12vh;
+  padding-top: 12vh;
+  height: 100vh;
   padding-left: 0;
   padding-right: 0;
   margin-top: 0;
   margin-left: 0;
-}
-
-.recipe-form__button-wrapper {
-  display: flex;
-  justify-content: end;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  max-width: 100%;
 }

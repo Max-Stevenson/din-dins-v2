@@ -13,13 +13,14 @@ import "./FormInputs.scss";
 
 function FormInputs({ nextStep, formState, handleChange }) {
   return (
-    <Grid container spacing={4} className="recipe-form__input-wrapper">
+    <Grid container className="recipe-form__input-wrapper">
       <Grid item xs={12}>
         <TextField
           defaultValue={formState.name}
           label="Recipe Name"
           onChange={(event) => handleChange("name", event)}
           variant="outlined"
+          autoComplete="off"
         />
       </Grid>
       <Grid item>
