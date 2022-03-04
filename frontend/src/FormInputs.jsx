@@ -16,6 +16,7 @@ function FormInputs({ nextStep, formState, handleChange }) {
     <Grid container className="recipe-form__input-wrapper">
       <Grid item xs={12}>
         <TextField
+          required
           defaultValue={formState.name}
           label="Recipe Name"
           onChange={(event) => handleChange("name", event)}
@@ -49,9 +50,9 @@ function FormInputs({ nextStep, formState, handleChange }) {
           <FormControlLabel control={<Checkbox />} label="Meal is Vegeterain" />
         </FormGroup>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className="recipe-form__grid-container--relative">
         <Button
-          className="recipe-form__continue-button"
+          className="recipe-form__continue-button recipe-form__continue-button--absolute"
           variant="contained"
           endIcon={<ArrowForwardIosOutlinedIcon />}
           onClick={nextStep}
