@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import PropTypes from "prop-types";
@@ -12,6 +12,15 @@ import {
 import "./FormInputs.scss";
 
 function FormInputs({ nextStep, formState, handleChange }) {
+  // eslint-disable-next-line no-unused-vars
+  const [validInputs, setValidInputs] = useState(false);
+
+  const validateInputs = (name, event) => {
+    console.log("ran");
+    // setValidInputs(true);
+    handleChange(name, event);
+  };
+
   return (
     <Grid container className="recipe-form__input-wrapper">
       <Grid item xs={12}>
@@ -19,30 +28,35 @@ function FormInputs({ nextStep, formState, handleChange }) {
           required
           defaultValue={formState.name}
           label="Recipe Name"
-          onChange={(event) => handleChange("name", event)}
+          onChange={(event) => validateInputs("name", event)}
           variant="outlined"
           autoComplete="off"
+          helperText="Please enter a name for this recipe."
         />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <TextField
           defaultValue={formState.servings}
           label="Servings"
+          required
           type="number"
           variant="outlined"
           InputLabelProps={{
             shrink: true
           }}
           onChange={(event) => handleChange("servings", event)}
+          helperText="How many servings does this recipe make?"
         />
       </Grid>
       <Grid item>
         <TextField
           type="number"
+          required
           defaultValue={formState.cookingTime}
           label="Cooking Time"
           onChange={(event) => handleChange("cookingTime", event)}
           variant="outlined"
+          helperText="How long does it take to make this recipe?"
         />
       </Grid>
       <Grid item>
@@ -56,6 +70,7 @@ function FormInputs({ nextStep, formState, handleChange }) {
           variant="contained"
           endIcon={<ArrowForwardIosOutlinedIcon />}
           onClick={nextStep}
+          disabled={validInputs}
         >
           Continue
         </Button>
