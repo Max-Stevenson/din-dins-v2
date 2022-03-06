@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import PropTypes from "prop-types";
@@ -12,33 +12,23 @@ import {
 import "./FormInputs.scss";
 
 function FormInputs({ nextStep, formState, handleChange }) {
-  const [validInputs, setValidInputs] = useState({
-    name: formState.name.isValid,
-    servings: formState.servings.isValid,
-    cookingTime: formState.cookingTime.isValid
-  });
-
-  const validateInput = () => {
-    setValidInputs((previous) => ({ ...previous, all: true }));
-  };
-
   return (
     <Grid container className="recipe-form__input-wrapper">
       <Grid item xs={12}>
         <TextField
           required
-          defaultValue={formState.name}
+          defaultValue={formState.name.value}
           label="Recipe Name"
           onChange={(event) => handleChange("name", event)}
-          onBlur={() => validateInput()}
           variant="outlined"
           autoComplete="off"
           helperText="Please enter a name for this recipe."
         />
+        {formState.name.errorMsg && <h2>{formState.name.errorMsg}</h2>}
       </Grid>
       <Grid item xs={12}>
         <TextField
-          defaultValue={formState.servings}
+          defaultValue={formState.servings.value}
           label="Servings"
           required
           type="number"
@@ -54,7 +44,7 @@ function FormInputs({ nextStep, formState, handleChange }) {
         <TextField
           type="number"
           required
-          defaultValue={formState.cookingTime}
+          defaultValue={formState.cookingTime.value}
           label="Cooking Time"
           onChange={(event) => handleChange("cookingTime", event)}
           variant="outlined"
@@ -72,22 +62,37 @@ function FormInputs({ nextStep, formState, handleChange }) {
           variant="contained"
           endIcon={<ArrowForwardIosOutlinedIcon />}
           onClick={nextStep}
-          disabled={Object.values(validInputs).includes(false)}
+          disabled={
+            formState.name.isValid
+            && formState.servings.isValid
+            && formState.cookingTime.isValid
+          }
         >
           Continue
         </Button>
       </Grid>
     </Grid>
-
   );
 }
 
 FormInputs.propTypes = {
   nextStep: PropTypes.func.isRequired,
   formState: PropTypes.shape({
-    name: PropTypes.string,
-    servings: PropTypes.number,
-    cookingTime: PropTypes.number,
+    name: PropTypes.shape({
+      value: PropTypes.string,
+      isValid: PropTypes.bool,
+      errorMsg: PropTypes.string
+    }),
+    servings: PropTypes.shape({
+      value: PropTypes.number,
+      isValid: PropTypes.bool,
+      errorMsg: PropTypes.string
+    }),
+    cookingTime: PropTypes.shape({
+      value: PropTypes.number,
+      isValid: PropTypes.bool,
+      errorMsg: PropTypes.string
+    }),
     isVegetarian: PropTypes.bool,
     ingredients: PropTypes.arrayOf(
       PropTypes.shape({

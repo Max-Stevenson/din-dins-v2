@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import validator from "validator";
 import FormInputs from "./FormInputs";
 import IngredientList from "./IngredientList";
 import DisplayWrapper from "./shared/DisplayWrapper";
@@ -6,9 +7,9 @@ import DisplayWrapper from "./shared/DisplayWrapper";
 function RecipeForm() {
   const [formState, setFormState] = useState({
     step: 1,
-    name: { value: "", isValid: false },
-    servings: 0,
-    cookingTime: 0,
+    name: { value: "", isValid: false, errorMsg: "" },
+    servings: { value: 0, isValid: false, errorMsg: "" },
+    cookingTime: { value: 0, isValid: false, errorMsg: "" },
     isVegetarian: false,
     ingredients: [],
     method: [],
@@ -26,18 +27,28 @@ function RecipeForm() {
   };
 
   const handleChange = (input, event) => {
-    setFormState((previous) => ({ ...previous, [input]: event.target.value }));
+    if (input === "name") {
+      if (!validator.isEmpty(event.target.value.trim())) {
+        setFormState((previous) => ({
+          ...previous,
+          [input]: { ...formState[input], value: event.target.value, isValid: true }
+        }));
+      }
+    }
   };
 
   const handleAddToList = (list, listItem) => setFormState((previous) => ({
-    ...previous, [list]: [...previous[list], listItem]
+    ...previous,
+    [list]: [...previous[list], listItem]
   }));
 
   const handleDeleteFromList = (list, listItem) => {
     setFormState((previous) => ({
       ...previous,
-      [list]: previous[list].filter((element) => (
-        element.quantity !== listItem.quantity && element.ingredient !== listItem.ingredient))
+      [list]: previous[list].filter(
+        (element) => element.quantity !== listItem.quantity
+          && element.ingredient !== listItem.ingredient
+      )
     }));
   };
 
