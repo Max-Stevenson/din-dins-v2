@@ -12,13 +12,14 @@ import {
 import "./FormInputs.scss";
 
 function FormInputs({ nextStep, formState, handleChange }) {
-  // eslint-disable-next-line no-unused-vars
-  const [validInputs, setValidInputs] = useState(false);
+  const [validInputs, setValidInputs] = useState({
+    name: formState.name.isValid,
+    servings: formState.servings.isValid,
+    cookingTime: formState.cookingTime.isValid
+  });
 
-  const validateInputs = (name, event) => {
-    console.log("ran");
-    // setValidInputs(true);
-    handleChange(name, event);
+  const validateInput = () => {
+    setValidInputs((previous) => ({ ...previous, all: true }));
   };
 
   return (
@@ -28,7 +29,8 @@ function FormInputs({ nextStep, formState, handleChange }) {
           required
           defaultValue={formState.name}
           label="Recipe Name"
-          onChange={(event) => validateInputs("name", event)}
+          onChange={(event) => handleChange("name", event)}
+          onBlur={() => validateInput()}
           variant="outlined"
           autoComplete="off"
           helperText="Please enter a name for this recipe."
@@ -70,12 +72,13 @@ function FormInputs({ nextStep, formState, handleChange }) {
           variant="contained"
           endIcon={<ArrowForwardIosOutlinedIcon />}
           onClick={nextStep}
-          disabled={validInputs}
+          disabled={Object.values(validInputs).includes(false)}
         >
           Continue
         </Button>
       </Grid>
     </Grid>
+
   );
 }
 
