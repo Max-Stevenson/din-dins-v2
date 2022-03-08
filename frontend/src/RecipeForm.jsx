@@ -26,21 +26,34 @@ function RecipeForm() {
     setFormState((previous) => ({ ...previous, step: step - 1 }));
   };
 
+  const handleAddToList = (list, listItem) => setFormState((previous) => ({
+    ...previous,
+    [list]: [...previous[list], listItem]
+  }));
+
   const handleChange = (input, event) => {
     if (input === "name") {
       if (!validator.isEmpty(event.target.value.trim())) {
         setFormState((previous) => ({
           ...previous,
-          [input]: { ...formState[input], value: event.target.value, isValid: true }
+          [input]: {
+            value: event.target.value,
+            isValid: true,
+            errorMsg: ""
+          }
+        }));
+      } else {
+        setFormState((previous) => ({
+          ...previous,
+          [input]: {
+            value: event.target.value,
+            isValid: false,
+            errorMsg: "Recipe name cannot be empty"
+          }
         }));
       }
     }
   };
-
-  const handleAddToList = (list, listItem) => setFormState((previous) => ({
-    ...previous,
-    [list]: [...previous[list], listItem]
-  }));
 
   const handleDeleteFromList = (list, listItem) => {
     setFormState((previous) => ({

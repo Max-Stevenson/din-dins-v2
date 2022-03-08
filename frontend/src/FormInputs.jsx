@@ -63,9 +63,9 @@ function FormInputs({ nextStep, formState, handleChange }) {
           endIcon={<ArrowForwardIosOutlinedIcon />}
           onClick={nextStep}
           disabled={
-            formState.name.isValid
-            && formState.servings.isValid
-            && formState.cookingTime.isValid
+            !formState.name.isValid
+            && !formState.servings.isValid
+            && !formState.cookingTime.isValid
           }
         >
           Continue
