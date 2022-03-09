@@ -52,6 +52,19 @@ function RecipeForm() {
           }
         }));
       }
+    } else if (input === "servings" || input === "cooking time") {
+      console.log("here");
+      if (parseInt(event.target.value, 10) < 0) {
+        console.log("here again");
+        setFormState((previous) => ({
+          ...previous,
+          [input]: {
+            value: parseInt(event.target.value, 10),
+            isValid: false,
+            errorMsg: `${input} cannot be a negative number`
+          }
+        }));
+      }
     }
   };
 
