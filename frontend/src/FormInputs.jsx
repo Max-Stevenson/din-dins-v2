@@ -39,6 +39,7 @@ function FormInputs({ nextStep, formState, handleChange }) {
           onChange={(event) => handleChange("servings", event)}
           helperText="How many servings does this recipe make?"
         />
+        {formState.servings.errorMsg && <h2>{formState.servings.errorMsg}</h2>}
       </Grid>
       <Grid item>
         <TextField
@@ -64,8 +65,8 @@ function FormInputs({ nextStep, formState, handleChange }) {
           onClick={nextStep}
           disabled={
             !formState.name.isValid
-            && !formState.servings.isValid
-            && !formState.cookingTime.isValid
+            || !formState.servings.isValid
+            || !formState.cookingTime.isValid
           }
         >
           Continue
