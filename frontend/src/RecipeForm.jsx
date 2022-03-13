@@ -48,25 +48,26 @@ function RecipeForm() {
           [input]: {
             value: event.target.value,
             isValid: false,
-            errorMsg: "Recipe name cannot be empty"
+            errorMsg: "Recipe name cannot be empty."
           }
         }));
       }
-    } else if (input === "servings" || input === "cooking time") {
-      if (parseInt(event.target.value, 10) < 0) {
+    } else if (input === "servings" || input === "cookingTime") {
+      const value = parseInt(event.target.value, 10) || 0;
+      if (value <= 0) {
         setFormState((previous) => ({
           ...previous,
           [input]: {
-            value: parseInt(event.target.value, 10),
+            value,
             isValid: false,
-            errorMsg: `${input} cannot be a negative number`
+            errorMsg: "value cannot be a negative or 0."
           }
         }));
       } else {
         setFormState((previous) => ({
           ...previous,
           [input]: {
-            value: parseInt(event.target.value, 10),
+            value,
             isValid: true,
             errorMsg: ""
           }

@@ -51,6 +51,7 @@ function FormInputs({ nextStep, formState, handleChange }) {
           variant="outlined"
           helperText="How long does it take to make this recipe?"
         />
+        {formState.cookingTime.errorMsg && <h2>{formState.cookingTime.errorMsg}</h2>}
       </Grid>
       <Grid item>
         <FormGroup>
