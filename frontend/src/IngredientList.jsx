@@ -23,10 +23,9 @@ function IngredientList({
     <Container>
       <ul>
         {formState.ingredients.length > 0 && formState.ingredients.map((ingredient, index) => (
-          <li>
+          // eslint-disable-next-line react/no-array-index-key
+          <li key={`${ingredient.ingredident}${index}`}>
             <Ingredient
-              // eslint-disable-next-line react/no-array-index-key
-              key={`${ingredient.ingredident}${index}`}
               quantity={ingredient.quantity}
               measure={ingredient.measure}
               ingredient={ingredient.ingredient}
