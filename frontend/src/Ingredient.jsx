@@ -17,7 +17,7 @@ function Ingredient({
 }
 
 Ingredient.propTypes = {
-  quantity: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
   measure: PropTypes.string.isRequired,
   ingredient: PropTypes.string.isRequired,
   handleDelete: PropTypes.func.isRequired

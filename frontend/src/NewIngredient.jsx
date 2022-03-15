@@ -9,7 +9,7 @@ function NewIngredient({ handleAddIngredient }) {
     event.preventDefault();
     const inputs = event.target.parentElement.querySelectorAll("input");
     const ingredient = {
-      quantity: inputs[0].value,
+      quantity: parseInt(inputs[0].value, 10),
       measure: inputs[1].value,
       ingredient: inputs[2].value
     };

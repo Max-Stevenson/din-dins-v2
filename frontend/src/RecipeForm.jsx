@@ -48,7 +48,7 @@ function RecipeForm() {
           [input]: {
             value: event.target.value,
             isValid: false,
-            errorMsg: "Recipe name cannot be empty."
+            errorMsg: "Recipe name cannot be empty"
           }
         }));
       }
@@ -60,7 +60,7 @@ function RecipeForm() {
           [input]: {
             value,
             isValid: false,
-            errorMsg: "value cannot be a negative or 0."
+            errorMsg: "value cannot be a negative or 0"
           }
         }));
       } else {

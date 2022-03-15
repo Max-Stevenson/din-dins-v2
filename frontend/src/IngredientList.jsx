@@ -22,9 +22,11 @@ function IngredientList({
   return (
     <Container>
       <ul>
-        {formState.ingredients.length > 0 && formState.ingredients.map((ingredient) => (
+        {formState.ingredients.length > 0 && formState.ingredients.map((ingredient, index) => (
           <li>
             <Ingredient
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${ingredient.ingredident}${index}`}
               quantity={ingredient.quantity}
               measure={ingredient.measure}
               ingredient={ingredient.ingredient}
@@ -44,9 +46,21 @@ IngredientList.propTypes = {
   nextStep: PropTypes.func.isRequired,
   previousStep: PropTypes.func.isRequired,
   formState: PropTypes.shape({
-    name: PropTypes.string,
-    servings: PropTypes.number,
-    cookingTime: PropTypes.number,
+    name: PropTypes.shape({
+      value: PropTypes.string,
+      isValid: PropTypes.bool,
+      errorMsg: PropTypes.string
+    }),
+    servings: PropTypes.shape({
+      value: PropTypes.number,
+      isValid: PropTypes.bool,
+      errorMsg: PropTypes.string
+    }),
+    cookingTime: PropTypes.shape({
+      value: PropTypes.number,
+      isValid: PropTypes.bool,
+      errorMsg: PropTypes.string
+    }),
     isVegetarian: PropTypes.bool,
     ingredients: PropTypes.arrayOf(
       PropTypes.shape({
