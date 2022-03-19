@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import validator from "validator";
+import validator from "validator";
 import PropTypes from "prop-types";
 import { Button, Container, TextField } from "@mui/material";
 
@@ -35,16 +35,31 @@ function NewIngredient({ handleAddIngredient }) {
             }
           }));
         }
-        setIngredient({});
         break;
       case "measure":
-        break;
       case "ingredient":
+        if (validator.isEmpty(inputValue.trim())) {
+          setIngredient((previous) => ({
+            ...previous,
+            [inputName]: {
+              value: inputValue.trim(),
+              isValid: false,
+              errorMsg: `${inputName} cannot be empty`
+            }
+          }));
+        } else {
+          setIngredient((previous) => ({
+            ...previous,
+            [inputName]: {
+              value: inputValue.trim(),
+              isValid: true,
+              errorMsg: ""
+            }
+          }));
+        }
         break;
-
       default:
     }
-    // setIngredient((previous) => ({ ...previous }));
   };
 
   const handleAdd = (event) => {
@@ -58,7 +73,9 @@ function NewIngredient({ handleAddIngredient }) {
       <TextField
         required
         type="number"
-        onChange={(event) => { handleChange("quantity", event); }}
+        onChange={(event) => {
+          handleChange("quantity", event);
+        }}
         variant="outlined"
         InputLabelProps={{
           shrink: true
@@ -66,9 +83,33 @@ function NewIngredient({ handleAddIngredient }) {
         label="Quantity"
       />
       {ingredient.quantity.errorMsg && <p>{ingredient.quantity.errorMsg}</p>}
-      <TextField required variant="outlined" label="Measure" />
-      <TextField required variant="outlined" label="Ingredient" />
-      <Button variant="contained" disabled={ingredient.isValid} onClick={(event) => handleAdd(event)}>Add Ingredient</Button>
+      <TextField
+        onChange={(event) => {
+          handleChange("measure", event);
+        }}
+        required
+        variant="outlined"
+        label="Measure"
+      />
+      <TextField
+        onChange={(event) => {
+          handleChange("ingredient", event);
+        }}
+        required
+        variant="outlined"
+        label="Ingredient"
+      />
+      <Button
+        variant="contained"
+        disabled={
+          !ingredient.quantity.isValid
+          || !ingredient.measure.isValid
+          || !ingredient.ingredient.isValid
+        }
+        onClick={(event) => handleAdd(event)}
+      >
+        Add Ingredient
+      </Button>
     </Container>
   );
 }
