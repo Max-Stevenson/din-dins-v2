@@ -12,9 +12,29 @@ function NewIngredient({ handleAddIngredient }) {
   });
 
   const handleChange = (inputName, event) => {
+    const inputValue = event.target.value;
+
     switch (inputName) {
       case "quantity":
-        const inputValue = event.target.value
+        if (parseInt(inputValue, 10) > 0) {
+          setIngredient((previous) => ({
+            ...previous,
+            [inputName]: {
+              value: parseInt(inputValue, 10),
+              isValid: true,
+              errorMsg: ""
+            }
+          }));
+        } else {
+          setIngredient((previous) => ({
+            ...previous,
+            [inputName]: {
+              value: parseInt(inputValue, 10),
+              isValid: false,
+              errorMsg: "value cannot be a negative or 0"
+            }
+          }));
+        }
         setIngredient({});
         break;
       case "measure":
