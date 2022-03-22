@@ -64,7 +64,11 @@ function NewIngredient({ handleAddIngredient }) {
 
   const handleAdd = (event) => {
     event.preventDefault();
-    handleAddIngredient(ingredient);
+    handleAddIngredient({
+      quantity: ingredient.quantity.value,
+      measure: ingredient.measure.value,
+      ingredient: ingredient.ingredient.value
+    });
     // restore state to 0;
   };
 
