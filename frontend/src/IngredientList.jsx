@@ -21,6 +21,7 @@ function IngredientList({
 
   return (
     <Container>
+      <h2>Ingredients</h2>
       <ul>
         {formState.ingredients.length > 0 && formState.ingredients.map((ingredient, index) => (
           // eslint-disable-next-line react/no-array-index-key
@@ -35,7 +36,7 @@ function IngredientList({
         ))}
       </ul>
       <NewIngredient handleAddIngredient={handleAddIngredient} />
-      <Button onClick={nextStep}>Continue</Button>
+      <Button variant="contained" disabled={!formState.ingredients.length > 0} onClick={nextStep}>Continue</Button>
       <Button onClick={previousStep}>Previous</Button>
     </Container>
   );

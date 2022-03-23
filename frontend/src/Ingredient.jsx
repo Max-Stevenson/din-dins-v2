@@ -7,8 +7,8 @@ function Ingredient({
   quantity, measure, ingredient, handleDelete
 }) {
   return (
-    <div>
-      <p>{`${quantity} ${measure} ${ingredient}`}</p>
+    <div className="recipe-form__ingreident-wrapper">
+      <p className="recipe-form__ingredient">{`${quantity} ${measure} ${ingredient}`}</p>
       <IconButton onClick={() => handleDelete({ quantity, measure, ingredient })}>
         <HighlightOffOutlinedIcon />
       </IconButton>

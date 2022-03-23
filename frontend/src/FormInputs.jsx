@@ -22,9 +22,8 @@ function FormInputs({ nextStep, formState, handleChange }) {
           onChange={(event) => handleChange("name", event)}
           variant="outlined"
           autoComplete="off"
-          helperText="Please enter a name for this recipe."
+          helperText={formState.name.errorMsg || "Please enter a name for this recipe."}
         />
-        {formState.name.errorMsg && <h2>{formState.name.errorMsg}</h2>}
       </Grid>
       <Grid item xs={12}>
         <TextField
@@ -37,9 +36,8 @@ function FormInputs({ nextStep, formState, handleChange }) {
             shrink: true
           }}
           onChange={(event) => handleChange("servings", event)}
-          helperText="How many servings does this recipe make?"
+          helperText={formState.servings.errorMsg || "How many servings does this recipe make?"}
         />
-        {formState.servings.errorMsg && <h2>{formState.servings.errorMsg}</h2>}
       </Grid>
       <Grid item>
         <TextField
@@ -49,9 +47,8 @@ function FormInputs({ nextStep, formState, handleChange }) {
           label="Cooking Time"
           onChange={(event) => handleChange("cookingTime", event)}
           variant="outlined"
-          helperText="How long does it take to make this recipe?"
+          helperText={formState.cookingTime.errorMsg || "How long does it take to make this recipe?"}
         />
-        {formState.cookingTime.errorMsg && <h2>{formState.cookingTime.errorMsg}</h2>}
       </Grid>
       <Grid item>
         <FormGroup>

@@ -7,8 +7,7 @@ function NewIngredient({ handleAddIngredient }) {
   const [ingredient, setIngredient] = useState({
     quantity: { value: 0, isValid: false, errorMsg: "" },
     measure: { value: "", isValid: false, errorMsg: "" },
-    ingredient: { value: "", isValid: false, errorMsg: "" },
-    isValid: false
+    ingredient: { value: "", isValid: false, errorMsg: "" }
   });
 
   const handleChange = (inputName, event) => {
@@ -69,7 +68,11 @@ function NewIngredient({ handleAddIngredient }) {
       measure: ingredient.measure.value,
       ingredient: ingredient.ingredient.value
     });
-    // restore state to 0;
+    setIngredient({
+      quantity: { value: 0, isValid: false, errorMsg: "" },
+      measure: { value: "", isValid: false, errorMsg: "" },
+      ingredient: { value: "", isValid: false, errorMsg: "" }
+    });
   };
 
   return (
@@ -95,6 +98,7 @@ function NewIngredient({ handleAddIngredient }) {
         variant="outlined"
         label="Measure"
       />
+      {ingredient.measure.errorMsg && <p>{ingredient.measure.errorMsg}</p>}
       <TextField
         onChange={(event) => {
           handleChange("ingredient", event);
@@ -103,6 +107,7 @@ function NewIngredient({ handleAddIngredient }) {
         variant="outlined"
         label="Ingredient"
       />
+      {ingredient.ingredient.errorMsg && <p>{ingredient.ingredient.errorMsg}</p>}
       <Button
         variant="contained"
         disabled={
