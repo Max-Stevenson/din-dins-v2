@@ -73,12 +73,21 @@ function NewIngredient({ handleAddIngredient }) {
       measure: { value: "", isValid: false, errorMsg: "" },
       ingredient: { value: "", isValid: false, errorMsg: "" }
     });
+    const inputs = document.querySelectorAll("input");
+    for (let i = 0, j = inputs.length; i < j; i += 1) {
+      if (i === 0) {
+        inputs[i].value = 0;
+      } else {
+        inputs[i].value = "";
+      }
+    }
   };
 
   return (
     <Container>
       <TextField
         required
+        autoComplete="off"
         type="number"
         onChange={(event) => {
           handleChange("quantity", event);
@@ -95,6 +104,7 @@ function NewIngredient({ handleAddIngredient }) {
           handleChange("measure", event);
         }}
         required
+        autoComplete="off"
         variant="outlined"
         label="Measure"
       />
@@ -104,6 +114,7 @@ function NewIngredient({ handleAddIngredient }) {
           handleChange("ingredient", event);
         }}
         required
+        autoComplete="off"
         variant="outlined"
         label="Ingredient"
       />

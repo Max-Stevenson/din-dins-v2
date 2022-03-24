@@ -30,6 +30,7 @@ function FormInputs({ nextStep, formState, handleChange }) {
           defaultValue={formState.servings.value}
           label="Servings"
           required
+          autoComplete="off"
           type="number"
           variant="outlined"
           InputLabelProps={{
@@ -39,10 +40,11 @@ function FormInputs({ nextStep, formState, handleChange }) {
           helperText={formState.servings.errorMsg || "How many servings does this recipe make?"}
         />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <TextField
           type="number"
           required
+          autoComplete="off"
           defaultValue={formState.cookingTime.value}
           label="Cooking Time"
           onChange={(event) => handleChange("cookingTime", event)}
@@ -55,9 +57,9 @@ function FormInputs({ nextStep, formState, handleChange }) {
           <FormControlLabel control={<Checkbox />} label="Meal is Vegeterain" />
         </FormGroup>
       </Grid>
-      <Grid item xs={12} className="recipe-form__grid-container--relative">
+      <Grid item xs={12} className="recipe-form__nav-button__container">
         <Button
-          className="recipe-form__continue-button recipe-form__continue-button--absolute"
+          className="nav-button__end"
           variant="contained"
           endIcon={<ArrowForwardIosOutlinedIcon />}
           onClick={nextStep}

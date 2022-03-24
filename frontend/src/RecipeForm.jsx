@@ -3,6 +3,7 @@ import validator from "validator";
 import FormInputs from "./FormInputs";
 import IngredientList from "./IngredientList";
 import DisplayWrapper from "./shared/DisplayWrapper";
+import "./RecipeForm.scss";
 
 function RecipeForm() {
   const [formState, setFormState] = useState({
@@ -97,15 +98,13 @@ function RecipeForm() {
       );
     case 2:
       return (
-        <DisplayWrapper>
-          <IngredientList
-            previousStep={previousStep}
-            nextStep={nextStep}
-            handleAddToList={handleAddToList}
-            handleDeleteFromList={handleDeleteFromList}
-            formState={formState}
-          />
-        </DisplayWrapper>
+        <IngredientList
+          previousStep={previousStep}
+          nextStep={nextStep}
+          handleAddToList={handleAddToList}
+          handleDeleteFromList={handleDeleteFromList}
+          formState={formState}
+        />
       );
     case 3:
       return (

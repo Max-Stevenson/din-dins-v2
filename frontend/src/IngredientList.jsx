@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Container } from "@mui/material";
+import { Button, Container, Grid } from "@mui/material";
 import NewIngredient from "./NewIngredient";
 import Ingredient from "./Ingredient";
 
@@ -21,23 +21,30 @@ function IngredientList({
 
   return (
     <Container>
-      <h2>Ingredients</h2>
-      <ul>
-        {formState.ingredients.length > 0 && formState.ingredients.map((ingredient, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <li key={`${ingredient.ingredident}${index}`}>
-            <Ingredient
-              quantity={ingredient.quantity}
-              measure={ingredient.measure}
-              ingredient={ingredient.ingredient}
-              handleDelete={handleRemoveIngredient}
-            />
-          </li>
-        ))}
-      </ul>
-      <NewIngredient handleAddIngredient={handleAddIngredient} />
-      <Button variant="contained" disabled={!formState.ingredients.length > 0} onClick={nextStep}>Continue</Button>
-      <Button onClick={previousStep}>Previous</Button>
+      <Grid container className="recipe-form__input-wrapper">
+        <Grid item>
+          <ul>
+            {formState.ingredients.length > 0 && formState.ingredients.map((ingredient, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <li key={`${ingredient.ingredident}${index}`}>
+                <Ingredient
+                  quantity={ingredient.quantity}
+                  measure={ingredient.measure}
+                  ingredient={ingredient.ingredient}
+                  handleDelete={handleRemoveIngredient}
+                />
+              </li>
+            ))}
+          </ul>
+        </Grid>
+        <Grid item>
+          <NewIngredient handleAddIngredient={handleAddIngredient} />
+        </Grid>
+        <Grid item xs={12} className="recipe-form__nav-button__container">
+          <Button onClick={previousStep}>Previous</Button>
+          <Button variant="contained" disabled={!formState.ingredients.length > 0} onClick={nextStep}>Continue</Button>
+        </Grid>
+      </Grid>
     </Container>
   );
 }
