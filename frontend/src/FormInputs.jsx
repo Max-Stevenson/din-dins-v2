@@ -13,8 +13,8 @@ import "./FormInputs.scss";
 
 function FormInputs({ nextStep, formState, handleChange }) {
   return (
-    <Grid container className="recipe-form__input-wrapper">
-      <Grid item xs={12}>
+    <Grid direction="column" container className="recipe-form__input-wrapper">
+      <Grid item>
         <TextField
           required
           defaultValue={formState.name.value}
@@ -25,7 +25,7 @@ function FormInputs({ nextStep, formState, handleChange }) {
           helperText={formState.name.errorMsg || "Please enter a name for this recipe."}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item>
         <TextField
           defaultValue={formState.servings.value}
           label="Servings"
