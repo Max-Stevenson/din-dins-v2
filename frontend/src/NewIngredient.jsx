@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import validator from "validator";
 import PropTypes from "prop-types";
-import { Button, Container, TextField } from "@mui/material";
+import {
+  Button, Container, Grid, TextField
+} from "@mui/material";
 
 function NewIngredient({ handleAddIngredient }) {
   const [ingredient, setIngredient] = useState({
@@ -85,51 +87,57 @@ function NewIngredient({ handleAddIngredient }) {
 
   return (
     <Container>
-      <TextField
-        required
-        autoComplete="off"
-        type="number"
-        onChange={(event) => {
-          handleChange("quantity", event);
-        }}
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true
-        }}
-        label="Quantity"
-      />
-      {ingredient.quantity.errorMsg && <p>{ingredient.quantity.errorMsg}</p>}
-      <TextField
-        onChange={(event) => {
-          handleChange("measure", event);
-        }}
-        required
-        autoComplete="off"
-        variant="outlined"
-        label="Measure"
-      />
-      {ingredient.measure.errorMsg && <p>{ingredient.measure.errorMsg}</p>}
-      <TextField
-        onChange={(event) => {
-          handleChange("ingredient", event);
-        }}
-        required
-        autoComplete="off"
-        variant="outlined"
-        label="Ingredient"
-      />
-      {ingredient.ingredient.errorMsg && <p>{ingredient.ingredient.errorMsg}</p>}
-      <Button
-        variant="contained"
-        disabled={
+      <Grid container>
+        <Grid item xs={12}>
+          <TextField
+            required
+            autoComplete="off"
+            type="number"
+            onChange={(event) => {
+              handleChange("quantity", event);
+            }}
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true
+            }}
+            label="Quantity"
+          />
+          {ingredient.quantity.errorMsg && <p>{ingredient.quantity.errorMsg}</p>}
+          <TextField
+            onChange={(event) => {
+              handleChange("measure", event);
+            }}
+            required
+            autoComplete="off"
+            variant="outlined"
+            label="Measure"
+          />
+          {ingredient.measure.errorMsg && <p>{ingredient.measure.errorMsg}</p>}
+          <TextField
+            onChange={(event) => {
+              handleChange("ingredient", event);
+            }}
+            required
+            autoComplete="off"
+            variant="outlined"
+            label="Ingredient"
+          />
+          {ingredient.ingredient.errorMsg && <p>{ingredient.ingredient.errorMsg}</p>}
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            disabled={
           !ingredient.quantity.isValid
           || !ingredient.measure.isValid
           || !ingredient.ingredient.isValid
         }
-        onClick={(event) => handleAdd(event)}
-      >
-        Add Ingredient
-      </Button>
+            onClick={(event) => handleAdd(event)}
+          >
+            Add Ingredient
+          </Button>
+        </Grid>
+      </Grid>
     </Container>
   );
 }

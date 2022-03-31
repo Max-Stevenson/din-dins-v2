@@ -7,72 +7,77 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Grid
+  Grid,
+  Container
 } from "@mui/material";
 import "./FormInputs.scss";
 
 function FormInputs({ nextStep, formState, handleChange }) {
   return (
-    <Grid direction="column" container className="recipe-form__input-wrapper">
-      <Grid item>
-        <TextField
-          required
-          defaultValue={formState.name.value}
-          label="Recipe Name"
-          onChange={(event) => handleChange("name", event)}
-          variant="outlined"
-          autoComplete="off"
-          helperText={formState.name.errorMsg || "Please enter a name for this recipe."}
-        />
-      </Grid>
-      <Grid item>
-        <TextField
-          defaultValue={formState.servings.value}
-          label="Servings"
-          required
-          autoComplete="off"
-          type="number"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true
-          }}
-          onChange={(event) => handleChange("servings", event)}
-          helperText={formState.servings.errorMsg || "How many servings does this recipe make?"}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          type="number"
-          required
-          autoComplete="off"
-          defaultValue={formState.cookingTime.value}
-          label="Cooking Time"
-          onChange={(event) => handleChange("cookingTime", event)}
-          variant="outlined"
-          helperText={formState.cookingTime.errorMsg || "How long does it take to make this recipe?"}
-        />
-      </Grid>
-      <Grid item>
-        <FormGroup>
-          <FormControlLabel control={<Checkbox />} label="Meal is Vegeterain" />
-        </FormGroup>
-      </Grid>
-      <Grid item xs={12} className="recipe-form__nav-button__container">
-        <Button
-          className="nav-button__end"
-          variant="contained"
-          endIcon={<ArrowForwardIosOutlinedIcon />}
-          onClick={nextStep}
-          disabled={
+    <Container>
+      <Grid container className="recipe-form__input-wrapper">
+        <Grid item xs={12}>
+          <TextField
+            required
+            defaultValue={formState.name.value}
+            label="Recipe Name"
+            onChange={(event) => handleChange("name", event)}
+            variant="outlined"
+            autoComplete="off"
+            helperText={formState.name.errorMsg || "Please enter a name for this recipe."}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            defaultValue={formState.servings.value}
+            label="Servings"
+            required
+            autoComplete="off"
+            type="number"
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true
+            }}
+            onChange={(event) => handleChange("servings", event)}
+            helperText={formState.servings.errorMsg || "How many servings does this recipe make?"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            type="number"
+            required
+            autoComplete="off"
+            defaultValue={formState.cookingTime.value}
+            label="Cooking Time"
+            onChange={(event) => handleChange("cookingTime", event)}
+            variant="outlined"
+            helperText={formState.cookingTime.errorMsg || "How long does it take to make this recipe?"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+            <FormControlLabel control={<Checkbox />} label="Meal is Vegeterain" />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12} className="recipe-form__nav-button__container">
+          <Button
+            className="nav-button__end"
+            variant="contained"
+            endIcon={<ArrowForwardIosOutlinedIcon />}
+            onClick={nextStep}
+            disabled={
             !formState.name.isValid
             || !formState.servings.isValid
             || !formState.cookingTime.isValid
           }
-        >
-          Continue
-        </Button>
+          >
+            Continue
+          </Button>
+        </Grid>
+
       </Grid>
-    </Grid>
+    </Container>
+
   );
 }
 
