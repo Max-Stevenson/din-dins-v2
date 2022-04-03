@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Grid, Container } from "@mui/material";
