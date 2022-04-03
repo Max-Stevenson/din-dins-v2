@@ -6,6 +6,7 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import NewIngredient from "./NewIngredient";
 import Ingredient from "./Ingredient";
+import "./IngredientList.scss";
 
 function IngredientList({
   formState,
