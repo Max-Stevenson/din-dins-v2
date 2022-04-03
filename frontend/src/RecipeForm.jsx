@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import validator from "validator";
 import FormInputs from "./FormInputs";
 import IngredientList from "./IngredientList";
-import DisplayWrapper from "./shared/DisplayWrapper";
+import MethodList from "./MethodList";
 import "./RecipeForm.scss";
 
 function RecipeForm() {
@@ -108,9 +108,13 @@ function RecipeForm() {
       );
     case 3:
       return (
-        <DisplayWrapper>
-          <h2>Test</h2>
-        </DisplayWrapper>
+        <MethodList
+          previousStep={previousStep}
+          nextStep={nextStep}
+          handleAddToList={handleAddToList}
+          handleDeleteFromList={handleDeleteFromList}
+          formState={formState}
+        />
       );
     default:
       return (
