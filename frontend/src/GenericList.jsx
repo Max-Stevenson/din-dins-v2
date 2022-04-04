@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Button, Grid, Container } from "@mui/material";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
@@ -9,6 +9,7 @@ function GenericList({
   listName,
   formState,
   listChildren,
+  listItemChild,
   nextStep,
   previousStep,
   handleAddToList,
@@ -21,10 +22,31 @@ function GenericList({
           <ul>
             {`${formState}.${listName}`.length > 0 && `${formState}.${listName}`.map((listItem) => (
               <li key={hashCode(listItem)}>
-                {React.cloneElement(listChildren, { itemDetails: listItem })}
+                {React.cloneElement(listChildren, { itemDetails: listItem, handleDeleteFromList })}
               </li>
             ))}
           </ul>
+        </Grid>
+        <Grid item xs={12}>
+          {React.cloneElement(listItemChild, { handleAddToList })}
+        </Grid>
+        <Grid item xs={12} className="recipe-form__nav-button__container">
+          <Button
+            variant="contained"
+            startIcon={<ArrowBackIosOutlinedIcon />}
+            onClick={previousStep}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="contained"
+            endIcon={<ArrowForwardIosOutlinedIcon />}
+            disabled={!`${formState}.${listName}`.length > 0}
+            onClick={nextStep}
+          >
+            Continue
+
+          </Button>
         </Grid>
       </Grid>
     </Container>
@@ -33,6 +55,7 @@ function GenericList({
 
 GenericList.propTypes = {
   listChildren: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  listItemChild: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   listName: PropTypes.string.isRequired,
   nextStep: PropTypes.func.isRequired,
   previousStep: PropTypes.func.isRequired,

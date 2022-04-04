@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import validator from "validator";
 import FormInputs from "./FormInputs";
-import IngredientList from "./IngredientList";
-import MethodList from "./MethodList";
+import GenericList from "./GenericList";
+import Ingredient from "./Ingredient";
+import NewIngredient from "./NewIngredient";
+// import IngredientList from "./IngredientList";
 import "./RecipeForm.scss";
 
 function RecipeForm() {
@@ -98,7 +100,17 @@ function RecipeForm() {
       );
     case 2:
       return (
-        <IngredientList
+        // <IngredientList
+        //   previousStep={previousStep}
+        //   nextStep={nextStep}
+        //   handleAddToList={handleAddToList}
+        //   handleDeleteFromList={handleDeleteFromList}
+        //   formState={formState}
+        // />
+        <GenericList
+          listName="ingredient"
+          listChildren={<Ingredient />}
+          listItemChild={<NewIngredient />}
           previousStep={previousStep}
           nextStep={nextStep}
           handleAddToList={handleAddToList}
@@ -108,13 +120,7 @@ function RecipeForm() {
       );
     case 3:
       return (
-        <MethodList
-          previousStep={previousStep}
-          nextStep={nextStep}
-          handleAddToList={handleAddToList}
-          handleDeleteFromList={handleDeleteFromList}
-          formState={formState}
-        />
+        <h2>Test</h2>
       );
     default:
       return (
