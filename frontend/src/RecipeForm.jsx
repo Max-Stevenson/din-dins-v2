@@ -108,7 +108,7 @@ function RecipeForm() {
         //   formState={formState}
         // />
         <GenericList
-          listName="ingredient"
+          listName="ingredients"
           listChildren={<Ingredient />}
           listItemChild={<NewIngredient />}
           previousStep={previousStep}

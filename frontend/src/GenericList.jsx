@@ -20,9 +20,12 @@ function GenericList({
       <Grid container rowSpacing={2} className="recipe-form__input-wrapper">
         <Grid item>
           <ul>
-            {`${formState}.${listName}`.length > 0 && `${formState}.${listName}`.map((listItem) => (
+            {formState[`${listName}`].length > 0 && formState[`${listName}`].map((listItem) => (
               <li key={hashCode(listItem)}>
-                {React.cloneElement(listChildren, { itemDetails: listItem, handleDeleteFromList })}
+                {React.cloneElement(
+                  listChildren,
+                  { listItem, handleDeleteFromList }
+                )}
               </li>
             ))}
           </ul>
@@ -54,8 +57,8 @@ function GenericList({
 }
 
 GenericList.propTypes = {
-  listChildren: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
-  listItemChild: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
+  listChildren: PropTypes.element.isRequired,
+  listItemChild: PropTypes.element.isRequired,
   listName: PropTypes.string.isRequired,
   nextStep: PropTypes.func.isRequired,
   previousStep: PropTypes.func.isRequired,

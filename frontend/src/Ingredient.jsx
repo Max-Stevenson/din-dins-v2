@@ -4,12 +4,12 @@ import { IconButton } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 
 function Ingredient({
-  quantity, measure, ingredient, handleDelete
+  listItem, handleDeleteFromList
 }) {
   return (
     <div className="recipe-form__ingreident-wrapper">
-      <p className="recipe-form__ingredient">{`${quantity} ${measure} ${ingredient}`}</p>
-      <IconButton onClick={() => handleDelete({ quantity, measure, ingredient })}>
+      <p className="recipe-form__ingredient">{`${listItem.quantity} ${listItem.measure} ${listItem.ingredient}`}</p>
+      <IconButton onClick={() => handleDeleteFromList("ingredients", listItem)}>
         <HighlightOffOutlinedIcon />
       </IconButton>
     </div>
@@ -17,10 +17,17 @@ function Ingredient({
 }
 
 Ingredient.propTypes = {
-  quantity: PropTypes.number.isRequired,
-  measure: PropTypes.string.isRequired,
-  ingredient: PropTypes.string.isRequired,
-  handleDelete: PropTypes.func.isRequired
+  listItem: PropTypes.shape({
+    quantity: PropTypes.number,
+    measure: PropTypes.string,
+    ingredient: PropTypes.string
+  }),
+  handleDeleteFromList: PropTypes.func
+};
+
+Ingredient.defaultProps = {
+  listItem: {},
+  handleDeleteFromList: () => {}
 };
 
 export default Ingredient;
