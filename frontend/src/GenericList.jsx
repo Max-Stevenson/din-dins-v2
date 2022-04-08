@@ -44,7 +44,7 @@ function GenericList({
           <Button
             variant="contained"
             endIcon={<ArrowForwardIosOutlinedIcon />}
-            disabled={!`${formState}.${listName}`.length > 0}
+            disabled={!formState[`${listName}`].length > 0}
             onClick={nextStep}
           >
             Continue

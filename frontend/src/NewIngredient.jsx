@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import "./NewIngredient.scss";
 
-function NewIngredient({ handleAddIngredient }) {
+function NewIngredient({ handleAddToList }) {
   const [ingredient, setIngredient] = useState({
     quantity: { value: 0, isValid: false, errorMsg: "" },
     measure: { value: "", isValid: false, errorMsg: "" },
@@ -66,7 +66,7 @@ function NewIngredient({ handleAddIngredient }) {
 
   const handleAdd = (event) => {
     event.preventDefault();
-    handleAddIngredient({
+    handleAddToList("ingredients", {
       quantity: ingredient.quantity.value,
       measure: ingredient.measure.value,
       ingredient: ingredient.ingredient.value
@@ -148,11 +148,11 @@ function NewIngredient({ handleAddIngredient }) {
 }
 
 NewIngredient.propTypes = {
-  handleAddIngredient: PropTypes.func
+  handleAddToList: PropTypes.func
 };
 
 NewIngredient.defaultProps = {
-  handleAddIngredient: () => {}
+  handleAddToList: () => {}
 };
 
 export default NewIngredient;
