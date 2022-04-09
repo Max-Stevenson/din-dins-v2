@@ -107,8 +107,8 @@ FormInputs.propTypes = {
         ingredient: PropTypes.string
       })
     ),
-    method: PropTypes.arrayOf(PropTypes.string),
-    tags: PropTypes.arrayOf(PropTypes.string)
+    method: PropTypes.arrayOf(PropTypes.shape({ method: PropTypes.string })),
+    tags: PropTypes.arrayOf(PropTypes.shape({ tag: PropTypes.string }))
   }).isRequired,
   handleChange: PropTypes.func.isRequired
 };

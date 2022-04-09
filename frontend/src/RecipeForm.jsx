@@ -4,7 +4,8 @@ import FormInputs from "./FormInputs";
 import GenericList from "./GenericList";
 import Ingredient from "./Ingredient";
 import NewIngredient from "./NewIngredient";
-// import IngredientList from "./IngredientList";
+import NewMethod from "./NewMethod";
+import Method from "./Method";
 import "./RecipeForm.scss";
 
 function RecipeForm() {
@@ -79,6 +80,16 @@ function RecipeForm() {
     }
   };
 
+  // const handleDeleteFromList = (list, listItem) => {
+  //   setFormState((previous) => ({
+  //     ...previous,
+  //     [list]: previous[list].filter(
+  //       (element) => element.quantity !== listItem.quantity
+  //         && element.ingredient !== listItem.ingredient
+  //     )
+  //   }));
+  // };
+
   const handleDeleteFromList = (list, listItem) => {
     setFormState((previous) => ({
       ...previous,
@@ -100,13 +111,6 @@ function RecipeForm() {
       );
     case 2:
       return (
-        // <IngredientList
-        //   previousStep={previousStep}
-        //   nextStep={nextStep}
-        //   handleAddToList={handleAddToList}
-        //   handleDeleteFromList={handleDeleteFromList}
-        //   formState={formState}
-        // />
         <GenericList
           listName="ingredients"
           listChildren={<Ingredient />}
@@ -120,7 +124,16 @@ function RecipeForm() {
       );
     case 3:
       return (
-        <h2>Test</h2>
+        <GenericList
+          listName="method"
+          listChildren={<Method />}
+          listItemChild={<NewMethod />}
+          previousStep={previousStep}
+          nextStep={nextStep}
+          handleAddToList={handleAddToList}
+          handleDeleteFromList={handleDeleteFromList}
+          formState={formState}
+        />
       );
     default:
       return (
