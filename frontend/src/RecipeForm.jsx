@@ -80,22 +80,21 @@ function RecipeForm() {
     }
   };
 
-  // const handleDeleteFromList = (list, listItem) => {
-  //   setFormState((previous) => ({
-  //     ...previous,
-  //     [list]: previous[list].filter(
-  //       (element) => element.quantity !== listItem.quantity
-  //         && element.ingredient !== listItem.ingredient
-  //     )
-  //   }));
-  // };
-
-  const handleDeleteFromList = (list, listItem) => {
+  const handleDeleteIngredient = (list, listItem) => {
     setFormState((previous) => ({
       ...previous,
       [list]: previous[list].filter(
         (element) => element.quantity !== listItem.quantity
           && element.ingredient !== listItem.ingredient
+      )
+    }));
+  };
+
+  const handleDeleteTagsOrMethods = (list, listItem) => {
+    setFormState((previous) => ({
+      ...previous,
+      [list]: previous[list].filter(
+        (element) => element[Object.keys(element)[0]] !== listItem[Object.keys(listItem)[0]]
       )
     }));
   };
@@ -118,7 +117,7 @@ function RecipeForm() {
           previousStep={previousStep}
           nextStep={nextStep}
           handleAddToList={handleAddToList}
-          handleDeleteFromList={handleDeleteFromList}
+          handleDeleteFromList={handleDeleteIngredient}
           formState={formState}
         />
       );
@@ -131,7 +130,7 @@ function RecipeForm() {
           previousStep={previousStep}
           nextStep={nextStep}
           handleAddToList={handleAddToList}
-          handleDeleteFromList={handleDeleteFromList}
+          handleDeleteFromList={handleDeleteTagsOrMethods}
           formState={formState}
         />
       );
