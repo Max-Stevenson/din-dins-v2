@@ -80,6 +80,7 @@ function RecipeForm() {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleDeleteIngredient = (list, listItem) => {
     setFormState((previous) => ({
       ...previous,
@@ -95,6 +96,24 @@ function RecipeForm() {
       ...previous,
       [list]: previous[list].filter(
         (element) => element[Object.keys(element)[0]] !== listItem[Object.keys(listItem)[0]]
+      )
+    }));
+  };
+
+  const genericDeleteMethod = (list, listItem) => {
+    setFormState((previous) => ({
+      ...previous,
+      [list]: previous[list].filter(
+        (element) => {
+          let result = false;
+          for (let i = 0, j = Object.values(listItem).length; i < j; i += 1) {
+            if (element[Object.keys(element)[i]] !== listItem[Object.keys(listItem)[i]]) {
+              result = true;
+              return result;
+            }
+          }
+          return result;
+        }
       )
     }));
   };
@@ -117,7 +136,7 @@ function RecipeForm() {
           previousStep={previousStep}
           nextStep={nextStep}
           handleAddToList={handleAddToList}
-          handleDeleteFromList={handleDeleteIngredient}
+          handleDeleteFromList={genericDeleteMethod}
           formState={formState}
         />
       );
