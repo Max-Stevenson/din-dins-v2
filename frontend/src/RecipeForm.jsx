@@ -91,6 +91,7 @@ function RecipeForm() {
     }));
   };
 
+  // eslint-disable-next-line no-unused-vars
   const handleDeleteTagsOrMethods = (list, listItem) => {
     setFormState((previous) => ({
       ...previous,
@@ -149,7 +150,7 @@ function RecipeForm() {
           previousStep={previousStep}
           nextStep={nextStep}
           handleAddToList={handleAddToList}
-          handleDeleteFromList={handleDeleteTagsOrMethods}
+          handleDeleteFromList={genericDeleteMethod}
           formState={formState}
         />
       );
