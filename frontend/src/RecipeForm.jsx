@@ -5,7 +5,8 @@ import GenericList from "./GenericList";
 import Ingredient from "./Ingredient";
 import NewIngredient from "./NewIngredient";
 import NewMethod from "./NewMethod";
-import Method from "./Method";
+import GenericListItem from "./GenericListItem";
+// import Method from "./Method";
 import "./RecipeForm.scss";
 
 function RecipeForm() {
@@ -145,7 +146,7 @@ function RecipeForm() {
       return (
         <GenericList
           listName="method"
-          listChildren={<Method />}
+          listChildren={<GenericListItem className="method"  />}
           listItemChild={<NewMethod />}
           previousStep={previousStep}
           nextStep={nextStep}

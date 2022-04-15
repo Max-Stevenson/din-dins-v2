@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import validator from "validator";
 import PropTypes from "prop-types";
+import {
+  Button, Grid, TextField
+} from "@mui/material";
 
-function NewMethod(handleAddToList) {
-  const [method, setMethod] = useState({
-    method: "", isValid: false, errMsg: ""
+function NewMethod({ componentType, handleAddToList }) {
+  const [internalState, setInternalState] = useState({
+    [componentType]: { value: "", isValid: false, errorMsg: "" }
   });
 
-  const handleInputChange = (inputValue) => {
+  const handleInputChange = (inputName, inputValue) => {
     if (validator.isEmpty(inputValue.trim())) {
-      setMethod((previous) => ({
+      setInternalState((previous) => ({
         ...previous,
-        [method]: {
+        [inputName]: {
           value: inputValue.trim(),
           isValid: false,
           errorMsg: `${inputName} cannot be empty`
         }
       }));
     } else {
-      setMethod((previous) => ({
+      setInternalState((previous) => ({
         ...previous,
         [inputName]: {
           value: inputValue.trim(),
@@ -28,16 +31,58 @@ function NewMethod(handleAddToList) {
       }));
     }
   };
+
+  const handleAdd = (event) => {
+    event.preventDefault();
+    handleAddToList(`${componentType}`, {
+      [componentType]: internalState.value
+    });
+    setInternalState({
+      value: "", isValid: false, errMsg: ""
+    });
+    const inputs = document.querySelectorAll("input");
+    inputs.value = "";
+  };
   return (
-    <div />
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <TextField
+          required
+          autoComplete="off"
+          type="text"
+          onChange={(event) => {
+            handleInputChange(componentType, event);
+          }}
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true
+          }}
+          label={componentType}
+        />
+        {internalState.componentType.errorMsg && <p>{internalState.errorMsg}</p>}
+      </Grid>
+      <Grid item xs={12}>
+        <Button
+          variant="contained"
+          disabled={
+          internalState.isValid
+        }
+          onClick={(event) => handleAdd(event)}
+        >
+          Add Ingredient
+        </Button>
+      </Grid>
+    </Grid>
   );
 }
 
 NewMethod.propTypes = {
+  componentType: PropTypes.string,
   handleAddToList: PropTypes.func
 };
 
 NewMethod.defaultProps = {
+  componentType: "",
   handleAddToList: () => {}
 };
 

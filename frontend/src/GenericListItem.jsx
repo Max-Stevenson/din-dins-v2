@@ -6,12 +6,12 @@ import { IconButton } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 
 function GenericListItem({
-  className, itemValue, listTitle, handleDeleteFromList
+  className, listItem, listTitle, handleDeleteFromList
 }) {
   return (
     <div className={`recipe-form__${className}-wrapper`}>
-      <p className={`recipe-form__${className}`}>{itemValue}</p>
-      <IconButton onClick={() => handleDeleteFromList(listTitle, itemValue)}>
+      <p className={`recipe-form__${className}`}>{listItem}</p>
+      <IconButton onClick={() => handleDeleteFromList(listTitle, listItem)}>
         <HighlightOffOutlinedIcon />
       </IconButton>
     </div>

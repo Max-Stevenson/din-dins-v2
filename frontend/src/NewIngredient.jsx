@@ -143,7 +143,6 @@ function NewIngredient({ handleAddToList }) {
         </Button>
       </Grid>
     </Grid>
-
   );
 }
 
