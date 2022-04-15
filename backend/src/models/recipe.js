@@ -40,8 +40,39 @@ const recipeSchema = new Schema({
     ],
     required: true,
   },
-  method: { type: [String], required: true },
-  tags: { type: [String] },
+  method: {
+    _id: false,
+    type: [
+      {
+        method: {
+          type: String,
+          required: true,
+          trim: true,
+          validate(value) {
+            if (validator.isEmpty(value)) {
+              throw new Error("Method cannot be empty");
+            }
+          },
+        },
+      }],
+    required: true,
+  },
+  tags: {
+    _id: false,
+    type: [
+      {
+        tag: {
+          type: String,
+          required: true,
+          trim: true,
+          validate(value) {
+            if (validator.isEmpty(value)) {
+              throw new Error("Tag cannot be empty");
+            }
+          },
+        },
+      }],
+  },
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);

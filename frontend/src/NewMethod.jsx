@@ -10,7 +10,8 @@ function NewMethod({ componentType, handleAddToList }) {
     [componentType]: { value: "", isValid: false, errorMsg: "" }
   });
 
-  const handleInputChange = (inputName, inputValue) => {
+  const handleInputChange = (inputName, event) => {
+    const inputValue = event.target.value;
     if (validator.isEmpty(inputValue.trim())) {
       setInternalState((previous) => ({
         ...previous,
@@ -35,10 +36,12 @@ function NewMethod({ componentType, handleAddToList }) {
   const handleAdd = (event) => {
     event.preventDefault();
     handleAddToList(`${componentType}`, {
-      [componentType]: internalState.value
+      [componentType]: internalState[componentType].value
     });
     setInternalState({
-      value: "", isValid: false, errMsg: ""
+      [componentType]: {
+        value: "", isValid: false, errMsg: ""
+      }
     });
     const inputs = document.querySelectorAll("input");
     inputs.value = "";
@@ -59,17 +62,19 @@ function NewMethod({ componentType, handleAddToList }) {
           }}
           label={componentType}
         />
-        {internalState.componentType.errorMsg && <p>{internalState.errorMsg}</p>}
+        {internalState[componentType].errorMsg && <p>{internalState[componentType].errorMsg}</p>}
       </Grid>
       <Grid item xs={12}>
         <Button
           variant="contained"
           disabled={
-          internalState.isValid
+          !internalState[componentType].isValid
         }
           onClick={(event) => handleAdd(event)}
         >
-          Add Ingredient
+          Add
+          {" "}
+          {componentType}
         </Button>
       </Grid>
     </Grid>

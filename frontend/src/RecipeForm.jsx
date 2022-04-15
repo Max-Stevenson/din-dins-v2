@@ -107,14 +107,12 @@ function RecipeForm() {
       ...previous,
       [list]: previous[list].filter(
         (element) => {
-          let result = false;
           for (let i = 0, j = Object.values(listItem).length; i < j; i += 1) {
             if (element[Object.keys(element)[i]] !== listItem[Object.keys(listItem)[i]]) {
-              result = true;
-              return result;
+              return true;
             }
           }
-          return result;
+          return false;
         }
       )
     }));
@@ -146,8 +144,8 @@ function RecipeForm() {
       return (
         <GenericList
           listName="method"
-          listChildren={<GenericListItem className="method"  />}
-          listItemChild={<NewMethod />}
+          listChildren={<GenericListItem className="method" />}
+          listItemChild={<NewMethod componentType="method" />}
           previousStep={previousStep}
           nextStep={nextStep}
           handleAddToList={handleAddToList}
