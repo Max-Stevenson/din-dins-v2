@@ -21,7 +21,7 @@ function GenericList({
         <Grid item>
           <ul>
             {formState[`${listName}`].length > 0 && formState[`${listName}`].map((listItem) => (
-              <li key={hashCode(listItem)}>
+              <li key={hashCode(Object.values(listItem).filter((e) => typeof e === "string")[0])}>
                 {React.cloneElement(
                   listChildren,
                   { listItem, handleDeleteFromList }

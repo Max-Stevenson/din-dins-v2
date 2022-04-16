@@ -43,8 +43,8 @@ function NewMethod({ componentType, handleAddToList }) {
         value: "", isValid: false, errMsg: ""
       }
     });
-    const inputs = document.querySelectorAll("input");
-    inputs.value = "";
+    const inputField = document.querySelector("input");
+    inputField.value = "";
   };
   return (
     <Grid container spacing={2}>
