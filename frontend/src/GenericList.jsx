@@ -11,9 +11,7 @@ function GenericList({
   listChildren,
   listItemChild,
   nextStep,
-  previousStep,
-  handleAddToList,
-  handleDeleteFromList
+  previousStep
 }) {
   return (
     <Container>
@@ -24,7 +22,7 @@ function GenericList({
               <li key={Object.hasOwn(listItem, "ingredient") ? hashCode(Object.values(listItem)[2]) : hashCode(Object.values(listItem)[0])}>
                 {React.cloneElement(
                   listChildren,
-                  { listItem, handleDeleteFromList }
+                  { listItem }
                 )}
               </li>
             ))}
@@ -88,9 +86,7 @@ GenericList.propTypes = {
     ),
     method: PropTypes.arrayOf(PropTypes.shape({ method: PropTypes.string })),
     tags: PropTypes.arrayOf(PropTypes.shape({ tag: PropTypes.string }))
-  }).isRequired,
-  handleAddToList: PropTypes.func.isRequired,
-  handleDeleteFromList: PropTypes.func.isRequired
+  }).isRequired
 };
 
 export default GenericList;

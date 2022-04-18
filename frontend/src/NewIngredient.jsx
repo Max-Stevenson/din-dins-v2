@@ -147,11 +147,7 @@ function NewIngredient({ handleAddToList }) {
 }
 
 NewIngredient.propTypes = {
-  handleAddToList: PropTypes.func
-};
-
-NewIngredient.defaultProps = {
-  handleAddToList: () => {}
+  handleAddToList: PropTypes.func.isRequired
 };
 
 export default NewIngredient;

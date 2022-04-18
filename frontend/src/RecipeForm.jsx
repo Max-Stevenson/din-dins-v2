@@ -131,11 +131,10 @@ function RecipeForm() {
       return (
         <GenericList
           listName="ingredients"
-          listChildren={<Ingredient />}
-          listItemChild={<NewIngredient />}
+          listChildren={<Ingredient handleDeleteFromList={genericDeleteMethod} />}
+          listItemChild={<NewIngredient handleAddToList={handleAddToList} />}
           previousStep={previousStep}
           nextStep={nextStep}
-          handleAddToList={handleAddToList}
           handleDeleteFromList={genericDeleteMethod}
           formState={formState}
         />
@@ -144,11 +143,10 @@ function RecipeForm() {
       return (
         <GenericList
           listName="method"
-          listChildren={<GenericListItem className="method" />}
+          listChildren={<GenericListItem listItem={{}} handleDeleteFromList={genericDeleteMethod} className="method" />}
           listItemChild={<NewMethod componentType="method" isRequired handleAddToList={handleAddToList} />}
           previousStep={previousStep}
           nextStep={nextStep}
-          handleAddToList={handleAddToList}
           handleDeleteFromList={genericDeleteMethod}
           formState={formState}
         />
@@ -161,7 +159,6 @@ function RecipeForm() {
           listItemChild={<NewMethod componentType="tags" isRequired={false} handleAddToList={handleAddToList} />}
           previousStep={previousStep}
           nextStep={nextStep}
-          handleAddToList={handleAddToList}
           handleDeleteFromList={genericDeleteMethod}
           formState={formState}
         />
