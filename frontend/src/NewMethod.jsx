@@ -5,7 +5,7 @@ import {
   Button, Grid, TextField
 } from "@mui/material";
 
-function NewMethod({ componentType, handleAddToList }) {
+function NewMethod({ componentType, handleAddToList, isRequired }) {
   const [internalState, setInternalState] = useState({
     [componentType]: { value: "", isValid: false, errorMsg: "" }
   });
@@ -68,7 +68,7 @@ function NewMethod({ componentType, handleAddToList }) {
         <Button
           variant="contained"
           disabled={
-          !internalState[componentType].isValid
+          !internalState[componentType].isValid && isRequired
         }
           onClick={(event) => handleAdd(event)}
         >
@@ -82,13 +82,9 @@ function NewMethod({ componentType, handleAddToList }) {
 }
 
 NewMethod.propTypes = {
-  componentType: PropTypes.string,
-  handleAddToList: PropTypes.func
-};
-
-NewMethod.defaultProps = {
-  componentType: "",
-  handleAddToList: () => {}
+  componentType: PropTypes.string.isRequired,
+  handleAddToList: PropTypes.func.isRequired,
+  isRequired: PropTypes.bool.isRequired
 };
 
 export default NewMethod;

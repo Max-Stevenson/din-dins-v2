@@ -21,7 +21,7 @@ function GenericList({
         <Grid item>
           <ul>
             {formState[`${listName}`].length > 0 && formState[`${listName}`].map((listItem) => (
-              <li key={hashCode(Object.values(listItem).filter((e) => typeof e === "string")[0])}>
+              <li key={Object.hasOwn(listItem, "ingredient") ? hashCode(Object.values(listItem)[2]) : hashCode(Object.values(listItem)[0])}>
                 {React.cloneElement(
                   listChildren,
                   { listItem, handleDeleteFromList }
@@ -31,7 +31,7 @@ function GenericList({
           </ul>
         </Grid>
         <Grid item xs={12}>
-          {React.cloneElement(listItemChild, { handleAddToList })}
+          {listItemChild}
         </Grid>
         <Grid item xs={12} className="recipe-form__nav-button__container">
           <Button
