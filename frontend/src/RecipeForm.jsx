@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import validator from "validator";
 import FormInputs from "./FormInputs";
 import GenericList from "./GenericList";
-import Ingredient from "./Ingredient";
 import NewIngredient from "./NewIngredient";
 import NewMethod from "./NewMethod";
 import GenericListItem from "./GenericListItem";
-// import Method from "./Method";
 import "./RecipeForm.scss";
 
 function RecipeForm() {
@@ -81,27 +79,6 @@ function RecipeForm() {
     }
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const handleDeleteIngredient = (list, listItem) => {
-    setFormState((previous) => ({
-      ...previous,
-      [list]: previous[list].filter(
-        (element) => element.quantity !== listItem.quantity
-          && element.ingredient !== listItem.ingredient
-      )
-    }));
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const handleDeleteTagsOrMethods = (list, listItem) => {
-    setFormState((previous) => ({
-      ...previous,
-      [list]: previous[list].filter(
-        (element) => element[Object.keys(element)[0]] !== listItem[Object.keys(listItem)[0]]
-      )
-    }));
-  };
-
   const genericDeleteMethod = (list, listItem) => {
     setFormState((previous) => ({
       ...previous,
@@ -131,7 +108,7 @@ function RecipeForm() {
       return (
         <GenericList
           listName="ingredients"
-          listChildren={<Ingredient handleDeleteFromList={genericDeleteMethod} />}
+          listChildren={<GenericListItem listItem={{}} className="ingredients" handleDeleteFromList={genericDeleteMethod} />}
           listItemChild={<NewIngredient handleAddToList={handleAddToList} />}
           previousStep={previousStep}
           nextStep={nextStep}

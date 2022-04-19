@@ -8,7 +8,7 @@ function GenericListItem({
 }) {
   return (
     <div className={`recipe-form__${className}-wrapper`}>
-      <p className={`recipe-form__${className}`}>{Object.values(listItem).map((listItemValue) => (listItemValue))}</p>
+      <p className={`recipe-form__${className}`}>{Object.values(listItem).map((listItemValue) => (`${listItemValue} `))}</p>
       <IconButton onClick={() => handleDeleteFromList(className, listItem)}>
         <HighlightOffOutlinedIcon />
       </IconButton>
@@ -18,8 +18,7 @@ function GenericListItem({
 
 GenericListItem.propTypes = {
   className: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  listItem: PropTypes.object.isRequired,
+  listItem: PropTypes.objectOf(PropTypes.any).isRequired,
   handleDeleteFromList: PropTypes.func.isRequired
 };
 
