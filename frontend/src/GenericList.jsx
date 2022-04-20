@@ -29,7 +29,7 @@ function GenericList({
           </ul>
         </Grid>
         <Grid item xs={12}>
-          {listItemChild}
+          {React.cloneElement(listItemChild)}
         </Grid>
         <Grid item xs={12} className="recipe-form__nav-button__container">
           <Button

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import validator from "validator";
 import PropTypes from "prop-types";
 import {
@@ -9,6 +9,14 @@ function NewMethod({ componentType, handleAddToList, isRequired }) {
   const [internalState, setInternalState] = useState({
     [componentType]: { value: "", isValid: false, errorMsg: "" }
   });
+
+  useEffect(() => {
+    setInternalState({
+      [componentType]: {
+        value: "", isValid: false, errorMsg: ""
+      }
+    });
+  }, [componentType]);
 
   const handleInputChange = (inputName, event) => {
     const inputValue = event.target.value;
@@ -62,14 +70,14 @@ function NewMethod({ componentType, handleAddToList, isRequired }) {
           }}
           label={componentType}
         />
-        {internalState[componentType].errorMsg && <p>{internalState[componentType].errorMsg}</p>}
       </Grid>
       <Grid item xs={12}>
         <Button
           variant="contained"
-          disabled={
-          !internalState[componentType].isValid && isRequired
-        }
+          disabled={!isRequired}
+        //   isRequired ? isRequired && !internalState[componentType].isValid
+        //     : !internalState[componentType].isValid
+        // }
           onClick={(event) => handleAdd(event)}
         >
           Add

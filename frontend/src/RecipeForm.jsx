@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState } from "react";
 import validator from "validator";
 import FormInputs from "./FormInputs";
