@@ -40,7 +40,7 @@ function RecipeItem({ recipeItem }) {
         <ol>
           {recipeItem.method.map((method) => (
             <li>
-              {method}
+              {method.method}
             </li>
           ))}
         </ol>

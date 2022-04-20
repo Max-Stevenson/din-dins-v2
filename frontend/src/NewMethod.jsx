@@ -40,7 +40,7 @@ function NewMethod({ componentType, handleAddToList, isRequired }) {
     });
     setInternalState({
       [componentType]: {
-        value: "", isValid: false, errMsg: ""
+        value: "", isValid: false, errorMsg: ""
       }
     });
     const inputField = document.querySelector("input");
