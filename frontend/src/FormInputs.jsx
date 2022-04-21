@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import "./FormInputs.scss";
 
+// TODO add image upload.
+
 function FormInputs({ nextStep, formState, handleChange }) {
   return (
     <Container>

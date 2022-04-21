@@ -4,7 +4,7 @@ import validator from "validator";
 import FormInputs from "./FormInputs";
 import GenericList from "./GenericList";
 import NewIngredient from "./NewIngredient";
-import NewMethod from "./NewMethod";
+import NewGenericListItem from "./NewGenericListItem";
 import GenericListItem from "./GenericListItem";
 import "./RecipeForm.scss";
 
@@ -123,7 +123,7 @@ function RecipeForm() {
         <GenericList
           listName="method"
           listChildren={<GenericListItem listItem={{}} handleDeleteFromList={genericDeleteMethod} className="method" />}
-          listItemChild={<NewMethod componentType="method" isRequired handleAddToList={handleAddToList} />}
+          listItemChild={<NewGenericListItem key={0} componentType="method" isRequired handleAddToList={handleAddToList} />}
           previousStep={previousStep}
           nextStep={nextStep}
           handleDeleteFromList={genericDeleteMethod}
@@ -135,7 +135,7 @@ function RecipeForm() {
         <GenericList
           listName="tags"
           listChildren={<GenericListItem listItem={{}} handleDeleteFromList={genericDeleteMethod} className="tags" />}
-          listItemChild={<NewMethod componentType="tags" isRequired={false} handleAddToList={handleAddToList} />}
+          listItemChild={<NewGenericListItem key={1} componentType="tags" isRequired={false} handleAddToList={handleAddToList} />}
           previousStep={previousStep}
           nextStep={nextStep}
           handleDeleteFromList={genericDeleteMethod}
