@@ -1,3 +1,5 @@
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable no-nested-ternary */
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Grid, Container } from "@mui/material";
@@ -6,6 +8,7 @@ import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import { hashCode } from "./hashCode";
 
 function GenericList({
+  isRequired,
   listName,
   formState,
   listChildren,
@@ -42,11 +45,10 @@ function GenericList({
           <Button
             variant="contained"
             endIcon={<ArrowForwardIosOutlinedIcon />}
-            disabled={!formState[`${listName}`].length > 0}
+            disabled={isRequired ? (formState[`${listName}`].length > 0 ? false : true) : false}
             onClick={nextStep}
           >
             Continue
-
           </Button>
         </Grid>
       </Grid>
@@ -55,6 +57,7 @@ function GenericList({
 }
 
 GenericList.propTypes = {
+  isRequired: PropTypes.bool.isRequired,
   listChildren: PropTypes.element.isRequired,
   listItemChild: PropTypes.element.isRequired,
   listName: PropTypes.string.isRequired,

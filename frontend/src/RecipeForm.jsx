@@ -108,6 +108,7 @@ function RecipeForm() {
     case 2:
       return (
         <GenericList
+          isRequired
           listName="ingredients"
           listChildren={<GenericListItem listItem={{}} className="ingredients" handleDeleteFromList={genericDeleteMethod} />}
           // TODO extract out validators to make this generic too - replace with NewMethod.
@@ -121,9 +122,10 @@ function RecipeForm() {
     case 3:
       return (
         <GenericList
+          isRequired
           listName="method"
           listChildren={<GenericListItem listItem={{}} handleDeleteFromList={genericDeleteMethod} className="method" />}
-          listItemChild={<NewGenericListItem key={0} componentType="method" isRequired handleAddToList={handleAddToList} />}
+          listItemChild={<NewGenericListItem key={0} componentType="method" handleAddToList={handleAddToList} />}
           previousStep={previousStep}
           nextStep={nextStep}
           handleDeleteFromList={genericDeleteMethod}
@@ -133,9 +135,10 @@ function RecipeForm() {
     case 4:
       return (
         <GenericList
+          isRequired={false}
           listName="tags"
           listChildren={<GenericListItem listItem={{}} handleDeleteFromList={genericDeleteMethod} className="tags" />}
-          listItemChild={<NewGenericListItem key={1} componentType="tags" isRequired={false} handleAddToList={handleAddToList} />}
+          listItemChild={<NewGenericListItem key={1} componentType="tags" handleAddToList={handleAddToList} />}
           previousStep={previousStep}
           nextStep={nextStep}
           handleDeleteFromList={genericDeleteMethod}
