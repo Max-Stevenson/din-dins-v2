@@ -5,7 +5,7 @@ import {
   Button, Grid, TextField
 } from "@mui/material";
 
-function NewGenericListItem({ componentType, handleAddToList, isRequired }) {
+function NewGenericListItem({ componentType, handleAddToList }) {
   const [internalState, setInternalState] = useState({
     [componentType]: { value: "", isValid: false, errorMsg: "" }
   });
@@ -76,8 +76,7 @@ function NewGenericListItem({ componentType, handleAddToList, isRequired }) {
         <Button
           variant="contained"
           disabled={
-          isRequired ? isRequired && !internalState[componentType].isValid
-            : false
+         !internalState[componentType].isValid
         }
           onClick={(event) => handleAdd(event)}
         >
@@ -92,8 +91,7 @@ function NewGenericListItem({ componentType, handleAddToList, isRequired }) {
 
 NewGenericListItem.propTypes = {
   componentType: PropTypes.string.isRequired,
-  handleAddToList: PropTypes.func.isRequired,
-  isRequired: PropTypes.bool.isRequired
+  handleAddToList: PropTypes.func.isRequired
 };
 
 export default NewGenericListItem;

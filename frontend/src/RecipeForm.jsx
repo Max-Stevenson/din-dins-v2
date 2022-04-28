@@ -145,6 +145,13 @@ function RecipeForm() {
           formState={formState}
         />
       );
+    case 5:
+      return (
+        <RecipeReview
+          formState={formState}
+          previousStep={previousStep}
+        />
+      );
     default:
       return (
         <div>
