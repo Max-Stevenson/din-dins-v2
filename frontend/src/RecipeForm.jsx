@@ -6,6 +6,7 @@ import GenericList from "./GenericList";
 import NewIngredient from "./NewIngredient";
 import NewGenericListItem from "./NewGenericListItem";
 import GenericListItem from "./GenericListItem";
+import RecipeReview from "./RecipeReview";
 import "./RecipeForm.scss";
 
 function RecipeForm() {
