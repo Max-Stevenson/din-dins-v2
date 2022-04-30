@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import {
   Button,
   Grid,
-  Container
+  Container,
+  Tab,
+  Tabs
 } from "@mui/material";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
+import TabPanel from "./shared/TabPanel";
 
 function RecipeReview({ formState, previousStep }) {
   const [tabValue, setTabValue] = useState(0);
@@ -23,6 +26,9 @@ function RecipeReview({ formState, previousStep }) {
         <Grid item xs={12}>
           <h3>{formState.name.value}</h3>
         </Grid>
+        <Grid item xs={12}>
+          <img src="/images/recipe.jpg" alt="recipe placeholder" />
+        </Grid>
         <Grid item xs={6}>
           <h5>
             Servings:
@@ -36,21 +42,56 @@ function RecipeReview({ formState, previousStep }) {
               {formState.cookingTime.value}
             </h5>
           </Grid>
-          <Grid item xs={12} className="recipe-form__nav-button__container">
-            <Button
-              variant="contained"
-              startIcon={<ArrowBackIosOutlinedIcon />}
-              onClick={previousStep}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="contained"
-              onClick={submitRecipe}
-            >
-              Submit
-            </Button>
+          <Grid item xs={6}>
+            <h5>
+              {formState.isVegetarian ? "Recipe is vegetarian" : "Recipe is not vegetarian"}
+            </h5>
           </Grid>
+          <Grid item xs={12}>
+            <Tabs value={tabValue} onChange={handleChange}>
+              <Tab label="Ingredients" />
+              <Tab label="Method" />
+            </Tabs>
+            <TabPanel value={tabValue} index={0}>
+              <h2>Ingredients</h2>
+              <ul>
+                {formState.ingredients.map((i) => (
+                  <li>
+                    {i.quantity}
+                    {" "}
+                    {i.measure}
+                    {" "}
+                    {i.ingredient}
+                  </li>
+                ))}
+              </ul>
+            </TabPanel>
+            <TabPanel value={tabValue} index={1}>
+              <h2>Method</h2>
+              <ol>
+                {formState.method.map((method) => (
+                  <li>
+                    {method.method}
+                  </li>
+                ))}
+              </ol>
+            </TabPanel>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} className="recipe-form__nav-button__container">
+          <Button
+            variant="contained"
+            startIcon={<ArrowBackIosOutlinedIcon />}
+            onClick={previousStep}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="contained"
+            onClick={submitRecipe}
+          >
+            Submit
+          </Button>
         </Grid>
       </Grid>
     </Container>

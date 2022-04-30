@@ -7,8 +7,6 @@ import useFetch from "./useFetchHook";
 import "./Recipes.scss";
 import DisplayWrapper from "./shared/DisplayWrapper";
 
-const logo = require("./recipe.jpg");
-
 function Recipes() {
   const { data, error, loading } = useFetch(
     "http://localhost:3000/api/v1/recipes"
@@ -29,7 +27,7 @@ function Recipes() {
       >
         <Link to={`/recipes/view/${recipe._id}`}>
           <div className="recipe-item__wrapper">
-            <img alt="" src={logo} />
+            <img alt="" src="/images/recipe.jpg" />
             <h3>{recipe.name}</h3>
           </div>
         </Link>
