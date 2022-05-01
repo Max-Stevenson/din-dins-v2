@@ -35,48 +35,46 @@ function RecipeReview({ formState, previousStep }) {
             {" "}
             {formState.servings.value}
           </h5>
-          <Grid item xs={6}>
-            <h5>
-              Cooking Time:
-              {" "}
-              {formState.cookingTime.value}
-            </h5>
-          </Grid>
-          <Grid item xs={6}>
-            <h5>
-              {formState.isVegetarian ? "Recipe is vegetarian" : "Recipe is not vegetarian"}
-            </h5>
-          </Grid>
-          <Grid item xs={12}>
-            <Tabs value={tabValue} onChange={handleChange}>
-              <Tab label="Ingredients" />
-              <Tab label="Method" />
-            </Tabs>
-            <TabPanel value={tabValue} index={0}>
-              <h2>Ingredients</h2>
-              <ul>
-                {formState.ingredients.map((i) => (
-                  <li>
-                    {i.quantity}
-                    {" "}
-                    {i.measure}
-                    {" "}
-                    {i.ingredient}
-                  </li>
-                ))}
-              </ul>
-            </TabPanel>
-            <TabPanel value={tabValue} index={1}>
-              <h2>Method</h2>
-              <ol>
-                {formState.method.map((method) => (
-                  <li>
-                    {method.method}
-                  </li>
-                ))}
-              </ol>
-            </TabPanel>
-          </Grid>
+        </Grid>
+        <Grid item xs={6}>
+          <h5>
+            Cooking Time:
+            {" "}
+            {formState.cookingTime.value}
+          </h5>
+        </Grid>
+        <Grid item xs={6}>
+          <h5>
+            {formState.isVegetarian ? "Recipe is vegetarian" : "Recipe is not vegetarian"}
+          </h5>
+        </Grid>
+        <Grid item xs={12}>
+          <Tabs value={tabValue} onChange={handleChange}>
+            <Tab label="Ingredients" />
+            <Tab label="Method" />
+          </Tabs>
+          <TabPanel value={tabValue} index={0}>
+            <ul>
+              {formState.ingredients.map((i) => (
+                <li>
+                  {i.quantity}
+                  {" "}
+                  {i.measure}
+                  {" "}
+                  {i.ingredient}
+                </li>
+              ))}
+            </ul>
+          </TabPanel>
+          <TabPanel value={tabValue} index={1}>
+            <ol>
+              {formState.method.map((method) => (
+                <li>
+                  {method.method}
+                </li>
+              ))}
+            </ol>
+          </TabPanel>
         </Grid>
         <Grid item xs={12} className="recipe-form__nav-button__container">
           <Button
