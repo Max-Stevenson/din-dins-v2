@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { IconButton } from "@mui/material";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
+import "./Ingredient.scss";
 
 function Ingredient({
   listItem, handleDeleteFromList
 }) {
   return (
-    <div className="recipe-form__ingreident-wrapper">
+    <div className="recipe-form__ingredients-wrapper">
       <p className="recipe-form__ingredient">{`${listItem.quantity} ${listItem.measure} ${listItem.ingredient}`}</p>
       <IconButton onClick={() => handleDeleteFromList("ingredients", listItem)}>
         <HighlightOffOutlinedIcon />

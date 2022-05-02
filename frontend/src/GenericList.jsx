@@ -6,6 +6,7 @@ import { Button, Grid, Container } from "@mui/material";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import { hashCode } from "./hashCode";
+import "./GenericList.scss";
 
 function GenericList({
   isRequired,
@@ -19,10 +20,10 @@ function GenericList({
   return (
     <Container>
       <Grid container rowSpacing={2} className="recipe-form__input-wrapper">
-        <Grid item>
+        <Grid item xs={12}>
           <ul>
             {formState[`${listName}`].length > 0 && formState[`${listName}`].map((listItem) => (
-              <li key={Object.hasOwn(listItem, "ingredient") ? hashCode(Object.values(listItem)[2]) : hashCode(Object.values(listItem)[0])}>
+              <li className={`recipe-form__${listName}-item`} key={Object.hasOwn(listItem, "ingredient") ? hashCode(Object.values(listItem)[2]) : hashCode(Object.values(listItem)[0])}>
                 {React.cloneElement(
                   listChildren,
                   { listItem }
