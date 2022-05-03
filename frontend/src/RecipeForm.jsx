@@ -13,6 +13,7 @@ function RecipeForm() {
   const [formState, setFormState] = useState({
     step: 1,
     name: { value: "", isValid: false, errorMsg: "" },
+    image: null,
     servings: { value: 0, isValid: false, errorMsg: "" },
     cookingTime: { value: 0, isValid: false, errorMsg: "" },
     isVegetarian: false,
@@ -82,7 +83,11 @@ function RecipeForm() {
   };
 
   const handleFileUpload = (event) => {
-    console.log(event.target.files[0]);
+    const image = event.target.files[0];
+    setFormState((previous) => ({
+      ...previous,
+      image: URL.createObjectURL(image)
+    }));
   };
 
   const genericDeleteMethod = (list, listItem) => {

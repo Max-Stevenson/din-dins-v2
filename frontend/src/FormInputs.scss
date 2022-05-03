@@ -11,8 +11,13 @@
 .recipe-form__grid-container--relative {
   position: relative;
 }
+
 .MuiButton-contained.recipe-form__continue-button--absolute {
   position: absolute;
   bottom: 20%;
   right: 10%;
+}
+
+input[type="file"] {
+  // display: none;
 }

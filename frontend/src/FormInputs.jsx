@@ -32,7 +32,11 @@ function FormInputs({
           />
         </Grid>
         <Grid item xs={12}>
+          <img src={formState.image || "/images/recipe.jpg"} alt="bruh" />
+        </Grid>
+        <Grid item xs={12}>
           <input type="file" accept={"image/*"} onChange={handleFileUpload} />
+          <Button>Upload Image</Button>
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -96,6 +100,7 @@ FormInputs.propTypes = {
       isValid: PropTypes.bool,
       errorMsg: PropTypes.string
     }),
+    image: PropTypes.string,
     servings: PropTypes.shape({
       value: PropTypes.number,
       isValid: PropTypes.bool,
