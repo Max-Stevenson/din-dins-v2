@@ -14,7 +14,9 @@ import "./FormInputs.scss";
 
 // TODO add image upload.
 
-function FormInputs({ nextStep, formState, handleChange }) {
+function FormInputs({
+  nextStep, formState, handleChange, handleFileUpload
+}) {
   return (
     <Container>
       <Grid container className="recipe-form__input-wrapper">
@@ -28,6 +30,9 @@ function FormInputs({ nextStep, formState, handleChange }) {
             autoComplete="off"
             helperText={formState.name.errorMsg || "Please enter a name for this recipe."}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <input type="file" accept={"image/*"} onChange={handleFileUpload} />
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -112,7 +117,8 @@ FormInputs.propTypes = {
     method: PropTypes.arrayOf(PropTypes.shape({ method: PropTypes.string })),
     tags: PropTypes.arrayOf(PropTypes.shape({ tag: PropTypes.string }))
   }).isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  handleFileUpload: PropTypes.func.isRequired
 };
 
 export default FormInputs;

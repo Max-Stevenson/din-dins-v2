@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { Tab, Tabs } from "@mui/material";
 import TabPanel from "./shared/TabPanel";
 
-const logo = require("./recipe.jpg");
-
 function RecipeItem({ recipeItem }) {
   const [tabValue, setTabValue] = useState(0);
   const handleChange = (_event, value) => {
@@ -14,7 +12,7 @@ function RecipeItem({ recipeItem }) {
   return (
     <div className="recipe-item__wrapper">
       <div className="recipe-item__img-wrapper">
-        <img alt="" src={logo} />
+        <img alt="" src="/images/recipe.jpg" />
       </div>
       <h3>{recipeItem.name}</h3>
       <Tabs value={tabValue} onChange={handleChange}>

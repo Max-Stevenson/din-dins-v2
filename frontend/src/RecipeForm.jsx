@@ -81,6 +81,10 @@ function RecipeForm() {
     }
   };
 
+  const handleFileUpload = (event) => {
+    console.log(event.target.files[0]);
+  };
+
   const genericDeleteMethod = (list, listItem) => {
     setFormState((previous) => ({
       ...previous,
@@ -104,6 +108,7 @@ function RecipeForm() {
           nextStep={nextStep}
           handleChange={handleChange}
           formState={formState}
+          handleFileUpload={handleFileUpload}
         />
       );
     case 2:
