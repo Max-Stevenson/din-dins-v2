@@ -20,7 +20,7 @@ function GenericList({
   return (
     <Container>
       <Grid container rowSpacing={2} className="recipe-form__input-wrapper">
-        <Grid class="test" item xs={12}>
+        <Grid class={`recipe-form__${listName}-list-wrapper`} item xs={12}>
           <ul>
             {formState[`${listName}`].length > 0 && formState[`${listName}`].map((listItem) => (
               <li className={`recipe-form__${listName}-item`} key={Object.hasOwn(listItem, "ingredient") ? hashCode(Object.values(listItem)[2]) : hashCode(Object.values(listItem)[0])}>

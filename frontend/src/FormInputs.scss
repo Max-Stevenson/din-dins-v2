@@ -8,6 +8,10 @@
   overflow: scroll;
 }
 
+.MuiGrid-container.recipe-form__input-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
 .recipe-form__grid-container--relative {
   position: relative;
 }
@@ -19,5 +23,5 @@
 }
 
 input[type="file"] {
-  // display: none;
+  display: none;
 }

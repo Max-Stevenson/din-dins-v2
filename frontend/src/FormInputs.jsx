@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Button from "@mui/material/Button";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import PropTypes from "prop-types";
@@ -11,12 +11,17 @@ import {
   Container
 } from "@mui/material";
 import "./FormInputs.scss";
-
 // TODO add image upload.
 
 function FormInputs({
   nextStep, formState, handleChange, handleFileUpload
 }) {
+  const fileInput = useRef();
+
+  const handleFileSelection = () => {
+    fileInput.current.click();
+  };
+
   return (
     <Container>
       <Grid container className="recipe-form__input-wrapper">
@@ -35,8 +40,8 @@ function FormInputs({
           <img src={formState.image || "/images/recipe.jpg"} alt="bruh" />
         </Grid>
         <Grid item xs={12}>
-          <input type="file" accept={"image/*"} onChange={handleFileUpload} />
-          <Button>Upload Image</Button>
+          <input ref={fileInput} type="file" accept={"image/*"} onChange={handleFileUpload} />
+          <Button onClick={handleFileSelection}>Upload Image</Button>
         </Grid>
         <Grid item xs={12}>
           <TextField
