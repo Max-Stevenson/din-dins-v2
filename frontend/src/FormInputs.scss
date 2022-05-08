@@ -7,6 +7,9 @@
   max-width: 100%;
   overflow: scroll;
 }
+.MuiGrid-container.recipe-form__input-wrapper > div {
+  padding-top: 10px;
+}
 
 .MuiGrid-container.recipe-form__input-wrapper::-webkit-scrollbar {
   display: none;

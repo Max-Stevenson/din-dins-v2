@@ -38,10 +38,8 @@ function FormInputs({
         </Grid>
         <Grid item xs={12}>
           <img src={formState.image || "/images/recipe.jpg"} alt="bruh" />
-        </Grid>
-        <Grid item xs={12}>
           <input ref={fileInput} type="file" accept={"image/*"} onChange={handleFileUpload} />
-          <Button onClick={handleFileSelection}>Upload Image</Button>
+          <Button variant="contained" onClick={handleFileSelection}>Upload Image</Button>
         </Grid>
         <Grid item xs={12}>
           <TextField
