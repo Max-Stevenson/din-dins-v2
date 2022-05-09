@@ -47,7 +47,7 @@ const createRecipe = async (req, res, next) => {
 
 const editRecipe = async (req, res, next) => {
   const {
-    name, servings, cookingTime, isVegetarian, ingredients, method,
+    name, image, servings, cookingTime, isVegetarian, ingredients, method,
   } = req.body;
   const { id } = req.params;
 
@@ -64,6 +64,7 @@ const editRecipe = async (req, res, next) => {
   }
 
   recipe.name = name;
+  recipe.image = image;
   recipe.servings = servings;
   recipe.cookingTime = cookingTime;
   recipe.isVegetarian = isVegetarian;
