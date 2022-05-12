@@ -37,7 +37,7 @@ function FormInputs({
           />
         </Grid>
         <Grid item xs={12}>
-          <img src={formState.image || "/images/recipe.jpg"} alt="bruh" />
+          <img src={formState.image.preview || "/images/recipe.jpg"} alt="bruh" />
           <input ref={fileInput} type="file" accept={"image/*"} onChange={handleFileUpload} />
           <Button variant="contained" onClick={handleFileSelection}>Upload Image</Button>
         </Grid>
@@ -103,7 +103,10 @@ FormInputs.propTypes = {
       isValid: PropTypes.bool,
       errorMsg: PropTypes.string
     }),
-    image: PropTypes.string,
+    image: PropTypes.shape({
+      preview: PropTypes.string,
+      fileBase64: PropTypes.string
+    }),
     servings: PropTypes.shape({
       value: PropTypes.number,
       isValid: PropTypes.bool,
