@@ -27,7 +27,7 @@ function RecipeReview({ formState, previousStep }) {
           <h3>{formState.name.value}</h3>
         </Grid>
         <Grid item xs={12}>
-          <img src="/images/recipe.jpg" alt="recipe placeholder" />
+          <img src={formState.image.preview || "/images/recipe.jpg"} alt="recipe placeholder" />
         </Grid>
         <Grid item xs={6}>
           <h5>
@@ -102,6 +102,10 @@ RecipeReview.propTypes = {
       value: PropTypes.string,
       isValid: PropTypes.bool,
       errorMsg: PropTypes.string
+    }),
+    image: PropTypes.shape({
+      preview: PropTypes.string,
+      fileBase64: PropTypes.string
     }),
     servings: PropTypes.shape({
       value: PropTypes.number,

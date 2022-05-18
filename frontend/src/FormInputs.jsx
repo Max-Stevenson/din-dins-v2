@@ -37,7 +37,7 @@ function FormInputs({
           />
         </Grid>
         <Grid item xs={12}>
-          <img src={formState.image.preview || "/images/recipe.jpg"} alt="bruh" />
+          <img src={formState.image.preview || "/images/recipe.jpg"} alt={formState.name || "placeholder image"} />
           <input ref={fileInput} type="file" accept={"image/*"} onChange={handleFileUpload} />
           <Button variant="contained" onClick={handleFileSelection}>Upload Image</Button>
         </Grid>

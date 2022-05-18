@@ -13,7 +13,7 @@ function RecipeForm() {
   const [formState, setFormState] = useState({
     step: 1,
     name: { value: "", isValid: false, errorMsg: "" },
-    image: null,
+    image: { preview: "", fileBase64: "" },
     servings: { value: 0, isValid: false, errorMsg: "" },
     cookingTime: { value: 0, isValid: false, errorMsg: "" },
     isVegetarian: false,
