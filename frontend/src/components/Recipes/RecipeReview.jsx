@@ -8,7 +8,7 @@ import {
   Tabs
 } from "@mui/material";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
-import TabPanel from "./components/shared/TabPanel";
+import TabPanel from "../../shared/components/TabPanel";
 
 function RecipeReview({ formState, previousStep }) {
   const [tabValue, setTabValue] = useState(0);

@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 import React, { useState } from "react";
 import validator from "validator";
-import FormInputs from "./FormInputs";
-import GenericList from "./GenericList";
-import NewIngredient from "./NewIngredient";
-import NewGenericListItem from "./NewGenericListItem";
-import GenericListItem from "./GenericListItem";
+import FormInputs from "../../components/Recipes/FormInputs";
+import GenericList from "../../components/Recipes/GenericList";
+import NewIngredient from "../../components/Recipes/NewIngredient";
+import NewGenericListItem from "../../components/Recipes/NewGenericListItem";
+import GenericListItem from "../../components/Recipes/GenericListItem";
 import RecipeReview from "../../components/Recipes/RecipeReview";
 import "./RecipeForm.scss";
 

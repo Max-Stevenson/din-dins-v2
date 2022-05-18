@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Button, Grid, Container } from "@mui/material";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
-import { hashCode } from "./hashCode";
+import { hashCode } from "../../shared/utils/hashCode";
 import "./GenericList.scss";
 
 function GenericList({

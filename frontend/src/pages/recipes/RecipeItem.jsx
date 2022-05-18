@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Tab, Tabs } from "@mui/material";
-import TabPanel from "./shared/TabPanel";
+import TabPanel from "../../shared/components/TabPanel";
 
 function RecipeItem({ recipeItem }) {
   const [tabValue, setTabValue] = useState(0);

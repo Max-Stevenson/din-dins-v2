@@ -2,10 +2,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid } from "@mui/material";
-import LoadingSpinner from "./shared/LoadingSpinner";
-import useFetch from "./useFetchHook";
+import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import useFetch from "../../shared/hooks/useFetchHook";
 import "./Recipes.scss";
-import DisplayWrapper from "./shared/DisplayWrapper";
+import DisplayWrapper from "../../shared/components/DisplayWrapper";
 
 function Recipes() {
   const { data, error, loading } = useFetch(

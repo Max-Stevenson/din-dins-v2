@@ -7,13 +7,13 @@ import {
   faCalendarAlt
 } from "@fortawesome/free-solid-svg-icons";
 import "./App.scss";
-import Header from "./shared/Header";
-import Navbar from "./shared/Navbar";
-import Recipes from "./Recipes";
-import Mealplanner from "./Mealplanner";
-import Settings from "./Settings";
-import ViewRecipe from "./ViewRecipe";
-import RecipeForm from "./RecipeForm";
+import Header from "./shared/components/Header";
+import Navbar from "./shared/components/Navbar";
+import Recipes from "./pages/recipes/Recipes";
+import Mealplanner from "./pages/mealplanner/Mealplanner";
+import Settings from "./pages/profile/Settings";
+import ViewRecipe from "./pages/recipes/ViewRecipe";
+import RecipeForm from "./pages/recipes/RecipeForm";
 
 library.add(faCog, faUtensils, faCalendarAlt);
 

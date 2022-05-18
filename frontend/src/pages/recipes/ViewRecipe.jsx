@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router";
-import LoadingSpinner from "./shared/LoadingSpinner";
-import useFetch from "./useFetchHook";
+import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import useFetch from "../../shared/hooks/useFetchHook";
 
 function ViewRecipe() {
   const { recipeId } = useParams();
