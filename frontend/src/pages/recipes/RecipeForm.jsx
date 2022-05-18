@@ -6,7 +6,7 @@ import GenericList from "./GenericList";
 import NewIngredient from "./NewIngredient";
 import NewGenericListItem from "./NewGenericListItem";
 import GenericListItem from "./GenericListItem";
-import RecipeReview from "./RecipeReview";
+import RecipeReview from "../../components/Recipes/RecipeReview";
 import "./RecipeForm.scss";
 
 function RecipeForm() {
@@ -95,6 +95,7 @@ function RecipeForm() {
   });
 
   const handleFileUpload = async (event) => {
+    // TODO filesize and type check
     const image = event.target.files[0];
     const base64Image = await convertToBase64(image);
     setFormState((previous) => ({
