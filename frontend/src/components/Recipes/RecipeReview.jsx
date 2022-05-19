@@ -1,25 +1,31 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Button,
-  Grid,
-  Container,
-  Tab,
-  Tabs
+  Button, Grid, Container, Tab, Tabs
 } from "@mui/material";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import TabPanel from "../../shared/components/TabPanel";
+import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import "./RecipeReview.scss";
 
 function RecipeReview({ formState, previousStep }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const handleChange = (_event, value) => {
     setTabValue(value);
   };
 
   const submitRecipe = () => {
-
+    setIsLoading(true);
   };
 
+  if (isLoading) {
+    return (
+      <Container className="recipe-review__submit-container">
+        <LoadingSpinner />
+      </Container>
+    );
+  }
   return (
     <Container>
       <Grid container className="recipe-form__input-wrapper">
@@ -27,7 +33,10 @@ function RecipeReview({ formState, previousStep }) {
           <h3>{formState.name.value}</h3>
         </Grid>
         <Grid item xs={12}>
-          <img src={formState.image.preview || "/images/recipe.jpg"} alt="recipe placeholder" />
+          <img
+            src={formState.image.preview || "/images/recipe.jpg"}
+            alt="recipe placeholder"
+          />
         </Grid>
         <Grid item xs={6}>
           <h5>
@@ -45,7 +54,9 @@ function RecipeReview({ formState, previousStep }) {
         </Grid>
         <Grid item xs={6}>
           <h5>
-            {formState.isVegetarian ? "Recipe is vegetarian" : "Recipe is not vegetarian"}
+            {formState.isVegetarian
+              ? "Recipe is vegetarian"
+              : "Recipe is not vegetarian"}
           </h5>
         </Grid>
         <Grid item xs={12}>
@@ -69,9 +80,7 @@ function RecipeReview({ formState, previousStep }) {
           <TabPanel value={tabValue} index={1}>
             <ol>
               {formState.method.map((method) => (
-                <li>
-                  {method.method}
-                </li>
+                <li>{method.method}</li>
               ))}
             </ol>
           </TabPanel>
@@ -84,10 +93,7 @@ function RecipeReview({ formState, previousStep }) {
           >
             Previous
           </Button>
-          <Button
-            variant="contained"
-            onClick={submitRecipe}
-          >
+          <Button variant="contained" onClick={submitRecipe}>
             Submit
           </Button>
         </Grid>
