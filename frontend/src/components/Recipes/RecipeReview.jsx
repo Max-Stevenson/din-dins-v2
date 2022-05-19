@@ -4,6 +4,7 @@ import {
   Button, Grid, Container, Tab, Tabs
 } from "@mui/material";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
+import axios from "axios";
 import TabPanel from "../../shared/components/TabPanel";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import "./RecipeReview.scss";
@@ -19,6 +20,17 @@ function RecipeReview({ formState, previousStep }) {
   const submitRecipe = () => {
     setIsLoading(true);
     setRecipeSubmitted(true);
+    const recipe = {
+      name: formState.name.value,
+      image: formState.image.fileBase64,
+      servings: formState.servings.value,
+      cookingTime: formState.cookingTime.value,
+      isVegetarian: formState.isVegetarian,
+      ingredients: formState.ingredients,
+      method: formState.method,
+      tags: formState.tags
+    };
+    axios.post("http://localhost:3000/api/v1/recipes", recipe);
   };
 
   if (recipeSubmitted) {
