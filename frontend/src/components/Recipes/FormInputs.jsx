@@ -70,7 +70,11 @@ function FormInputs({
         </Grid>
         <Grid item xs={12}>
           <FormGroup>
-            <FormControlLabel control={<Checkbox />} label="Meal is Vegeterain" />
+            <FormControlLabel
+              onChange={(event) => handleChange("isVegetarian", event)}
+              control={<Checkbox />}
+              label="Meal is Vegeterain"
+            />
           </FormGroup>
         </Grid>
         <Grid item xs={12} className="recipe-form__nav-button__container">

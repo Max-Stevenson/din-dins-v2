@@ -79,6 +79,12 @@ function RecipeForm() {
           }
         }));
       }
+    } else {
+      const value = event.target.checked;
+      setFormState((previous) => ({
+        ...previous,
+        [input]: value
+      }));
     }
   };
 

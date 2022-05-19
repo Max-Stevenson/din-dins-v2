@@ -10,6 +10,7 @@ import "./RecipeReview.scss";
 
 function RecipeReview({ formState, previousStep }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [recipeSubmitted, setRecipeSubmitted] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const handleChange = (_event, value) => {
     setTabValue(value);
@@ -17,89 +18,98 @@ function RecipeReview({ formState, previousStep }) {
 
   const submitRecipe = () => {
     setIsLoading(true);
+    setRecipeSubmitted(true);
   };
 
-  if (isLoading) {
+  if (recipeSubmitted) {
     return (
       <Container className="recipe-review__submit-container">
-        <LoadingSpinner />
+        {isLoading
+          && (
+          <>
+            <LoadingSpinner />
+            <h2>Loading...</h2>
+          </>
+          )}
       </Container>
     );
   }
-  return (
-    <Container>
-      <Grid container className="recipe-form__input-wrapper">
-        <Grid item xs={12}>
-          <h3>{formState.name.value}</h3>
+  if (!recipeSubmitted) {
+    return (
+      <Container>
+        <Grid container className="recipe-form__input-wrapper">
+          <Grid item xs={12}>
+            <h3>{formState.name.value}</h3>
+          </Grid>
+          <Grid item xs={12}>
+            <img
+              src={formState.image.preview || "/images/recipe.jpg"}
+              alt="recipe placeholder"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <h5>
+              Servings:
+              {" "}
+              {formState.servings.value}
+            </h5>
+          </Grid>
+          <Grid item xs={6}>
+            <h5>
+              Cooking Time:
+              {" "}
+              {formState.cookingTime.value}
+            </h5>
+          </Grid>
+          <Grid item xs={6}>
+            <h5>
+              {formState.isVegetarian
+                ? "Recipe is vegetarian"
+                : "Recipe is not vegetarian"}
+            </h5>
+          </Grid>
+          <Grid item xs={12}>
+            <Tabs value={tabValue} onChange={handleChange}>
+              <Tab label="Ingredients" />
+              <Tab label="Method" />
+            </Tabs>
+            <TabPanel value={tabValue} index={0}>
+              <ul>
+                {formState.ingredients.map((i) => (
+                  <li>
+                    {i.quantity}
+                    {" "}
+                    {i.measure}
+                    {" "}
+                    {i.ingredient}
+                  </li>
+                ))}
+              </ul>
+            </TabPanel>
+            <TabPanel value={tabValue} index={1}>
+              <ol>
+                {formState.method.map((method) => (
+                  <li>{method.method}</li>
+                ))}
+              </ol>
+            </TabPanel>
+          </Grid>
+          <Grid item xs={12} className="recipe-form__nav-button__container">
+            <Button
+              variant="contained"
+              startIcon={<ArrowBackIosOutlinedIcon />}
+              onClick={previousStep}
+            >
+              Previous
+            </Button>
+            <Button variant="contained" onClick={submitRecipe}>
+              Submit
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <img
-            src={formState.image.preview || "/images/recipe.jpg"}
-            alt="recipe placeholder"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <h5>
-            Servings:
-            {" "}
-            {formState.servings.value}
-          </h5>
-        </Grid>
-        <Grid item xs={6}>
-          <h5>
-            Cooking Time:
-            {" "}
-            {formState.cookingTime.value}
-          </h5>
-        </Grid>
-        <Grid item xs={6}>
-          <h5>
-            {formState.isVegetarian
-              ? "Recipe is vegetarian"
-              : "Recipe is not vegetarian"}
-          </h5>
-        </Grid>
-        <Grid item xs={12}>
-          <Tabs value={tabValue} onChange={handleChange}>
-            <Tab label="Ingredients" />
-            <Tab label="Method" />
-          </Tabs>
-          <TabPanel value={tabValue} index={0}>
-            <ul>
-              {formState.ingredients.map((i) => (
-                <li>
-                  {i.quantity}
-                  {" "}
-                  {i.measure}
-                  {" "}
-                  {i.ingredient}
-                </li>
-              ))}
-            </ul>
-          </TabPanel>
-          <TabPanel value={tabValue} index={1}>
-            <ol>
-              {formState.method.map((method) => (
-                <li>{method.method}</li>
-              ))}
-            </ol>
-          </TabPanel>
-        </Grid>
-        <Grid item xs={12} className="recipe-form__nav-button__container">
-          <Button
-            variant="contained"
-            startIcon={<ArrowBackIosOutlinedIcon />}
-            onClick={previousStep}
-          >
-            Previous
-          </Button>
-          <Button variant="contained" onClick={submitRecipe}>
-            Submit
-          </Button>
-        </Grid>
-      </Grid>
-    </Container>
-  );
+      </Container>
+    );
+  }
 }
 
 RecipeReview.propTypes = {
