@@ -5,18 +5,18 @@ import {
   Button, Grid, TextField
 } from "@mui/material";
 
-function NewGenericListItem({ componentType, handleAddToList }) {
+function NewGenericListItem({ recipeList, recipeListItem, handleAddToList }) {
   const [internalState, setInternalState] = useState({
-    [componentType]: { value: "", isValid: false, errorMsg: "" }
+    [recipeList]: { value: "", isValid: false, errorMsg: "" }
   });
 
   useEffect(() => {
     setInternalState({
-      [componentType]: {
+      [recipeList]: {
         value: "", isValid: false, errorMsg: ""
       }
     });
-  }, [componentType]);
+  }, [recipeList]);
 
   const handleInputChange = (inputName, event) => {
     const inputValue = event.target.value;
@@ -43,11 +43,11 @@ function NewGenericListItem({ componentType, handleAddToList }) {
 
   const handleAdd = (event) => {
     event.preventDefault();
-    handleAddToList(`${componentType}`, {
-      [componentType]: internalState[componentType].value
+    handleAddToList(`${recipeList}`, {
+      [recipeList]: internalState[recipeList].value
     });
     setInternalState({
-      [componentType]: {
+      [recipeList]: {
         value: "", isValid: false, errorMsg: ""
       }
     });
@@ -62,27 +62,27 @@ function NewGenericListItem({ componentType, handleAddToList }) {
           autoComplete="off"
           type="text"
           onChange={(event) => {
-            handleInputChange(componentType, event);
+            handleInputChange(recipeList, event);
           }}
           variant="outlined"
           InputLabelProps={{
             shrink: true
           }}
-          label={componentType}
+          label={recipeList}
         />
-        {internalState[componentType].errorMsg && <p>{internalState[componentType].errorMsg}</p>}
+        {internalState[recipeList].errorMsg && <p>{internalState[recipeList].errorMsg}</p>}
       </Grid>
       <Grid item xs={12}>
         <Button
           variant="contained"
           disabled={
-         !internalState[componentType].isValid
+         !internalState[recipeList].isValid
         }
           onClick={(event) => handleAdd(event)}
         >
           Add
           {" "}
-          {componentType}
+          {recipeList}
         </Button>
       </Grid>
     </Grid>
@@ -90,8 +90,13 @@ function NewGenericListItem({ componentType, handleAddToList }) {
 }
 
 NewGenericListItem.propTypes = {
-  componentType: PropTypes.string.isRequired,
+  recipeList: PropTypes.string.isRequired,
+  recipeListItem: PropTypes.string,
   handleAddToList: PropTypes.func.isRequired
+};
+
+NewGenericListItem.defaultProps = {
+  recipeListItem: this.recipeList
 };
 
 export default NewGenericListItem;

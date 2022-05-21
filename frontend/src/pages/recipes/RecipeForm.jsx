@@ -171,7 +171,7 @@ function RecipeForm() {
           isRequired={false}
           listName="tags"
           listChildren={<GenericListItem listItem={{}} handleDeleteFromList={genericDeleteMethod} className="tags" />}
-          listItemChild={<NewGenericListItem key={1} componentType="tags" handleAddToList={handleAddToList} />}
+          listItemChild={<NewGenericListItem key={1} recipeList="tags" recipeListItem="tag" handleAddToList={handleAddToList} />}
           previousStep={previousStep}
           nextStep={nextStep}
           handleDeleteFromList={genericDeleteMethod}
