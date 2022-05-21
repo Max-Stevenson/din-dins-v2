@@ -1,22 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-// const cors = require("cors");
+const cors = require("cors");
 
 const recipeRoutes = require("./routes/recipesRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
+app.use(cors());
+app.options("*", cors()); // enable pre-flight
+app.use(bodyParser.json({ limit: "50mb", type: "application/json" }));
 app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin: *");
-  res.header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS, post, get");
-  res.header("Access-Control-Max-Age", "3600");
-  res.header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
-
 app.use("/api/v1/recipes", recipeRoutes);
 app.use("/api/v1/users", userRoutes);
 
