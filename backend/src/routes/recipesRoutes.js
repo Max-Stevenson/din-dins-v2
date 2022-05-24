@@ -1,5 +1,6 @@
 // Contains only routing for recipes
 const express = require("express");
+// const cache = require("../routeCache");
 const recipesController = require("../controllers/recipesController");
 
 const router = express.Router();

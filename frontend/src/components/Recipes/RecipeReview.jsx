@@ -17,7 +17,7 @@ function RecipeReview({ formState, previousStep }) {
     setTabValue(value);
   };
 
-  const submitRecipe = () => {
+  const submitRecipe = async () => {
     setIsLoading(true);
     setRecipeSubmitted(true);
     const recipe = {
@@ -30,7 +30,13 @@ function RecipeReview({ formState, previousStep }) {
       method: formState.method,
       tags: formState.tags
     };
-    axios.post("http://localhost:3000/api/v1/recipes", recipe);
+    try {
+      await axios.post("http://localhost:3000/api/v1/recipes", recipe);
+      setIsLoading(false);
+    } catch (err) {
+      return err;
+    }
+    return true;
   };
 
   if (recipeSubmitted) {
@@ -43,6 +49,9 @@ function RecipeReview({ formState, previousStep }) {
             <h2>Loading...</h2>
           </>
           )}
+        {!isLoading && (
+          <h2>Recipe Creation successful</h2>
+        )}
       </Container>
     );
   }
