@@ -44,7 +44,7 @@ function NewGenericListItem({ recipeList, recipeListItem, handleAddToList }) {
   const handleAdd = (event) => {
     event.preventDefault();
     handleAddToList(`${recipeList}`, {
-      [recipeList]: internalState[recipeList].value
+      [recipeListItem]: internalState[recipeList].value
     });
     setInternalState({
       [recipeList]: {
@@ -91,12 +91,8 @@ function NewGenericListItem({ recipeList, recipeListItem, handleAddToList }) {
 
 NewGenericListItem.propTypes = {
   recipeList: PropTypes.string.isRequired,
-  recipeListItem: PropTypes.string,
+  recipeListItem: PropTypes.string.isRequired,
   handleAddToList: PropTypes.func.isRequired
-};
-
-NewGenericListItem.defaultProps = {
-  recipeListItem: this.recipeList
 };
 
 export default NewGenericListItem;
