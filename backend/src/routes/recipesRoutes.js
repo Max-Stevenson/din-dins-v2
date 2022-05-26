@@ -1,15 +1,15 @@
 // Contains only routing for recipes
 const express = require("express");
 // const cache = require("../routeCache");
-const multer = require("multer");
+// const multer = require("multer");
 const recipesController = require("../controllers/recipesController");
 
 const router = express.Router();
-const upload = multer({});
+// const upload = multer({});
 
 router.get("/", recipesController.getAllRecipes);
 router.get("/:id", recipesController.getRecipeById);
-router.post("/", upload.single("image"), recipesController.createRecipe);
+router.post("/", recipesController.createRecipe);
 router.put("/:id", recipesController.editRecipe);
 router.delete("/:id", recipesController.deleteRecipe);
 
