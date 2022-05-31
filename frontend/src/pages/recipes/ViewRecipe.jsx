@@ -22,22 +22,10 @@ function ViewRecipe({ recipe }) {
 ViewRecipe.propTypes = {
   recipe: PropTypes.shape({
     _id: PropTypes.string,
-    name: PropTypes.shape({
-      value: PropTypes.string,
-      isValid: PropTypes.bool,
-      errorMsg: PropTypes.string
-    }),
+    name: PropTypes.string,
     image: PropTypes.string,
-    servings: PropTypes.shape({
-      value: PropTypes.number,
-      isValid: PropTypes.bool,
-      errorMsg: PropTypes.string
-    }),
-    cookingTime: PropTypes.shape({
-      value: PropTypes.number,
-      isValid: PropTypes.bool,
-      errorMsg: PropTypes.string
-    }),
+    servings: PropTypes.number,
+    cookingTime: PropTypes.number,
     isVegetarian: PropTypes.bool,
     ingredients: PropTypes.arrayOf(
       PropTypes.shape({

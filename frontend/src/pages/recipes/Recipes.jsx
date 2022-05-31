@@ -8,6 +8,7 @@ import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import useFetch from "../../shared/hooks/useFetchHook";
 import "./Recipes.scss";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
+import ViewRecipe from "./ViewRecipe";
 
 function Recipes() {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -16,8 +17,15 @@ function Recipes() {
   );
 
   const handleRecipeSelection = (event) => {
-    setSelectedRecipe(event.currentTarget.getAttribute("data-recipe-id"));
+    const selectedRecipeId = event.currentTarget.getAttribute("data-recipe-id");
+    if (selectedRecipeId) {
+      setSelectedRecipe(data.filter((element) => element._id === selectedRecipeId)[0]);
+    }
   };
+
+  if (selectedRecipe) {
+    return <ViewRecipe recipe={selectedRecipe} />;
+  }
 
   if (loading && !error) {
     return <LoadingSpinner />;
