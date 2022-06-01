@@ -12,7 +12,8 @@ import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import ViewRecipe from "./ViewRecipe";
 
 function Recipes() {
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const navigate = useNavigate();
+  // const [selectedRecipe, setSelectedRecipe] = useState(null);
   const { data, error, loading } = useFetch(
     "http://localhost:3000/api/v1/recipes"
   );
@@ -20,8 +21,8 @@ function Recipes() {
   const handleRecipeSelection = (event) => {
     const selectedRecipeId = event.currentTarget.getAttribute("data-recipe-id");
     if (selectedRecipeId) {
-      setSelectedRecipe(data.filter((element) => element._id === selectedRecipeId)[0]);
-      useNavigate(`/recipes/${selectedRecipeId}`, { state: selectedRecipe });
+      const selectedRecipe = (data.filter((element) => element._id === selectedRecipeId)[0]);
+      navigate(`/recipes/view/${selectedRecipeId}`, { state: { recipe: selectedRecipe } });
     }
   };
 
