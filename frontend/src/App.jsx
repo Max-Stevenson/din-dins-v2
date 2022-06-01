@@ -12,8 +12,8 @@ import Navbar from "./shared/components/Navbar";
 import Recipes from "./pages/recipes/Recipes";
 import Mealplanner from "./pages/mealplanner/Mealplanner";
 import Settings from "./pages/profile/Settings";
-// import ViewRecipe from "./pages/recipes/ViewRecipe";
 import RecipeForm from "./pages/recipes/RecipeForm";
+import ViewRecipe from "./pages/recipes/ViewRecipe";
 
 library.add(faCog, faUtensils, faCalendarAlt);
 
@@ -26,6 +26,7 @@ function App() {
         <Route path="/mealplanner" element={<Mealplanner />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/recipes/new" element={<RecipeForm />} />
+        <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
       </Routes>
       <Navbar />
     </Router>

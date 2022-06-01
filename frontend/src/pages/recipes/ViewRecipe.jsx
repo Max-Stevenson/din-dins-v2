@@ -1,10 +1,12 @@
-import React from "react";
+import React from "react"; // Read values passed on state
+import PropTypes from "prop-types";
+import { useLocation } from "react-router";
 // import { useParams } from "react-router";
 // import LoadingSpinner from "../../shared/components/LoadingSpinner";
 // import useFetch from "../../shared/hooks/useFetchHook";
-import PropTypes from "prop-types";
+// const { recipe } = useLocation();
 
-function ViewRecipe({ recipe }) {
+function ViewRecipe({ recipe = useLocation() }) {
   // const { recipeId } = useParams();
   // const { data, error, loading } = useFetch(
   //   `http://localhost:3000/api/v1/recipes/${recipeId}`

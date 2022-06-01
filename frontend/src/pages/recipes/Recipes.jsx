@@ -3,6 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from "react";
 // import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import useFetch from "../../shared/hooks/useFetchHook";
@@ -20,12 +21,9 @@ function Recipes() {
     const selectedRecipeId = event.currentTarget.getAttribute("data-recipe-id");
     if (selectedRecipeId) {
       setSelectedRecipe(data.filter((element) => element._id === selectedRecipeId)[0]);
+      useNavigate(`/recipes/${selectedRecipeId}`, { state: selectedRecipe });
     }
   };
-
-  if (selectedRecipe) {
-    return <ViewRecipe recipe={selectedRecipe} />;
-  }
 
   if (loading && !error) {
     return <LoadingSpinner />;
