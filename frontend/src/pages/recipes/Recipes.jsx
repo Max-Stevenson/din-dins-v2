@@ -1,19 +1,15 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import useFetch from "../../shared/hooks/useFetchHook";
 import "./Recipes.scss";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
-import ViewRecipe from "./ViewRecipe";
 
 function Recipes() {
   const navigate = useNavigate();
-  // const [selectedRecipe, setSelectedRecipe] = useState(null);
   const { data, error, loading } = useFetch(
     "http://localhost:3000/api/v1/recipes"
   );
@@ -39,18 +35,31 @@ function Recipes() {
         sm={6}
         md={3}
       >
-
         <div data-recipe-id={recipe._id} onClick={(event) => handleRecipeSelection(event)} tabIndex={0} role="button" className="recipe-item__wrapper">
           <img alt="" src={recipe.image} />
           <h3>{recipe.name}</h3>
         </div>
-
       </Grid>
     ));
+    recipeItems.push();
     return (
       <DisplayWrapper>
         <Grid container spacing={1}>
           {recipeItems}
+          <Grid
+            key="newRecipe"
+            item
+            xs={6}
+            sm={6}
+            md={3}
+          >
+            <Link to="/recipes/new">
+              <div className="recipe-item__wrapper">
+                <img alt="" src="/images/recipe.jpg" />
+                <h3>Add New Recipe</h3>
+              </div>
+            </Link>
+          </Grid>
         </Grid>
       </DisplayWrapper>
     );
