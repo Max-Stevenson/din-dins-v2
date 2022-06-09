@@ -37,7 +37,7 @@ function Recipes() {
       >
         <div data-recipe-id={recipe._id} onClick={(event) => handleRecipeSelection(event)} tabIndex={0} role="button" className="recipe-item__wrapper">
           <img alt="" src={recipe.image} />
-          <h3>{recipe.name}</h3>
+          <h3 className="recipe-item__recipe-name">{recipe.name}</h3>
         </div>
       </Grid>
     ));
@@ -53,10 +53,10 @@ function Recipes() {
             sm={6}
             md={3}
           >
-            <Link to="/recipes/new">
+            <Link className="recipe-item__new-recipe" to="/recipes/new">
               <div className="recipe-item__wrapper">
                 <img alt="" src="/images/recipe.jpg" />
-                <h3>Add New Recipe</h3>
+                <h3 className="recipe-item__recipe-name">Add New Recipe</h3>
               </div>
             </Link>
           </Grid>

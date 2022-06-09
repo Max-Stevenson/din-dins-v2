@@ -14,3 +14,14 @@ img {
   justify-content: center;
   align-items: center;
 }
+
+.recipe-item__recipe-name {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.recipe-item__new-recipe {
+  text-decoration: none;
+}
