@@ -23,7 +23,7 @@ function Recipes() {
   };
 
   if (loading && !error) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner asOverlay loadingMessage="Loading Recipes..." />;
   }
 
   if (!loading && data) {
