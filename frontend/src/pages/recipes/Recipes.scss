@@ -3,6 +3,7 @@
 }
 
 img {
+  flex: 1;
   max-width: 95%;
   border: double;
   border-radius: 10px;
@@ -10,6 +11,7 @@ img {
 
 .recipe-item__wrapper {
   display: flex;
+  height: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
