@@ -94,6 +94,7 @@ function RecipeReview({ formState, previousStep }) {
             <Tabs value={tabValue} onChange={handleChange}>
               <Tab label="Ingredients" />
               <Tab label="Method" />
+              <Tab label="Tags" />
             </Tabs>
             <TabPanel value={tabValue} index={0}>
               <ul>
@@ -114,6 +115,15 @@ function RecipeReview({ formState, previousStep }) {
                   <li>{method.method}</li>
                 ))}
               </ol>
+            </TabPanel>
+            <TabPanel value={tabValue} index={2}>
+              <ul>
+                {formState.tags.map((t) => (
+                  <li>
+                    {t.tag}
+                  </li>
+                ))}
+              </ul>
             </TabPanel>
           </Grid>
           <Grid item xs={12} className="recipe-form__nav-button__container">
