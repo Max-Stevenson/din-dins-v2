@@ -14,6 +14,7 @@ import Mealplanner from "./pages/mealplanner/Mealplanner";
 import Settings from "./pages/profile/Settings";
 import RecipeForm from "./pages/recipes/RecipeForm";
 import ViewRecipe from "./pages/recipes/ViewRecipe";
+import RecipesContext from "./shared/context/RecipesContext";
 
 library.add(faCog, faUtensils, faCalendarAlt);
 
@@ -21,13 +22,15 @@ function App() {
   return (
     <Router>
       <Header />
-      <Routes>
-        <Route path="/" element={<Recipes />} />
-        <Route path="/mealplanner" element={<Mealplanner />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/recipes/new" element={<RecipeForm />} />
-        <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
-      </Routes>
+      <RecipesContext.Provider value="bruh">
+        <Routes>
+          <Route path="/" element={<Recipes />} />
+          <Route path="/mealplanner" element={<Mealplanner />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/recipes/new" element={<RecipeForm />} />
+          <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
+        </Routes>
+      </RecipesContext.Provider>
       <Navbar />
     </Router>
   );

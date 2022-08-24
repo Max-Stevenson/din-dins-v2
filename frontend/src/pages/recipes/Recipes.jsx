@@ -1,15 +1,18 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import useFetch from "../../shared/hooks/useFetchHook";
 import "./Recipes.scss";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
+import RecipesContext from "../../shared/context/RecipesContext";
 
 function Recipes() {
   const navigate = useNavigate();
+  const msg = useContext(RecipesContext);
+  console.log(msg);
   const { data, error, loading } = useFetch(
     "http://localhost:3000/api/v1/recipes"
   );
