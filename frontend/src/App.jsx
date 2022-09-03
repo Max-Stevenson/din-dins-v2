@@ -19,10 +19,11 @@ import RecipesContext from "./shared/context/RecipesContext";
 library.add(faCog, faUtensils, faCalendarAlt);
 
 function App() {
+  const [recipes, setRecipes] = useState(null);
   return (
     <Router>
       <Header />
-      <RecipesContext.Provider value="bruh">
+      <RecipesContext.Provider recipes={{ recipes, setRecipes }}>
         <Routes>
           <Route path="/" element={<Recipes />} />
           <Route path="/mealplanner" element={<Mealplanner />} />

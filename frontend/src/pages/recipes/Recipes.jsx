@@ -11,8 +11,6 @@ import RecipesContext from "../../shared/context/RecipesContext";
 
 function Recipes() {
   const navigate = useNavigate();
-  const msg = useContext(RecipesContext);
-  console.log(msg);
   const { data, error, loading } = useFetch(
     "http://localhost:3000/api/v1/recipes"
   );
