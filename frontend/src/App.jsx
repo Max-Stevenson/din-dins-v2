@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -20,10 +20,12 @@ library.add(faCog, faUtensils, faCalendarAlt);
 
 function App() {
   const [recipes, setRecipes] = useState(null);
+  const recipeValue = useMemo(() => ({ recipes, setRecipes }), [recipes, setRecipes]);
+
   return (
     <Router>
       <Header />
-      <RecipesContext.Provider recipes={{ recipes, setRecipes }}>
+      <RecipesContext.Provider value={recipeValue}>
         <Routes>
           <Route path="/" element={<Recipes />} />
           <Route path="/mealplanner" element={<Mealplanner />} />

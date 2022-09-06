@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
@@ -11,6 +12,7 @@ import RecipesContext from "../../shared/context/RecipesContext";
 
 function Recipes() {
   const navigate = useNavigate();
+  const { recipes, setRecipes } = useContext(RecipesContext);
   const { data, error, loading } = useFetch(
     "http://localhost:3000/api/v1/recipes"
   );
@@ -28,6 +30,7 @@ function Recipes() {
   }
 
   if (!loading && data) {
+    setRecipes(data);
     const recipeItems = data.map((recipe) => (
       <Grid
         key={recipe._id}
