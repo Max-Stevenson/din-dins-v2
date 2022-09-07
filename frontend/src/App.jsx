@@ -19,7 +19,7 @@ import RecipesContext from "./shared/context/RecipesContext";
 library.add(faCog, faUtensils, faCalendarAlt);
 
 function App() {
-  const [recipes, setRecipes] = useState(null);
+  const [recipes, setRecipes] = useState(undefined);
   const recipeValue = useMemo(() => ({ recipes, setRecipes }), [recipes, setRecipes]);
 
   return (
