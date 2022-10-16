@@ -19,8 +19,11 @@ import RecipesContext from "./shared/context/RecipesContext";
 library.add(faCog, faUtensils, faCalendarAlt);
 
 function App() {
-  const [recipes, setRecipes] = useState(undefined);
-  const recipeValue = useMemo(() => ({ recipes, setRecipes }), [recipes, setRecipes]);
+  const [contextRecipes, setContextRecipes] = useState(undefined);
+  const recipeValue = useMemo(
+    () => ({ contextRecipes, setContextRecipes }),
+    [contextRecipes, setContextRecipes]
+  );
 
   return (
     <Router>
