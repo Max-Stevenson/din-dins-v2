@@ -26,11 +26,9 @@ function Recipes() {
         const response = await sendRequest(
           "http://localhost:3000/api/v1/recipes"
         );
-        console.log(response.data);
         setRecipes(response.data);
         setContextRecipes(response.data);
       } catch (err) {
-        console.log(err);
       }
     };
     if (!contextRecipes) {
