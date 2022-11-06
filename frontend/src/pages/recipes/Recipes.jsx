@@ -86,7 +86,6 @@ function Recipes() {
       </DisplayWrapper>
     );
   }
-
   return <h2>Loading</h2>;
 }
 
