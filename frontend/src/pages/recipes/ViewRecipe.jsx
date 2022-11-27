@@ -45,8 +45,11 @@ function ViewRecipe() {
     return (
       <DisplayWrapper>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <h2>{recipe.name}</h2>
+          </Grid>
+          <Grid item xs={12}>
+            <img src={recipe.img} alt={recipe.name} />
           </Grid>
         </Grid>
       </DisplayWrapper>
