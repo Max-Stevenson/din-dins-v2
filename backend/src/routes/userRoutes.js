@@ -4,4 +4,18 @@ const usersControllers = require("../controllers/usersController");
 
 const router = express.Router();
 
+router.post(
+  "/",
+  [
+    check("name")
+      .not()
+      .isEmpty(),
+    check("email")
+      .normalizeEmail()
+      .isEmail(),
+    check("password").isLength({ min: 6 }),
+  ],
+  usersControllers.createUser,
+);
+
 module.exports = router;
