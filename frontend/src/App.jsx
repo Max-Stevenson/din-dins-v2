@@ -15,6 +15,7 @@ import Settings from "./pages/profile/Settings";
 import RecipeForm from "./pages/recipes/RecipeForm";
 import ViewRecipe from "./pages/recipes/ViewRecipe";
 import RecipesContext from "./shared/context/RecipesContext";
+import UserPortal from "./pages/profile/UserPortal";
 
 library.add(faCog, faUtensils, faCalendarAlt);
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/recipes/new" element={<RecipeForm />} />
           <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
+          <Route path="/user" element={<UserPortal />} />
         </Routes>
       </RecipesContext.Provider>
       <Navbar />
