@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -14,7 +14,9 @@ import Mealplanner from "./pages/mealplanner/Mealplanner";
 import Settings from "./pages/profile/Settings";
 import RecipeForm from "./pages/recipes/RecipeForm";
 import ViewRecipe from "./pages/recipes/ViewRecipe";
+// import PrivateRoute from "./shared/components/PrivateRoute";
 import RecipesContext from "./shared/context/RecipesContext";
+import AuthContext from "./shared/context/AuthContext";
 import UserPortal from "./pages/profile/UserPortal";
 
 library.add(faCog, faUtensils, faCalendarAlt);
@@ -26,18 +28,34 @@ function App() {
     [contextRecipes, setContextRecipes]
   );
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const login = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
+
+  const userValue = useMemo(() => ({
+    isLoggedIn, setIsLoggedIn, login, logout
+  }), [isLoggedIn, setIsLoggedIn, login, logout]);
+
   return (
     <Router>
       <Header />
       <RecipesContext.Provider value={recipeValue}>
-        <Routes>
-          <Route path="/" element={<Recipes />} />
-          <Route path="/mealplanner" element={<Mealplanner />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/recipes/new" element={<RecipeForm />} />
-          <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
-          <Route path="/user" element={<UserPortal />} />
-        </Routes>
+        <AuthContext.Provider value={userValue}>
+          <Routes>
+            <Route path="/" element={<Recipes />} />
+            <Route path="/mealplanner" element={<Mealplanner />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/recipes/new" element={<RecipeForm />} />
+            <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
+            <Route path="/user" element={<UserPortal />} />
+          </Routes>
+        </AuthContext.Provider>
       </RecipesContext.Provider>
       <Navbar />
     </Router>
