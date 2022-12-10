@@ -18,4 +18,6 @@ router.post(
   usersControllers.createUser,
 );
 
+router.post("/login", usersControllers.login);
+
 module.exports = router;
