@@ -1,9 +1,17 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
+import LoadingSpinner from "../../shared/components/LoadingSpinner";
 
 function UserPortal() {
   const [isLogin, setIsLogin] = useState(true);
   const [isActive, setIsActive] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState({
+    email: "",
+    password: ""
+  });
 
   const switchMode = (value, event) => {
     if (isLogin !== value) {
@@ -12,10 +20,42 @@ function UserPortal() {
     }
   };
 
+  const login = (email, password) => {
+    // Send a request to the server with the username and password
+    fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password })
+    }).then((response) => {
+      // If the login was successful, redirect the user to the dashboard
+      if (response.ok) {
+        window.location.replace("/dashboard");
+      } else {
+        // Otherwise, show an error message
+        setError("Invalid username or password.");
+      }
+    });
+  };
+
+  const changeHandler = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Perform validation on the form fields
+    if (data.email === "" || data.password === "") {
+    // Show an error message if the form is not filled out
+      setError("Please fill out all fields.");
+    } else {
+    // Submit the form to the server
+      login(data.email, data.password);
+    }
+  };
+
   if (isLogin) {
     return (
       <DisplayWrapper>
-        <form>
+        <form onSubmit={handleSubmit}>
           <h3>Login</h3>
           <div>
             <button
@@ -44,10 +84,12 @@ function UserPortal() {
               <input
                 id="email"
                 type="email"
+                name="email"
                 className="form-control"
                 placeholder="Enter email"
+                onChange={changeHandler}
+                value={data.email}
               />
-              Email address
             </label>
           </div>
           <div>
@@ -56,7 +98,10 @@ function UserPortal() {
                 id="password"
                 type="password"
                 className="form-control"
+                name="password"
                 placeholder="Enter password"
+                onChange={changeHandler}
+                value={data.password}
               />
               Password
             </label>
