@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
@@ -22,9 +23,10 @@ function UserPortal() {
 
   const login = (email, password) => {
     // Send a request to the server with the username and password
-    fetch("/api/login", {
+    fetch("http://localhost:3000/api/v1/users/login", {
       method: "POST",
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
+      headers: { "Content-Type": "application/json" }
     }).then((response) => {
       // If the login was successful, redirect the user to the dashboard
       if (response.ok) {
@@ -44,10 +46,10 @@ function UserPortal() {
     event.preventDefault();
     // Perform validation on the form fields
     if (data.email === "" || data.password === "") {
-    // Show an error message if the form is not filled out
+      // Show an error message if the form is not filled out
       setError("Please fill out all fields.");
     } else {
-    // Submit the form to the server
+      // Submit the form to the server
       login(data.email, data.password);
     }
   };
