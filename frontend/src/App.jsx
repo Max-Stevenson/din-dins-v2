@@ -14,10 +14,10 @@ import Mealplanner from "./pages/mealplanner/Mealplanner";
 import Settings from "./pages/profile/Settings";
 import RecipeForm from "./pages/recipes/RecipeForm";
 import ViewRecipe from "./pages/recipes/ViewRecipe";
-// import PrivateRoute from "./shared/components/PrivateRoute";
 import RecipesContext from "./shared/context/RecipesContext";
 import AuthContext from "./shared/context/AuthContext";
 import UserPortal from "./pages/profile/UserPortal";
+import ProtectedRoute from "./shared/components/PrivateRoute";
 
 library.add(faCog, faUtensils, faCalendarAlt);
 
@@ -38,9 +38,15 @@ function App() {
     setIsLoggedIn(false);
   }, []);
 
-  const userValue = useMemo(() => ({
-    isLoggedIn, setIsLoggedIn, login, logout
-  }), [isLoggedIn, setIsLoggedIn, login, logout]);
+  const userValue = useMemo(
+    () => ({
+      isLoggedIn,
+      setIsLoggedIn,
+      login,
+      logout
+    }),
+    [isLoggedIn, setIsLoggedIn, login, logout]
+  );
 
   return (
     <Router>
@@ -48,7 +54,14 @@ function App() {
       <RecipesContext.Provider value={recipeValue}>
         <AuthContext.Provider value={userValue}>
           <Routes>
-            <Route path="/" element={<Recipes />} />
+            <Route
+              path="/"
+              element={(
+                <ProtectedRoute>
+                  <Recipes />
+                </ProtectedRoute>
+              )}
+            />
             <Route path="/mealplanner" element={<Mealplanner />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/recipes/new" element={<RecipeForm />} />

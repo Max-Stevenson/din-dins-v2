@@ -6,18 +6,12 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
-import useFetch from "../../shared/hooks/useFetchHook";
 import "./Recipes.scss";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import useHttpClient from "../../shared/hooks/http-hook";
 import RecipesContext from "../../shared/context/RecipesContext";
-import AuthContext from "../../shared/context/AuthContext";
 
 function Recipes() {
-  const { isAuthenticated } = useContext(AuthContext);
-  if (!isAuthenticated) {
-    return <Navigate to="/user" replace />;
-  }
   const navigate = useNavigate();
   const {
     error, isLoading, sendRequest, clearError

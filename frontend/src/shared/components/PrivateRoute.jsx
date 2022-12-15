@@ -1,27 +1,24 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from "react";
+import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Route, Redirect } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
-function PrivateRoute({ component: Component, ...rest }) {
-  const { userContext } = useContext(AuthContext);
-
-  return (
-    <Route
-      {...rest}
-      render={(props) => (userContext.isAuthenticated === true ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{ pathname: "/login" }}
-        />
-      ))}
-    />
-  );
+function ProtectedRoute({ redirectPath = "/user", children }) {
+  const { isLoggedIn } = useContext(AuthContext);
+  if (!isLoggedIn) {
+    return <Navigate to={redirectPath} replace />;
+  }
+  return children;
 }
 
-PrivateRoute.propTypes = {
-  component: PropTypes.elementType.isRequired
+ProtectedRoute.propTypes = {
+  redirectPath: PropTypes.string,
+  children: PropTypes.element.isRequired
 };
 
-export default PrivateRoute;
+ProtectedRoute.defaultProps = {
+  redirectPath: "/user"
+};
+
+export default ProtectedRoute;
