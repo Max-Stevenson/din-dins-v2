@@ -16,8 +16,8 @@ import RecipeForm from "./pages/recipes/RecipeForm";
 import ViewRecipe from "./pages/recipes/ViewRecipe";
 import RecipesContext from "./shared/context/RecipesContext";
 import AuthContext from "./shared/context/AuthContext";
-import UserPortal from "./pages/profile/UserPortal";
 import ProtectedRoute from "./shared/components/PrivateRoute";
+import UserPortal from "./pages/profile/UserPortal";
 
 library.add(faCog, faUtensils, faCalendarAlt);
 
@@ -29,7 +29,6 @@ function App() {
   );
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const login = useCallback(() => {
     setIsLoggedIn(true);
   }, []);
@@ -41,11 +40,10 @@ function App() {
   const userValue = useMemo(
     () => ({
       isLoggedIn,
-      setIsLoggedIn,
       login,
       logout
     }),
-    [isLoggedIn, setIsLoggedIn, login, logout]
+    [isLoggedIn, login, logout]
   );
 
   return (

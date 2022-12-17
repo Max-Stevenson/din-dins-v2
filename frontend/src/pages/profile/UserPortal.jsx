@@ -1,11 +1,12 @@
 /* eslint-disable quote-props */
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import AuthContext from "../../shared/context/AuthContext";
 
 function UserPortal() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [isActive, setIsActive] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -13,15 +14,16 @@ function UserPortal() {
     email: "",
     password: ""
   });
+  const { isLoggedIn, login } = useContext(AuthContext);
 
-  const switchMode = (value, event) => {
-    if (isLogin !== value) {
-      setIsLogin(value);
-      setIsActive(event.taget.getAttribute("data-index"));
+  const switchMode = (event, value) => {
+    if (isSignUp !== value) {
+      setIsSignUp(value);
+      setIsActive(event.target.getAttribute("data-index"));
     }
   };
 
-  const login = (email, password) => {
+  const authenticate = (email, password) => {
     // Send a request to the server with the username and password
     fetch("http://localhost:3000/api/v1/users/login", {
       method: "POST",
@@ -30,7 +32,8 @@ function UserPortal() {
     }).then((response) => {
       // If the login was successful, redirect the user to the dashboard
       if (response.ok) {
-        window.location.replace("/dashboard");
+        login();
+        window.location.replace("/");
       } else {
         // Otherwise, show an error message
         setError("Invalid username or password.");
@@ -50,11 +53,11 @@ function UserPortal() {
       setError("Please fill out all fields.");
     } else {
       // Submit the form to the server
-      login(data.email, data.password);
+      authenticate(data.email, data.password);
     }
   };
 
-  if (isLogin) {
+  if (isSignUp) {
     return (
       <DisplayWrapper>
         <form onSubmit={handleSubmit}>
@@ -63,8 +66,8 @@ function UserPortal() {
             <button
               data-index={0}
               className={isActive === "0" ? "active" : undefined}
-              onClick={() => {
-                switchMode(true);
+              onClick={(event) => {
+                switchMode(event, true);
               }}
               type="button"
             >
@@ -73,8 +76,9 @@ function UserPortal() {
             <button
               data-index={1}
               className={isActive === "0" ? "active" : undefined}
-              onClick={() => {
-                switchMode(false);
+              onClick={(event) => {
+                console.log(event);
+                // switchMode(event, false);
               }}
               type="button"
             >
@@ -128,23 +132,23 @@ function UserPortal() {
     );
   }
 
-  if (!isLogin) {
+  if (!isSignUp) {
     return (
       <DisplayWrapper>
         <form>
           <h3>Sign Up</h3>
           <div>
             <button
-              onClick={() => {
-                switchMode(true);
+              onClick={(event) => {
+                switchMode(event, true);
               }}
               type="button"
             >
               Login
             </button>
             <button
-              onClick={() => {
-                switchMode(false);
+              onClick={(event) => {
+                switchMode(event, false);
               }}
               type="button"
             >
@@ -158,6 +162,8 @@ function UserPortal() {
                 type="email"
                 className="form-control"
                 placeholder="Enter email"
+                onChange={changeHandler}
+                value={data.email}
               />
               Email address
             </label>
@@ -169,6 +175,8 @@ function UserPortal() {
                 type="password"
                 className="form-control"
                 placeholder="Enter password"
+                onChange={changeHandler}
+                value={data.password}
               />
               Password
             </label>
