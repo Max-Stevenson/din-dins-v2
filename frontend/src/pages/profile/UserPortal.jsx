@@ -3,7 +3,6 @@
 import React, { useState, useContext } from "react";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
-import AuthContext from "../../shared/context/AuthContext";
 
 function UserPortal() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -14,7 +13,6 @@ function UserPortal() {
     email: "",
     password: ""
   });
-  const { isLoggedIn, login } = useContext(AuthContext);
 
   const switchMode = (event, value) => {
     if (isSignUp !== value) {
@@ -32,7 +30,7 @@ function UserPortal() {
     }).then((response) => {
       // If the login was successful, redirect the user to the dashboard
       if (response.ok) {
-        login();
+        // login();
         window.location.replace("/");
       } else {
         // Otherwise, show an error message
@@ -77,8 +75,7 @@ function UserPortal() {
               data-index={1}
               className={isActive === "0" ? "active" : undefined}
               onClick={(event) => {
-                console.log(event);
-                // switchMode(event, false);
+                switchMode(event, false);
               }}
               type="button"
             >
