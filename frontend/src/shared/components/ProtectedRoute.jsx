@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
-import { AuthConsumer } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 function ProtectedRoute({ children, redirectPath = "/user" }) {
-  return (
-    <AuthConsumer>
-      {({ isAuthenticated }) => (isAuthenticated ? children : <Navigate to={{ redirectPath }} />)}
-    </AuthConsumer>
-  );
+  const auth = useAuth();
+  if (!auth.user) {
+    return <Navigate to={redirectPath} />;
+  }
+
+  return children;
 }
 
 ProtectedRoute.propTypes = {
@@ -19,4 +20,5 @@ ProtectedRoute.propTypes = {
 ProtectedRoute.defaultProps = {
   redirectPath: "/user"
 };
+
 export default ProtectedRoute;

@@ -31,7 +31,8 @@ function UserPortal() {
       // If the login was successful, redirect the user to the dashboard
       if (response.ok) {
         // login();
-        window.location.replace("/");
+        console.log("ok");
+        // window.location.replace("/");
       } else {
         // Otherwise, show an error message
         setError("Invalid username or password.");

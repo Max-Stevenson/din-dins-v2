@@ -34,7 +34,14 @@ function App() {
       <RecipesContext.Provider value={recipeValue}>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<ProtectedRoute><Recipes /></ProtectedRoute>} />
+            <Route
+              path="/"
+              element={(
+                <ProtectedRoute>
+                  <Recipes />
+                </ProtectedRoute>
+          )}
+            />
             <Route path="/mealplanner" element={<Mealplanner />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/recipes/new" element={<RecipeForm />} />

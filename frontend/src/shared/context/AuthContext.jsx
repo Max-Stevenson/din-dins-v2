@@ -1,34 +1,32 @@
-import React, { useState, useMemo } from "react";
+import React, {
+  useState, createContext, useContext, useMemo
+} from "react";
 import PropTypes from "prop-types";
 
-const AuthContext = React.createContext({
-  isAuthenticated: false,
-  authenticate: () => {},
-  logout: () => {}
-});
+const AuthContext = createContext(null);
 
-function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
 
-  const authenticate = () => {
-    setIsAuthenticated(true);
+  const login = (userValue) => {
+    setUser(userValue);
   };
 
   const logout = () => {
-    setIsAuthenticated(false);
+    setUser(null);
   };
 
-  const value = useMemo(
+  const memValue = useMemo(
     () => ({
-      isAuthenticated,
-      authenticate,
+      user,
+      login,
       logout
     }),
-    [isAuthenticated]
+    [user]
   );
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={memValue}>
       {children}
     </AuthContext.Provider>
   );
@@ -38,6 +36,4 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-const AuthConsumer = AuthContext.Consumer;
-
-export { AuthProvider, AuthConsumer };
+export const useAuth = () => useContext(AuthContext);

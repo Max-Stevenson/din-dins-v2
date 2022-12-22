@@ -10,7 +10,6 @@ import "./Recipes.scss";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import useHttpClient from "../../shared/hooks/http-hook";
 import RecipesContext from "../../shared/context/RecipesContext";
-import AuthContext from "../../shared/context/AuthContext";
 
 function Recipes() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function Recipes() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await sendRequest("http://localhost:3000/api/v1/recipes", "get", null, { Authorization: `Bearer ${"jwt"}` });
+        const response = await sendRequest("http://localhost:3000/api/v1/recipes");
         setRecipes(response.data);
         setContextRecipes(response.data);
       } catch (err) {
