@@ -3,9 +3,11 @@
 import React, { useState, useContext } from "react";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import { useAuth } from "../../shared/context/AuthContext";
 
 function UserPortal() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const auth = useAuth();
   const [isActive, setIsActive] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -27,17 +29,14 @@ function UserPortal() {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: { "Content-Type": "application/json" }
-    }).then((response) => {
-      // If the login was successful, redirect the user to the dashboard
-      if (response.ok) {
-        // login();
-        console.log("ok");
-        // window.location.replace("/");
-      } else {
-        // Otherwise, show an error message
-        setError("Invalid username or password.");
-      }
-    });
+    })
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((jsonData) => {
+            auth.login(jsonData.token);
+          });
+        }
+      });
   };
 
   const changeHandler = (event) => {

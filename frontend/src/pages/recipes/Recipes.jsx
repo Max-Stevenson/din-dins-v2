@@ -10,9 +10,11 @@ import "./Recipes.scss";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import useHttpClient from "../../shared/hooks/http-hook";
 import RecipesContext from "../../shared/context/RecipesContext";
+import { useAuth } from "../../shared/context/AuthContext";
 
 function Recipes() {
   const navigate = useNavigate();
+  const auth = useAuth();
   const {
     error, isLoading, sendRequest, clearError
   } = useHttpClient();
@@ -22,11 +24,15 @@ function Recipes() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await sendRequest("http://localhost:3000/api/v1/recipes");
+        const response = await sendRequest(
+          "http://localhost:3000/api/v1/recipes",
+          "GET",
+          null,
+          { Authorization: `Bearer ${auth.user}` }
+        );
         setRecipes(response.data);
         setContextRecipes(response.data);
-      } catch (err) {
-      }
+      } catch (err) {}
     };
     if (!contextRecipes) {
       fetchRecipes();
