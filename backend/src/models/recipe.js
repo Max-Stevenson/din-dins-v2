@@ -57,7 +57,8 @@ const recipeSchema = new Schema({
             }
           },
         },
-      }],
+      },
+    ],
     required: true,
   },
   tags: {
@@ -74,7 +75,18 @@ const recipeSchema = new Schema({
             }
           },
         },
-      }],
+      },
+    ],
+  },
+  metadata: {
+    _id: false,
+    dateLastConsumed: {
+      type: Date,
+    },
+    createdBy: {
+      type: String,
+      required: true,
+    },
   },
 });
 

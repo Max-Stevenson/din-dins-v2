@@ -1,0 +1,8 @@
+1. Update recipe model to include metadata.
+  - metadata should include: dateLastConsumed
+2. MVP for mealplanner should be 4 recipes drawn at random.
+3. 2 recipes drawn from dateLastConsumed.
+4. Mealplan should be saved and dateLastConsumed updated for each recipe.
+5. Ability to switch out a single recipe.
+6. Mealplan drawn from dateLastConsumed and tags.
+7. Mealplan drawn from dateLastConsumed, tags and veg / meat.
