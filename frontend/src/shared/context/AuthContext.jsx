@@ -10,21 +10,16 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   // Load the JWT from a cookie, if it exists
-  const jwt = Cookies.get("jwt");
-  if (jwt) {
-    setUser(jwt);
-  }
 
   const login = (userValue) => {
     setUser(userValue);
+    Cookies.set("jwt", userValue);
     // Save the JWT in a cookie
-    Cookies.set("jwt", userValue, { expires: 7 }); // expires in 7 days
   };
 
   const logout = () => {
     setUser(null);
     // Remove the JWT from the cookie
-    Cookies.remove("jwt");
   };
 
   const memValue = useMemo(
