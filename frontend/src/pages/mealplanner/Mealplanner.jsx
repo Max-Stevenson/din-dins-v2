@@ -1,20 +1,48 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import { useAuth } from "../../shared/context/AuthContext";
+import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import useHttpClient from "../../shared/hooks/http-hook";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 
 import RecipesContext from "../../shared/context/RecipesContext";
 
 function Mealplanner() {
   const auth = useAuth();
-  const { contextRecipes } = useContext(RecipesContext);
+  const { contextRecipes, setContextRecipes } = useContext(RecipesContext);
   const [mealplan, setMealplan] = useState(null);
+  const {
+    error, isLoading, sendRequest, clearError
+  } = useHttpClient();
+  const [recipes, setRecipes] = useState();
 
   const generateMealplan = () => {
-    const randomRecipes = contextRecipes.sort(() => 0.5 - Math.random()).slice(0, 2);
+    const randomRecipes = recipes.sort(() => 0.5 - Math.random()).slice(0, 2);
     setMealplan(randomRecipes);
   };
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await sendRequest(
+          "http://localhost:3000/api/v1/recipes",
+          "GET",
+          null,
+          { Authorization: `Bearer ${auth.user}` }
+        );
+        setRecipes(response.data);
+        setContextRecipes(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    if (!contextRecipes) {
+      fetchRecipes();
+    } else {
+      setRecipes(contextRecipes);
+    }
+  }, [sendRequest]);
 
   return (
     <DisplayWrapper>

@@ -42,7 +42,14 @@ function App() {
                 </ProtectedRoute>
           )}
             />
-            <Route path="/mealplanner" element={<Mealplanner />} />
+            <Route
+              path="/mealplanner"
+              element={(
+                <ProtectedRoute>
+                  <Mealplanner />
+                </ProtectedRoute>
+)}
+            />
             <Route path="/settings" element={<Settings />} />
             <Route path="/recipes/new" element={<RecipeForm />} />
             <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />

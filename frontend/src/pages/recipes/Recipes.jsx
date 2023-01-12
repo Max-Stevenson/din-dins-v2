@@ -32,7 +32,9 @@ function Recipes() {
         );
         setRecipes(response.data);
         setContextRecipes(response.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     if (!contextRecipes) {
       fetchRecipes();
