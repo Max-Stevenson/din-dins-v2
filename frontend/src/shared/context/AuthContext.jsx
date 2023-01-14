@@ -7,10 +7,9 @@ import Cookies from "js-cookie";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(Cookies.get("jwt"));
 
   // Load the JWT from a cookie, if it exists
-
   const login = (userValue) => {
     setUser(userValue);
     Cookies.set("jwt", userValue);

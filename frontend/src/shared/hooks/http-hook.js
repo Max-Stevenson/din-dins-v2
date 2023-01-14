@@ -20,7 +20,7 @@ export default function useHttpClient() {
     const httpAbortCtrl = new AbortController();
     activeHttpRequests.current.push(httpAbortCtrl);
     try {
-      const responseData = await axios.get(url, {
+      const responseData = await axios.request(url, {
         method,
         body,
         headers,

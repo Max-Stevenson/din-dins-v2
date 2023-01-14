@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useContext } from "react";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
+import useHttpClient from "../../shared/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import { useAuth } from "../../shared/context/AuthContext";
 
@@ -9,18 +10,24 @@ function UserPortal() {
   const [isSignUp, setIsSignUp] = useState(false);
   const auth = useAuth();
   const [isActive, setIsActive] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [inputError, setInputError] = useState(null);
   const [data, setData] = useState({
     email: "",
     password: ""
   });
+  const {
+    error, isLoading, sendRequest, clearError
+  } = useHttpClient();
 
   const switchMode = (event, value) => {
     if (isSignUp !== value) {
       setIsSignUp(value);
       setIsActive(event.target.getAttribute("data-index"));
     }
+  };
+
+  const authenticate2 = (email, password) => {
+    sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify({ email, password }), { "Content-Type": "application/json" });
   };
 
   const authenticate = (email, password) => {
@@ -48,7 +55,7 @@ function UserPortal() {
     // Perform validation on the form fields
     if (data.email === "" || data.password === "") {
       // Show an error message if the form is not filled out
-      setError("Please fill out all fields.");
+      setInputError("Please fill out all fields.");
     } else {
       // Submit the form to the server
       authenticate(data.email, data.password);
