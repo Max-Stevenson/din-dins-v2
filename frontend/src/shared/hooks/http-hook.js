@@ -13,16 +13,17 @@ export default function useHttpClient() {
   const sendRequest = useCallback(async (
     url,
     method = "GET",
-    body = null,
+    data = { email: "test", password: "tester" },
     headers = {}
   ) => {
     setIsLoading(true);
+    console.log(data);
     const httpAbortCtrl = new AbortController();
     activeHttpRequests.current.push(httpAbortCtrl);
     try {
       const responseData = await axios.request(url, {
         method,
-        body,
+        data,
         headers,
         signal: httpAbortCtrl.signal
       });

@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 /* eslint-disable quote-props */
 /* eslint-disable no-unused-vars */
 import React, { useState, useContext } from "react";
@@ -26,12 +27,17 @@ function UserPortal() {
     }
   };
 
-  const authenticate2 = (email, password) => {
-    sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify({ email, password }), { "Content-Type": "application/json" });
+  const authenticate2 = async (email, password) => {
+    const body = { email: email, password: password };
+    const headers = {
+      "Content-Type": "application/json"
+    };
+    sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify(body), headers);
   };
 
   const authenticate = (email, password) => {
     // Send a request to the server with the username and password
+    console.log(JSON.stringify({ email, password }));
     fetch("http://localhost:3000/api/v1/users/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
@@ -58,9 +64,17 @@ function UserPortal() {
       setInputError("Please fill out all fields.");
     } else {
       // Submit the form to the server
-      authenticate(data.email, data.password);
+      authenticate2(data.email, data.password);
     }
   };
+
+  if (isLoading) {
+    return (
+      <DisplayWrapper>
+        <LoadingSpinner asOverlay />
+      </DisplayWrapper>
+    );
+  }
 
   if (isSignUp) {
     return (
