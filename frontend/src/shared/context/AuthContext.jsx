@@ -9,6 +9,19 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(Cookies.get("jwt"));
 
+  // const authenticate = async () => {
+  //   try {
+  //     // Verify the JWT on the backend
+  //     const response = await axios.post("/api/v1/users/authenticate", { token: userValue });
+  //     if (response.data.message === "Token is valid") {
+  //       setUser(userValue);
+  //       Cookies.set("jwt", userValue);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   // Load the JWT from a cookie, if it exists
   const login = (userValue) => {
     setUser(userValue);

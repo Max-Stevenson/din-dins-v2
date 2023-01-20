@@ -72,6 +72,18 @@ exports.createUser = async (req, res, next) => {
   return res.status(201).json({ userId: createdUser.id, email: createdUser.email, token });
 };
 
+exports.authenticate = (req, res, next) => {
+  const { token } = req.body;
+
+  // Verify the token
+  try {
+    const decoded = jwt.verify(token, JWT_TOKEN);
+    return res.json({ message: "Token is valid" }, decoded);
+  } catch (err) {
+    return next(new HttpError("Invalid Token", 401));
+  }
+};
+
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
 
