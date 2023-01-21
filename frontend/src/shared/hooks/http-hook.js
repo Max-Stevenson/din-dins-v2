@@ -17,7 +17,6 @@ export default function useHttpClient() {
     headers = {}
   ) => {
     setIsLoading(true);
-    console.log(data);
     const httpAbortCtrl = new AbortController();
     activeHttpRequests.current.push(httpAbortCtrl);
     try {

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import useHttpClient from "../../shared/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
@@ -8,6 +9,8 @@ import { useAuth } from "../../shared/context/AuthContext";
 function UserPortal() {
   const [isSignUp, setIsSignUp] = useState(false);
   const auth = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isActive, setIsActive] = useState(0);
   const [inputError, setInputError] = useState(null);
   const [data, setData] = useState({
@@ -25,7 +28,7 @@ function UserPortal() {
     }
   };
 
-  const authenticate = async (email, password) => {
+  const authenticate = async (email, password, navLocation) => {
     const body = { email, password };
     const headers = {
       "Content-Type": "application/json"
@@ -33,6 +36,8 @@ function UserPortal() {
     const response = await sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify(body), headers);
     if (response.status === 200) {
       auth.login(response.data.token);
+      const { from } = navLocation.state || { from: { pathname: "/" } };
+      navigate(from);
     }
   };
 
@@ -48,7 +53,7 @@ function UserPortal() {
       setInputError("Please fill out all fields.");
     } else {
       // Submit the form to the server
-      authenticate(data.email, data.password);
+      authenticate(data.email, data.password, location);
     }
   };
 

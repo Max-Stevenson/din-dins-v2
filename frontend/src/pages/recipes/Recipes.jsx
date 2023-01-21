@@ -28,7 +28,7 @@ function Recipes() {
           "http://localhost:3000/api/v1/recipes",
           "GET",
           null,
-          { Authorization: `Bearer ${auth.user}` }
+          { Authorization: `Bearer ${auth.token}` }
         );
         setRecipes(response.data);
         setContextRecipes(response.data);
