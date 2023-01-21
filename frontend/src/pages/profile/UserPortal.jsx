@@ -1,5 +1,3 @@
-/* eslint-disable object-shorthand */
-/* eslint-disable quote-props */
 /* eslint-disable no-unused-vars */
 import React, { useState, useContext } from "react";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
@@ -27,29 +25,15 @@ function UserPortal() {
     }
   };
 
-  const authenticate2 = async (email, password) => {
-    const body = { email: email, password: password };
+  const authenticate = async (email, password) => {
+    const body = { email, password };
     const headers = {
       "Content-Type": "application/json"
     };
-    sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify(body), headers);
-  };
-
-  const authenticate = (email, password) => {
-    // Send a request to the server with the username and password
-    console.log(JSON.stringify({ email, password }));
-    fetch("http://localhost:3000/api/v1/users/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" }
-    })
-      .then((response) => {
-        if (response.ok) {
-          response.json().then((jsonData) => {
-            auth.login(jsonData.token);
-          });
-        }
-      });
+    const response = await sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify(body), headers);
+    if (response.status === 200) {
+      auth.login(response.data.token);
+    }
   };
 
   const changeHandler = (event) => {
@@ -64,7 +48,7 @@ function UserPortal() {
       setInputError("Please fill out all fields.");
     } else {
       // Submit the form to the server
-      authenticate2(data.email, data.password);
+      authenticate(data.email, data.password);
     }
   };
 
@@ -72,6 +56,15 @@ function UserPortal() {
     return (
       <DisplayWrapper>
         <LoadingSpinner asOverlay />
+      </DisplayWrapper>
+    );
+  }
+
+  if (error) {
+    return (
+      <DisplayWrapper>
+        <h2>Error</h2>
+        <p>{error}</p>
       </DisplayWrapper>
     );
   }
