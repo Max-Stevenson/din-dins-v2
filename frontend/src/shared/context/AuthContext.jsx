@@ -16,6 +16,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
+    Cookies.remove("jwt");
     setToken(null);
     // Remove the JWT from the cookie
   };

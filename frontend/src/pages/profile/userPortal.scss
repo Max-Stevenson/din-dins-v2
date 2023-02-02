@@ -1,0 +1,26 @@
+form {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 90px #00000024;
+  font-size: 20px;
+  border-radius: 15px;
+
+}
+
+.user-portal__mode-toggle-container {
+  display: flex;
+  border: 1px solid;
+  border-radius: 5px;
+  background: gainsboro;
+  padding: 5px;
+  justify-content: space-evenly;
+}
+
+.user-portal__mode-toggle-container > button {
+  font-size: 35px;
+  flex: 1;
+}
+
+.active {
+  background: silver;
+}

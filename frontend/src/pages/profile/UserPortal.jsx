@@ -5,13 +5,14 @@ import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import useHttpClient from "../../shared/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import { useAuth } from "../../shared/context/AuthContext";
+import "./userPortal.scss";
 
 function UserPortal() {
   const [isSignUp, setIsSignUp] = useState(false);
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isActive, setIsActive] = useState(0);
+  const [isActive, setIsActive] = useState("1");
   const [inputError, setInputError] = useState(null);
   const [data, setData] = useState({
     email: "",
@@ -79,7 +80,7 @@ function UserPortal() {
       <DisplayWrapper>
         <form onSubmit={handleSubmit}>
           <h3>Login</h3>
-          <div>
+          <div className="user-portal__mode-toggle-container">
             <button
               data-index={0}
               className={isActive === "0" ? "active" : undefined}
@@ -92,7 +93,7 @@ function UserPortal() {
             </button>
             <button
               data-index={1}
-              className={isActive === "0" ? "active" : undefined}
+              className={isActive === "1" ? "active" : undefined}
               onClick={(event) => {
                 switchMode(event, false);
               }}
@@ -155,6 +156,8 @@ function UserPortal() {
           <h3>Sign Up</h3>
           <div>
             <button
+              data-index={0}
+              className={isActive === "0" ? "active" : undefined}
               onClick={(event) => {
                 switchMode(event, true);
               }}
@@ -163,6 +166,8 @@ function UserPortal() {
               Login
             </button>
             <button
+              data-index={1}
+              className={isActive === "1" ? "active" : undefined}
               onClick={(event) => {
                 switchMode(event, false);
               }}
