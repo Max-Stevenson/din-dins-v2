@@ -61,7 +61,7 @@ function UserPortal() {
   if (isLoading) {
     return (
       <DisplayWrapper>
-        <LoadingSpinner asOverlay />
+        <LoadingSpinner asOverlay loadingMessage="Authenticating user, please wait..." />
       </DisplayWrapper>
     );
   }
@@ -79,7 +79,79 @@ function UserPortal() {
     return (
       <DisplayWrapper>
         <form onSubmit={handleSubmit}>
-          <h3>Login</h3>
+          <div className="user-portal__mode-toggle-container">
+            <button
+              data-index={0}
+              className={isActive === "0" ? "active" : undefined}
+              onClick={(event) => {
+                switchMode(event, true);
+              }}
+              type="button"
+            >
+              Login
+            </button>
+            <button
+              data-index={1}
+              className={isActive === "1" ? "active" : undefined}
+              onClick={(event) => {
+                switchMode(event, false);
+              }}
+              type="button"
+            >
+              Sign Up
+            </button>
+          </div>
+          <div className="user-portal__input-container">
+            <label className="user-portal__input-label" htmlFor="email">
+              <input
+                id="email"
+                type="email"
+                name="email"
+                className="user-portal__input-email"
+                placeholder="Email Address"
+                onChange={changeHandler}
+                value={data.email}
+              />
+            </label>
+          </div>
+          <div className="user-portal__input-container">
+            <label className="user-portal__input-label" htmlFor="password">
+              <input
+                id="password"
+                type="password"
+                className="user-portal__input-password"
+                name="password"
+                placeholder="Enter password"
+                onChange={changeHandler}
+                value={data.password}
+              />
+              Password
+            </label>
+          </div>
+          <div className="user-portal__input-container">
+            <label className="user-portal__input-label" htmlFor="customCheck1">
+              <input
+                type="checkbox"
+                className="user-portal__input-checkbox"
+                id="customCheck1"
+              />
+              Remember me
+            </label>
+          </div>
+          <div>
+            <button type="submit" className="">
+              Submit
+            </button>
+          </div>
+        </form>
+      </DisplayWrapper>
+    );
+  }
+
+  if (!isSignUp) {
+    return (
+      <DisplayWrapper>
+        <form onSubmit={handleSubmit}>
           <div className="user-portal__mode-toggle-container">
             <button
               data-index={0}
@@ -107,7 +179,6 @@ function UserPortal() {
               <input
                 id="email"
                 type="email"
-                name="email"
                 className="form-control"
                 placeholder="Enter email"
                 onChange={changeHandler}
@@ -121,85 +192,10 @@ function UserPortal() {
                 id="password"
                 type="password"
                 className="form-control"
-                name="password"
                 placeholder="Enter password"
                 onChange={changeHandler}
                 value={data.password}
               />
-              Password
-            </label>
-          </div>
-          <div>
-            <label className="custom-control-label" htmlFor="customCheck1">
-              <input
-                type="checkbox"
-                className="custom-control-input"
-                id="customCheck1"
-              />
-              Remember me
-            </label>
-          </div>
-          <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </div>
-        </form>
-      </DisplayWrapper>
-    );
-  }
-
-  if (!isSignUp) {
-    return (
-      <DisplayWrapper>
-        <form>
-          <h3>Sign Up</h3>
-          <div>
-            <button
-              data-index={0}
-              className={isActive === "0" ? "active" : undefined}
-              onClick={(event) => {
-                switchMode(event, true);
-              }}
-              type="button"
-            >
-              Login
-            </button>
-            <button
-              data-index={1}
-              className={isActive === "1" ? "active" : undefined}
-              onClick={(event) => {
-                switchMode(event, false);
-              }}
-              type="button"
-            >
-              Sign Up
-            </button>
-          </div>
-          <div>
-            <label htmlFor="email">
-              <input
-                id="email"
-                type="email"
-                className="form-control"
-                placeholder="Enter email"
-                onChange={changeHandler}
-                value={data.email}
-              />
-              Email address
-            </label>
-          </div>
-          <div>
-            <label htmlFor="password">
-              <input
-                id="password"
-                type="password"
-                className="form-control"
-                placeholder="Enter password"
-                onChange={changeHandler}
-                value={data.password}
-              />
-              Password
             </label>
           </div>
           <div>
@@ -209,13 +205,6 @@ function UserPortal() {
                 type="password"
                 placeholder="Confirm password"
               />
-              Confirm Password
-            </label>
-          </div>
-          <div>
-            <label htmlFor="username">
-              <input type="text" id="username" />
-              Username
             </label>
           </div>
           <div className="d-grid">
