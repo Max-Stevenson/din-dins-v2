@@ -24,3 +24,16 @@ form {
 .active {
   background: silver;
 }
+
+.user-portal__input-container {
+  margin-top: 15px;
+}
+
+.user-portal__input-container input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1.2em;
+  height: 50px;
+  padding: 10px;
+  border-radius: 5px;
+}

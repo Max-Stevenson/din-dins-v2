@@ -111,6 +111,7 @@ function UserPortal() {
                 placeholder="Email Address"
                 onChange={changeHandler}
                 value={data.email}
+                autoComplete="email"
               />
             </label>
           </div>
@@ -125,22 +126,11 @@ function UserPortal() {
                 onChange={changeHandler}
                 value={data.password}
               />
-              Password
             </label>
           </div>
           <div className="user-portal__input-container">
-            <label className="user-portal__input-label" htmlFor="customCheck1">
-              <input
-                type="checkbox"
-                className="user-portal__input-checkbox"
-                id="customCheck1"
-              />
-              Remember me
-            </label>
-          </div>
-          <div>
-            <button type="submit" className="">
-              Submit
+            <button type="submit" className="user-portal__submit-btn">
+              Login
             </button>
           </div>
         </form>
