@@ -87,27 +87,26 @@ function RecipeForm() {
     }
   };
 
-  const convertToBase64 = (file) => new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
+  // const convertToBase64 = (file) => new Promise((resolve, reject) => {
+  //   const fileReader = new FileReader();
+  //   fileReader.readAsDataURL(file);
+  //   fileReader.onload = () => {
+  //     resolve(fileReader.result);
+  //   };
 
-    FileReader.onerror = (err) => {
-      reject(err);
-    };
-  });
+  //   FileReader.onerror = (err) => {
+  //     reject(err);
+  //   };
+  // });
 
   const handleFileUpload = async (event) => {
     // TODO filesize and type check
     const image = event.target.files[0];
-    const base64Image = await convertToBase64(image);
     setFormState((previous) => ({
       ...previous,
       image: {
         preview: URL.createObjectURL(image),
-        fileBase64: base64Image
+        fileBase64: image
       }
     }));
   };

@@ -45,6 +45,8 @@ const createRecipe = async (req, res, next) => {
   return res.status(201).send(recipe);
 };
 
+const uploadImage = async (req, res) => res.status(201).send("burh");
+
 const editRecipe = async (req, res, next) => {
   const {
     name, image, servings, cookingTime, isVegetarian, ingredients, method,
@@ -100,5 +102,6 @@ const deleteRecipe = async (req, res, next) => {
 exports.getAllRecipes = getAllRecipes;
 exports.getRecipeById = getRecipeById;
 exports.createRecipe = createRecipe;
+exports.uploadImage = uploadImage;
 exports.editRecipe = editRecipe;
 exports.deleteRecipe = deleteRecipe;
