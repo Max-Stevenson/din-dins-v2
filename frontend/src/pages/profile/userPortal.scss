@@ -1,6 +1,7 @@
 form {
   display: flex;
   flex-direction: column;
+  margin-top: 25%;
   box-shadow: 0 10px 90px #00000024;
   font-size: 20px;
   border-radius: 15px;
@@ -29,11 +30,10 @@ form {
   margin-top: 15px;
 }
 
-.user-portal__input-container input {
+.user-portal__input-container input, .user-portal__submit-btn {
   width: 100%;
   box-sizing: border-box;
   font-size: 1.2em;
-  height: 50px;
   padding: 10px;
   border-radius: 5px;
 }

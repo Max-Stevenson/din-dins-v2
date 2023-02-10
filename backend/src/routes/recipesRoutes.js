@@ -1,21 +1,10 @@
 // Contains only routing for recipes
 const express = require("express");
-const path = require("path");
-const multer = require("multer");
 const recipesController = require("../controllers/recipesController");
 const checkAuth = require("../middleware/check-auth");
+const upload = require("../middleware/image-upload");
 
 const router = express.Router();
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./src/Images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
-const upload = multer({ storage });
 
 router.use(checkAuth);
 router.get("/", recipesController.getAllRecipes);

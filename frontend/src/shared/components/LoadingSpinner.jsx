@@ -7,7 +7,9 @@ function LoadingSpinner({ asOverlay, loadingMessage }) {
   return (
     <div className={`${asOverlay && "loading-spinner__overlay"}`}>
       <div className="lds-dual-ring" />
-      <h2>{loadingMessage}</h2>
+      <div>
+        <h3>{loadingMessage}</h3>
+      </div>
     </div>
   );
 }
