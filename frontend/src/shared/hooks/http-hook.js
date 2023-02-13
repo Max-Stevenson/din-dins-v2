@@ -38,7 +38,7 @@ export default function useHttpClient() {
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
-      throw err;
+      return false;
     }
   }, []);
 

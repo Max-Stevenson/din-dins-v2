@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 /* eslint-disable no-unused-vars */
 import React, { useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,20 +13,77 @@ function UserPortal() {
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isActive, setIsActive] = useState("1");
-  const [inputError, setInputError] = useState(null);
-  const [data, setData] = useState({
-    email: "",
-    password: ""
-  });
+  const [isActive, setIsActive] = useState("0");
   const {
     error, isLoading, sendRequest, clearError
   } = useHttpClient();
 
-  const switchMode = (event, value) => {
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+
+  const [inputError, setInputError] = useState({
+    email: "",
+    password: "",
+    confirmPassword: null
+  });
+
+  const validateInput = (e) => {
+    const { name, value } = e.target;
+    setInputError((prev) => {
+      const stateObj = { ...prev, [name]: "" };
+      switch (name) {
+        case "email":
+          if (!value) {
+            stateObj[name] = "Please enter Email.";
+          }
+          break;
+
+        case "password":
+          if (!value) {
+            stateObj[name] = "Please enter Password.";
+          } else if (input.confirmPassword && value !== input.confirmPassword) {
+            stateObj["confirmPassword"] = "Password and Confirm Password does not match.";
+          } else {
+            stateObj["confirmPassword"] = input.confirmPassword ? "" : inputError.confirmPassword;
+          }
+          break;
+
+        case "confirmPassword":
+          if (!value) {
+            stateObj[name] = "Please enter Confirm Password.";
+          } else if (input.password && value !== input.password) {
+            stateObj[name] = "Password and Confirm Password does not match.";
+          }
+          break;
+
+        default:
+          break;
+      }
+
+      if (typeof error === "string") {
+        stateObj["confirmPassword"] = error;
+      }
+
+      return stateObj;
+    });
+  };
+
+  const onInputChange = (e) => {
+    const { name, value } = e.target;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+    validateInput(e);
+  };
+
+  const switchMode = (index, value) => {
     if (isSignUp !== value) {
       setIsSignUp(value);
-      setIsActive(event.target.getAttribute("data-index"));
+      setIsActive(index.toString());
     }
   };
 
@@ -42,19 +100,19 @@ function UserPortal() {
     }
   };
 
-  const changeHandler = (event) => {
-    setData({ ...data, [event.target.name]: event.target.value });
-  };
+  // const changeHandler = (event) => {
+  //   setData({ ...data, [event.target.name]: event.target.value });
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // Perform validation on the form fields
-    if (data.email === "" || data.password === "") {
+    if (input.email === "" || input.password === "") {
       // Show an error message if the form is not filled out
       setInputError("Please fill out all fields.");
     } else {
       // Submit the form to the server
-      authenticate(data.email, data.password, location);
+      authenticate(input.email, input.password, location);
     }
   };
 
@@ -75,7 +133,7 @@ function UserPortal() {
     );
   }
 
-  if (isSignUp) {
+  if (isSignUp === false) {
     return (
       <DisplayWrapper>
         <form onSubmit={handleSubmit}>
@@ -83,8 +141,8 @@ function UserPortal() {
             <button
               data-index={0}
               className={isActive === "0" ? "active" : undefined}
-              onClick={(event) => {
-                switchMode(event, true);
+              onClick={() => {
+                switchMode(0, false);
               }}
               type="button"
             >
@@ -93,13 +151,14 @@ function UserPortal() {
             <button
               data-index={1}
               className={isActive === "1" ? "active" : undefined}
-              onClick={(event) => {
-                switchMode(event, false);
+              onClick={() => {
+                switchMode(1, true);
               }}
               type="button"
             >
               Sign Up
             </button>
+
           </div>
           <div className="user-portal__input-container">
             <label className="user-portal__input-label" htmlFor="email">
@@ -109,8 +168,8 @@ function UserPortal() {
                 name="email"
                 className="user-portal__input-email"
                 placeholder="Email Address"
-                onChange={changeHandler}
-                value={data.email}
+                onChange={onInputChange}
+                value={input.email}
                 autoComplete="email"
               />
             </label>
@@ -123,8 +182,8 @@ function UserPortal() {
                 className="user-portal__input-password"
                 name="password"
                 placeholder="Enter password"
-                onChange={changeHandler}
-                value={data.password}
+                onChange={onInputChange}
+                value={input.password}
               />
             </label>
           </div>
@@ -138,7 +197,7 @@ function UserPortal() {
     );
   }
 
-  if (!isSignUp) {
+  if (isSignUp) {
     return (
       <DisplayWrapper>
         <form onSubmit={handleSubmit}>
@@ -147,7 +206,7 @@ function UserPortal() {
               data-index={0}
               className={isActive === "0" ? "active" : undefined}
               onClick={(event) => {
-                switchMode(event, true);
+                switchMode(event, false);
               }}
               type="button"
             >
@@ -157,49 +216,54 @@ function UserPortal() {
               data-index={1}
               className={isActive === "1" ? "active" : undefined}
               onClick={(event) => {
-                switchMode(event, false);
+                switchMode(event, true);
               }}
               type="button"
             >
               Sign Up
             </button>
           </div>
-          <div>
+          <div className="user-portal__input-container">
             <label htmlFor="email">
               <input
                 id="email"
                 type="email"
+                name="email"
                 className="form-control"
-                placeholder="Enter email"
-                onChange={changeHandler}
-                value={data.email}
+                placeholder="Email Address"
+                onChange={onInputChange}
+                value={input.email}
               />
             </label>
           </div>
-          <div>
+          <div className="user-portal__input-container">
             <label htmlFor="password">
               <input
                 id="password"
                 type="password"
+                name="password"
                 className="form-control"
-                placeholder="Enter password"
-                onChange={changeHandler}
-                value={data.password}
+                placeholder="Password"
+                onChange={onInputChange}
+                value={input.password}
               />
             </label>
           </div>
-          <div>
+          <div className="user-portal__input-container">
             <label htmlFor="confirmPassword">
               <input
                 id="confirmPassword"
                 type="password"
+                name="confirmPassword"
                 placeholder="Confirm password"
+                onChange={onInputChange}
+                value={input.confirmPassword}
               />
             </label>
           </div>
-          <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
-              Submit
+          <div className="user-portal__input-container">
+            <button type="submit" className="user-portal__submit-btn">
+              Sign Up
             </button>
           </div>
         </form>
