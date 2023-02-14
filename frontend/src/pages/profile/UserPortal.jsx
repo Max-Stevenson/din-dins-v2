@@ -94,9 +94,9 @@ function UserPortal() {
     };
     let response;
     if (isSignUp) {
-      response = await sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify(body), headers);
-    } else {
       response = await sendRequest("http://localhost:3000/api/v1/users/", "POST", JSON.stringify(body), headers);
+    } else {
+      response = await sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify(body), headers);
     }
 
     if (response.status === 200 || response.status === 201) {

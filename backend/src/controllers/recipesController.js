@@ -45,7 +45,11 @@ const createRecipe = async (req, res, next) => {
   return res.status(201).send(recipe);
 };
 
-const uploadImage = async (req, res) => res.status(201).send("burh");
+const uploadImage = (req, res) => {
+  const { file } = req;
+  const imageUrl = `${req.protocol}://${req.get("host")}/images/${file.filename}`;
+  return res.status(201).json({ imageUrl });
+};
 
 const editRecipe = async (req, res, next) => {
   const {
