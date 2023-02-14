@@ -92,28 +92,23 @@ function UserPortal() {
     const headers = {
       "Content-Type": "application/json"
     };
-    const response = await sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify(body), headers);
-    if (response.status === 200) {
+    let response;
+    if (isSignUp) {
+      response = await sendRequest("http://localhost:3000/api/v1/users/login", "POST", JSON.stringify(body), headers);
+    } else {
+      response = await sendRequest("http://localhost:3000/api/v1/users/", "POST", JSON.stringify(body), headers);
+    }
+
+    if (response.status === 200 || response.status === 201) {
       auth.login(response.data.token);
       const { from } = navLocation.state || { from: { pathname: "/" } };
       navigate(from);
     }
   };
 
-  // const changeHandler = (event) => {
-  //   setData({ ...data, [event.target.name]: event.target.value });
-  // };
-
-  const handleSubmit = (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
-    // Perform validation on the form fields
-    if (input.email === "" || input.password === "") {
-      // Show an error message if the form is not filled out
-      setInputError("Please fill out all fields.");
-    } else {
-      // Submit the form to the server
-      authenticate(input.email, input.password, location);
-    }
+    authenticate(input.email, input.password, location);
   };
 
   if (isLoading) {
@@ -136,7 +131,7 @@ function UserPortal() {
   if (isSignUp === false) {
     return (
       <DisplayWrapper>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleFormSubmit}>
           <div className="user-portal__mode-toggle-container">
             <button
               data-index={0}
@@ -172,6 +167,7 @@ function UserPortal() {
                 value={input.email}
                 autoComplete="email"
               />
+              {inputError.email && <span className="err">{inputError.email}</span>}
             </label>
           </div>
           <div className="user-portal__input-container">
@@ -185,6 +181,7 @@ function UserPortal() {
                 onChange={onInputChange}
                 value={input.password}
               />
+              {inputError.password && <span className="err">{inputError.password}</span>}
             </label>
           </div>
           <div className="user-portal__input-container">
@@ -200,13 +197,13 @@ function UserPortal() {
   if (isSignUp) {
     return (
       <DisplayWrapper>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleFormSubmit}>
           <div className="user-portal__mode-toggle-container">
             <button
               data-index={0}
               className={isActive === "0" ? "active" : undefined}
               onClick={(event) => {
-                switchMode(event, false);
+                switchMode(0, false);
               }}
               type="button"
             >
@@ -216,7 +213,7 @@ function UserPortal() {
               data-index={1}
               className={isActive === "1" ? "active" : undefined}
               onClick={(event) => {
-                switchMode(event, true);
+                switchMode(1, true);
               }}
               type="button"
             >
@@ -234,6 +231,7 @@ function UserPortal() {
                 onChange={onInputChange}
                 value={input.email}
               />
+              {inputError.email && <span className="err">{inputError.email}</span>}
             </label>
           </div>
           <div className="user-portal__input-container">
@@ -247,6 +245,7 @@ function UserPortal() {
                 onChange={onInputChange}
                 value={input.password}
               />
+              {inputError.password && <span className="err">{inputError.password}</span>}
             </label>
           </div>
           <div className="user-portal__input-container">
@@ -259,6 +258,7 @@ function UserPortal() {
                 onChange={onInputChange}
                 value={input.confirmPassword}
               />
+              {inputError.confirmPassword && <span className="err">{inputError.confirmPassword}</span>}
             </label>
           </div>
           <div className="user-portal__input-container">
