@@ -7,12 +7,14 @@ import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import axios from "axios";
 import TabPanel from "../../shared/components/TabPanel";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import { useAuth } from "../../shared/context/AuthContext";
 import "./RecipeReview.scss";
 
 function RecipeReview({ formState, previousStep }) {
   const [isLoading, setIsLoading] = useState(false);
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
   const [tabValue, setTabValue] = useState(0);
+  const auth = useAuth();
 
   const handleChange = (_event, value) => {
     setTabValue(value);
@@ -23,7 +25,7 @@ function RecipeReview({ formState, previousStep }) {
     setRecipeSubmitted(true);
     const recipe = {
       name: formState.name.value,
-      image: formState.image.fileBase64,
+      image: null,
       servings: formState.servings.value,
       cookingTime: formState.cookingTime.value,
       isVegetarian: formState.isVegetarian,
@@ -31,9 +33,19 @@ function RecipeReview({ formState, previousStep }) {
       method: formState.method,
       tags: formState.tags
     };
+    const formData = new FormData();
+    formData.append("image", formState.image.file);
     try {
-      await axios.post("http://localhost:3000/api/v1/recipes", recipe);
-      setIsLoading(false);
+      const headers = { Authorization: `Bearer ${auth.token}` };
+      const imageResponse = await axios.post("http://localhost:3000/api/v1/recipes/upload", formData, { headers });
+      if (!imageResponse.ok) {
+        throw new Error("Upload failed");
+      }
+      recipe.image = imageResponse.imageUrl;
+      const recipeResponse = await axios.post("http://localhost:3000/api/v1/recipes", recipe, { headers });
+      if (!recipeResponse.ok) {
+        throw new Error("recipe creation failed");
+      }
     } catch (err) {
       return err;
     }
@@ -153,7 +165,7 @@ RecipeReview.propTypes = {
     }),
     image: PropTypes.shape({
       preview: PropTypes.string,
-      fileBase64: PropTypes.string
+      file: PropTypes.shape({})
     }),
     servings: PropTypes.shape({
       value: PropTypes.number,

@@ -109,7 +109,7 @@ FormInputs.propTypes = {
     }),
     image: PropTypes.shape({
       preview: PropTypes.string,
-      fileBase64: PropTypes.string
+      file: PropTypes.shape({})
     }),
     servings: PropTypes.shape({
       value: PropTypes.number,
