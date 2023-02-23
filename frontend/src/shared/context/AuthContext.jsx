@@ -8,15 +8,19 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(Cookies.get("jwt"));
+  const [userId, setUserId] = useState(null);
 
-  const login = (passedToken) => {
+  const login = (passedToken, passedUserId) => {
     setToken(passedToken);
+    setUserId(passedUserId);
+    console.log(passedUserId);
     Cookies.set("jwt", passedToken);
     // Save the JWT in a cookie
   };
 
   const logout = () => {
     Cookies.remove("jwt");
+    setUserId(null);
     setToken(null);
     // Remove the JWT from the cookie
   };
@@ -24,10 +28,11 @@ export function AuthProvider({ children }) {
   const memValue = useMemo(
     () => ({
       token,
+      userId,
       login,
       logout
     }),
-    [token]
+    [token, userId]
   );
 
   return (

@@ -12,6 +12,7 @@ import "./RecipeReview.scss";
 
 function RecipeReview({ formState, previousStep }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const auth = useAuth();
@@ -31,21 +32,30 @@ function RecipeReview({ formState, previousStep }) {
       isVegetarian: formState.isVegetarian,
       ingredients: formState.ingredients,
       method: formState.method,
-      tags: formState.tags
+      tags: formState.tags,
+      metadata: {
+        dateLastConsumed: Date.now(),
+        createdBy: auth.userId
+      }
     };
     const formData = new FormData();
     formData.append("image", formState.image.file);
     try {
       const headers = { Authorization: `Bearer ${auth.token}` };
       const imageResponse = await axios.post("http://localhost:3000/api/v1/recipes/upload", formData, { headers });
-      if (!imageResponse.ok) {
-        throw new Error("Upload failed");
+      console.log(recipe.data.imageResponse);
+      if (imageResponse.status !== 201) {
+        setIsLoading(false);
+        setError("Upload failed");
       }
-      recipe.image = imageResponse.imageUrl;
+      recipe.image = imageResponse.data.imageUrl;
+      console.log(recipe.image);
       const recipeResponse = await axios.post("http://localhost:3000/api/v1/recipes", recipe, { headers });
-      if (!recipeResponse.ok) {
-        throw new Error("recipe creation failed");
+      if (recipeResponse.status !== 201) {
+        setIsLoading(false);
+        setError("recipe creation failed");
       }
+      setIsLoading(false);
     } catch (err) {
       return err;
     }
@@ -65,9 +75,13 @@ function RecipeReview({ formState, previousStep }) {
         {!isLoading && (
           <h2>Recipe Creation successful</h2>
         )}
+        {!isLoading && error && (
+          <h2>{error}</h2>
+        )}
       </Container>
     );
   }
+
   if (!recipeSubmitted) {
     return (
       <Container>

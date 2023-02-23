@@ -87,6 +87,11 @@ function UserPortal() {
     }
   };
 
+  const handleLogout = (event) => {
+    event.preventDefault();
+    auth.logout();
+  };
+
   const authenticate = async (email, password, navLocation) => {
     const body = { email, password };
     const headers = {
@@ -100,7 +105,8 @@ function UserPortal() {
     }
 
     if (response.status === 200 || response.status === 201) {
-      auth.login(response.data.token);
+      auth.login(response.data.token, response.data.userId);
+      console.log(response.data.userId);
       const { from } = navLocation.state || { from: { pathname: "/" } };
       navigate(from);
     }
@@ -190,6 +196,12 @@ function UserPortal() {
             </button>
           </div>
         </form>
+        <button
+          onClick={handleLogout}
+          type="button"
+        >
+          Logout
+        </button>
       </DisplayWrapper>
     );
   }
