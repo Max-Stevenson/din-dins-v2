@@ -13,7 +13,6 @@ export function AuthProvider({ children }) {
   const login = (passedToken, passedUserId) => {
     setToken(passedToken);
     setUserId(passedUserId);
-    console.log(passedUserId);
     Cookies.set("jwt", passedToken);
     // Save the JWT in a cookie
   };

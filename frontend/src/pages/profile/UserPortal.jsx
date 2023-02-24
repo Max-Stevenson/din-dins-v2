@@ -106,7 +106,6 @@ function UserPortal() {
 
     if (response.status === 200 || response.status === 201) {
       auth.login(response.data.token, response.data.userId);
-      console.log(response.data.userId);
       const { from } = navLocation.state || { from: { pathname: "/" } };
       navigate(from);
     }

@@ -43,7 +43,8 @@ function RecipeReview({ formState, previousStep }) {
     try {
       const headers = { Authorization: `Bearer ${auth.token}` };
       const imageResponse = await axios.post("http://localhost:3000/api/v1/recipes/upload", formData, { headers });
-      console.log(recipe.data.imageResponse);
+      console.log(imageResponse);
+      console.log(imageResponse.data.imageUrl);
       if (imageResponse.status !== 201) {
         setIsLoading(false);
         setError("Upload failed");
