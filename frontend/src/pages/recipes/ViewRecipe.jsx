@@ -9,6 +9,7 @@ import useHttpClient from "../../shared/hooks/http-hook";
 import useFetch from "../../shared/hooks/useFetchHook";
 import RecipesContext from "../../shared/context/RecipesContext";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
+import DeleteConfirmationModal from "../../shared/components/DeleteConfirmationModal";
 
 function ViewRecipe() {
   const {
@@ -49,7 +50,13 @@ function ViewRecipe() {
             <h2>{recipe.name}</h2>
           </Grid>
           <Grid item xs={12}>
-            <img src={recipe.img} alt={recipe.name} />
+            <img src={recipe.image} alt={recipe.name} />
+          </Grid>
+          <Grid item xs={12}>
+            <div>
+              <button type="button">Edit</button>
+              <DeleteConfirmationModal />
+            </div>
           </Grid>
         </Grid>
       </DisplayWrapper>
