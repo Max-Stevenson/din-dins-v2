@@ -87,11 +87,6 @@ function UserPortal() {
     }
   };
 
-  const handleLogout = (event) => {
-    event.preventDefault();
-    auth.logout();
-  };
-
   const authenticate = async (email, password, navLocation) => {
     const body = { email, password };
     const headers = {
@@ -195,12 +190,6 @@ function UserPortal() {
             </button>
           </div>
         </form>
-        <button
-          onClick={handleLogout}
-          type="button"
-        >
-          Logout
-        </button>
       </DisplayWrapper>
     );
   }

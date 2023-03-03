@@ -1,10 +1,13 @@
 /* Smartphones (portrait and landscape) ----------- */
+.navbar-container {
+  display: none;
+}
+
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .navbar-container {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    height: 10vh;
     background: #302E2b;
     position: fixed;
     bottom: 0;

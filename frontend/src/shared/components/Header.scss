@@ -1,10 +1,32 @@
+.header-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #302E2b;
+  position: fixed;
+  color: #FFF;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.desktop-navbar {
+  display: flex;
+  flex-basis: 50%;
+  justify-content: space-around;
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .desktop-navbar {
+    display: none;
+  }
+
   .header-container {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    height: 10vh;
     background: #302E2b;
     position: fixed;
     color: #FFF;
