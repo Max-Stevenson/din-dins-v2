@@ -8,17 +8,19 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(Cookies.get("jwt"));
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(Cookies.get("userId"));
 
   const login = (passedToken, passedUserId) => {
     setToken(passedToken);
     setUserId(passedUserId);
     Cookies.set("jwt", passedToken);
+    Cookies.set("userId", passedUserId);
     // Save the JWT in a cookie
   };
 
   const logout = () => {
     Cookies.remove("jwt");
+    Cookies.remove("userId");
     setUserId(null);
     setToken(null);
     // Remove the JWT from the cookie

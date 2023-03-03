@@ -30,9 +30,9 @@ function App() {
 
   return (
     <Router>
-      <Header />
-      <RecipesContext.Provider value={recipeValue}>
-        <AuthProvider>
+      <AuthProvider>
+        <Header />
+        <RecipesContext.Provider value={recipeValue}>
           <Routes>
             <Route
               path="/"
@@ -40,7 +40,7 @@ function App() {
                 <ProtectedRoute>
                   <Recipes />
                 </ProtectedRoute>
-          )}
+              )}
             />
             <Route
               path="/mealplanner"
@@ -48,15 +48,15 @@ function App() {
                 <ProtectedRoute>
                   <Mealplanner />
                 </ProtectedRoute>
-)}
+              )}
             />
             <Route path="/settings" element={<Settings />} />
             <Route path="/recipes/new" element={<RecipeForm />} />
             <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
             <Route path="/user" element={<UserPortal />} />
           </Routes>
-        </AuthProvider>
-      </RecipesContext.Provider>
+        </RecipesContext.Provider>
+      </AuthProvider>
       <Navbar />
     </Router>
   );
