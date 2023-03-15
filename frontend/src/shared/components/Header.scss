@@ -1,6 +1,7 @@
 .header-container {
   display: flex;
   justify-content: space-evenly;
+  height: 80px;
   align-items: center;
   background: #302E2b;
   position: fixed;
@@ -26,6 +27,7 @@
   .header-container {
     display: flex;
     justify-content: space-evenly;
+    height: 80px;
     align-items: center;
     background: #302E2b;
     position: fixed;

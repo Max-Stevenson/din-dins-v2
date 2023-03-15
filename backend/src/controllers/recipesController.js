@@ -1,111 +1,110 @@
-// Contains middleware logic for recipes routes.
 const HttpError = require("../models/httpError");
 const Recipe = require("../models/recipe");
+// eslint-disable-next-line no-unused-vars
 const ValidationError = require("../models/validationError");
 
-const getAllRecipes = async (_req, res, next) => {
-  let recipes;
-
-  try {
-    recipes = await Recipe.find();
-  } catch (err) {
-    return next(new HttpError("Could not get recipes, please try again.", 500));
-  }
-  return res.status(200).send(recipes);
-};
-
-const getRecipeById = async (req, res, next) => {
-  const { id } = req.params;
-  let recipe;
-
-  try {
-    recipe = await Recipe.findById(id);
-    if (!recipe) {
-      return next(new HttpError("Recipe does not exist, please try again.", 404));
-    }
-  } catch (err) {
-    return next(new HttpError("Could not get recipe, please try again.", 500));
-  }
-  return res.status(200).send(recipe);
-};
-
-const createRecipe = async (req, res, next) => {
-  const recipe = new Recipe(req.body);
-
-  try {
-    await recipe.save();
-  } catch (err) {
+const handleErrors = (err, res) => {
+  let status = 500;
+  let message = "An unknown error occurred";
+  if (err instanceof HttpError) {
+    status = err.status;
+    message = err.message;
+  } else if (err.name === "ValidationError") {
+    status = 400;
+    message = "Invalid input";
     const errorDetails = {};
     Object.keys(err.errors).forEach((key) => {
       errorDetails[key] = err.errors[key].message;
     });
-    const error = new ValidationError("Invalid input", errorDetails, 400);
-    return next(error);
+    res.status(status).json({
+      message,
+      errors: errorDetails,
+    });
+    return;
   }
-  return res.status(201).send(recipe);
+  res.status(status).json({ message });
 };
 
-const uploadImage = (req, res) => {
+const getAllRecipes = async (_req, res) => {
+  try {
+    const recipes = await Recipe.find();
+    res.status(200).send(recipes);
+  } catch (err) {
+    handleErrors(new HttpError("Could not get recipes, please try again.", 500), res);
+  }
+};
+
+const getRecipeById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const recipe = await Recipe.findById(id);
+    if (!recipe) {
+      throw new HttpError("Recipe does not exist, please try again.", 404);
+    }
+    res.status(200).send(recipe);
+  } catch (err) {
+    handleErrors(new HttpError("Could not get recipe, please try again.", 500), res);
+  }
+};
+
+const createRecipe = async (req, res) => {
+  const recipe = new Recipe(req.body);
+  try {
+    await recipe.save();
+    res.status(201).send(recipe);
+  } catch (err) {
+    handleErrors(err, res);
+  }
+};
+
+const uploadImage = async (req, res) => {
   const { file } = req;
   const imageUrl = `${req.protocol}://${req.get("host")}/images/${file.filename}`;
-  return res.status(201).json({ imageUrl });
+  res.status(201).json({ imageUrl });
 };
 
-const editRecipe = async (req, res, next) => {
+const editRecipe = async (req, res) => {
   const {
     name, image, servings, cookingTime, isVegetarian, ingredients, method,
   } = req.body;
   const { id } = req.params;
-
-  let recipe;
   try {
-    recipe = await Recipe.findById(id);
+    const recipe = await Recipe.findById(id);
     if (!recipe) {
-      return next(
-        new HttpError("Could not find recipe to edit, please try again.", 404),
-      );
+      throw new HttpError("Could not find recipe to edit, please try again.", 404);
     }
-  } catch (err) {
-    return next(new HttpError("Could not edit recipe, please try again.", 500));
-  }
-
-  recipe.name = name;
-  recipe.image = image;
-  recipe.servings = servings;
-  recipe.cookingTime = cookingTime;
-  recipe.isVegetarian = isVegetarian;
-  recipe.ingredients = ingredients;
-  recipe.method = method;
-
-  try {
+    recipe.name = name;
+    recipe.image = image;
+    recipe.servings = servings;
+    recipe.cookingTime = cookingTime;
+    recipe.isVegetarian = isVegetarian;
+    recipe.ingredients = ingredients;
+    recipe.method = method;
     await recipe.save();
+    res.status(200).send(recipe);
   } catch (err) {
-    return next(new HttpError("Could not edit recipe, please try again.", 500));
+    handleErrors(new HttpError("Could not edit recipe, please try again.", 500), res);
   }
-
-  return res.status(200).send(recipe);
 };
 
-const deleteRecipe = async (req, res, next) => {
-  let recipe;
+const deleteRecipe = async (req, res) => {
   const { id } = req.params;
   try {
-    recipe = await Recipe.findByIdAndDelete(id);
+    const recipe = await Recipe.findByIdAndDelete(id);
     if (!recipe) {
-      return next(
-        new HttpError("Could not find recipe to delete, please try again.", 404),
-      );
+      throw new HttpError("Could not find recipe to delete, please try again.", 404);
     }
+    res.status(200).send(recipe);
   } catch (err) {
-    return next(new HttpError("Could not delete recipe, please try again.", 500));
+    handleErrors(new HttpError("Could not delete recipe, please try again.", 500), res);
   }
-
-  return res.status(200).send(recipe);
 };
 
-exports.getAllRecipes = getAllRecipes;
-exports.getRecipeById = getRecipeById;
-exports.createRecipe = createRecipe;
-exports.uploadImage = uploadImage;
-exports.editRecipe = editRecipe;
-exports.deleteRecipe = deleteRecipe;
+module.exports = {
+  getAllRecipes,
+  getRecipeById,
+  createRecipe,
+  uploadImage,
+  editRecipe,
+  deleteRecipe,
+};
