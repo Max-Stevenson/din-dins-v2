@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-empty */
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useContext, useEffect } from "react";
@@ -14,7 +13,7 @@ import { useAuth } from "../../shared/context/AuthContext";
 
 function ViewRecipe() {
   const {
-    error, isLoading, sendRequest, clearError
+    isLoading, sendRequest
   } = useHttpClient();
   const auth = useAuth();
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ function ViewRecipe() {
           null,
           { Authorization: `Bearer ${auth.token}` }
         );
-        setRecipe(response.data.filter((e) => e._id === recipeId)[0]);
+        setRecipe(response.data.find((e) => e._id === recipeId));
         setContextRecipes(response.data);
         setFindingRecipe(false);
       } catch (err) {
