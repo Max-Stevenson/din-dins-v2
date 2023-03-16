@@ -1,5 +1,3 @@
-/* eslint-disable no-unneeded-ternary */
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Grid, Container } from "@mui/material";
@@ -17,13 +15,20 @@ function GenericList({
   nextStep,
   previousStep
 }) {
+  const getItemKey = (listItem) => {
+    if (Object.hasOwn(listItem, "ingredient")) {
+      return hashCode(Object.values(listItem)[2]);
+    }
+    return hashCode(Object.values(listItem)[0]);
+  };
+
   return (
     <Container>
       <Grid container rowSpacing={2} className="recipe-form__input-wrapper">
         <Grid className={`recipe-form__${listName}-list-wrapper recipe-form__list-wrapper`} item xs={12}>
           <ul>
             {formState[`${listName}`].length > 0 && formState[`${listName}`].map((listItem) => (
-              <li className={`recipe-form__${listName}-item`} key={Object.hasOwn(listItem, "ingredient") ? hashCode(Object.values(listItem)[2]) : hashCode(Object.values(listItem)[0])}>
+              <li className={`recipe-form__${listName}-item`} key={getItemKey(listItem)}>
                 {React.cloneElement(
                   listChildren,
                   { listItem }
@@ -37,6 +42,7 @@ function GenericList({
         </Grid>
         <Grid item xs={12} className="recipe-form__nav-button__container">
           <Button
+            aria-label="previous step"
             variant="contained"
             startIcon={<ArrowBackIosOutlinedIcon />}
             onClick={previousStep}
@@ -44,9 +50,10 @@ function GenericList({
             Previous
           </Button>
           <Button
+            aria-label="next step"
             variant="contained"
             endIcon={<ArrowForwardIosOutlinedIcon />}
-            disabled={isRequired ? (formState[`${listName}`].length > 0 ? false : true) : false}
+            disabled={isRequired && formState[listName].length === 0}
             onClick={nextStep}
           >
             Continue
