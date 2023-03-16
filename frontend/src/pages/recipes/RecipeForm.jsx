@@ -87,18 +87,6 @@ function RecipeForm() {
     }
   };
 
-  // const convertToBase64 = (file) => new Promise((resolve, reject) => {
-  //   const fileReader = new FileReader();
-  //   fileReader.readAsDataURL(file);
-  //   fileReader.onload = () => {
-  //     resolve(fileReader.result);
-  //   };
-
-  //   FileReader.onerror = (err) => {
-  //     reject(err);
-  //   };
-  // });
-
   const handleFileUpload = async (event) => {
     // TODO filesize and type check
     const image = event.target.files[0];

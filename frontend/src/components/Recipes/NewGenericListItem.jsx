@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import validator from "validator";
 import PropTypes from "prop-types";
 import {
@@ -6,12 +6,14 @@ import {
 } from "@mui/material";
 
 function NewGenericListItem({ recipeList, recipeListItem, handleAddToList }) {
-  const [internalState, setInternalState] = useState({
+  const [inputState, setInputState] = useState({
     [recipeList]: { value: "", isValid: false, errorMsg: "" }
   });
 
+  const inputRef = useRef();
+
   useEffect(() => {
-    setInternalState({
+    setInputState({
       [recipeList]: {
         value: "", isValid: false, errorMsg: ""
       }
@@ -21,7 +23,7 @@ function NewGenericListItem({ recipeList, recipeListItem, handleAddToList }) {
   const handleInputChange = (inputName, event) => {
     const inputValue = event.target.value;
     if (validator.isEmpty(inputValue.trim())) {
-      setInternalState((previous) => ({
+      setInputState((previous) => ({
         ...previous,
         [inputName]: {
           value: inputValue.trim(),
@@ -30,7 +32,7 @@ function NewGenericListItem({ recipeList, recipeListItem, handleAddToList }) {
         }
       }));
     } else {
-      setInternalState((previous) => ({
+      setInputState((previous) => ({
         ...previous,
         [inputName]: {
           value: inputValue.trim(),
@@ -44,15 +46,14 @@ function NewGenericListItem({ recipeList, recipeListItem, handleAddToList }) {
   const handleAdd = (event) => {
     event.preventDefault();
     handleAddToList(`${recipeList}`, {
-      [recipeListItem]: internalState[recipeList].value
+      [recipeListItem]: inputState[recipeList].value
     });
-    setInternalState({
+    setInputState({
       [recipeList]: {
         value: "", isValid: false, errorMsg: ""
       }
     });
-    const inputField = document.querySelector("input");
-    inputField.value = "";
+    inputRef.current.value = "";
   };
   return (
     <Grid container spacing={2}>
@@ -61,6 +62,7 @@ function NewGenericListItem({ recipeList, recipeListItem, handleAddToList }) {
           required
           autoComplete="off"
           type="text"
+          inputRef={inputRef}
           onChange={(event) => {
             handleInputChange(recipeList, event);
           }}
@@ -70,13 +72,13 @@ function NewGenericListItem({ recipeList, recipeListItem, handleAddToList }) {
           }}
           label={recipeList}
         />
-        {internalState[recipeList].errorMsg && <p>{internalState[recipeList].errorMsg}</p>}
+        {inputState[recipeList].errorMsg && <p>{inputState[recipeList].errorMsg}</p>}
       </Grid>
       <Grid item xs={12}>
         <Button
           variant="contained"
           disabled={
-         !internalState[recipeList].isValid
+         !inputState[recipeList].isValid
         }
           onClick={(event) => handleAdd(event)}
         >
