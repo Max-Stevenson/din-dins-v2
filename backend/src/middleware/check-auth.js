@@ -13,14 +13,11 @@ module.exports = async (req, res, next) => {
       throw new HttpError("Authentication failed: no token provided", 401);
     }
     const decodedToken = jwt.verify(token, JWT_TOKEN);
-    if (!decodedToken) {
-      throw new HttpError("Authentication failed: invalid token", 401);
-    }
     const { userId } = decodedToken;
     if (!userId) {
       throw new HttpError("Authentication failed: missing userId in token", 401);
     }
-    const user = await User.findOne({ _id: userId });
+    const user = await User.findById(userId);
     if (!user) {
       throw new HttpError("Authentication failed: user not found", 401);
     }
