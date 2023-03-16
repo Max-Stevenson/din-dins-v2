@@ -72,18 +72,10 @@ function NewIngredient({ handleAddToList }) {
       ingredient: ingredient.ingredient.value
     });
     setIngredient({
-      quantity: { value: 0, isValid: false, errorMsg: "" },
+      quantity: { value: "", isValid: false, errorMsg: "" },
       measure: { value: "", isValid: false, errorMsg: "" },
       ingredient: { value: "", isValid: false, errorMsg: "" }
     });
-    const inputs = document.querySelectorAll("input");
-    for (let i = 0, j = inputs.length; i < j; i += 1) {
-      if (i === 0) {
-        inputs[i].value = 0;
-      } else {
-        inputs[i].value = "";
-      }
-    }
   };
 
   return (
@@ -101,8 +93,10 @@ function NewIngredient({ handleAddToList }) {
             shrink: true
           }}
           label="Quantity"
+          value={ingredient.quantity.value}
+          error={!ingredient.quantity.isValid && ingredient.quantity.errorMsg !== ""}
+          helperText={!ingredient.quantity.isValid && ingredient.quantity.errorMsg}
         />
-        {ingredient.quantity.errorMsg && <p>{ingredient.quantity.errorMsg}</p>}
       </Grid>
       <Grid item xs={6}>
         <TextField
@@ -113,8 +107,10 @@ function NewIngredient({ handleAddToList }) {
           autoComplete="off"
           variant="outlined"
           label="Measure"
+          value={ingredient.measure.value}
+          error={!ingredient.measure.isValid && ingredient.measure.errorMsg !== ""}
+          helperText={!ingredient.measure.isValid && ingredient.measure.errorMsg}
         />
-        {ingredient.measure.errorMsg && <p>{ingredient.measure.errorMsg}</p>}
       </Grid>
       <Grid item xs={12}>
         <TextField
@@ -126,8 +122,9 @@ function NewIngredient({ handleAddToList }) {
           autoComplete="off"
           variant="outlined"
           label="Ingredient"
+          value={ingredient.ingredient.value}
+          helperText={!ingredient.ingredient.isValid && ingredient.ingredient.errorMsg}
         />
-        {ingredient.ingredient.errorMsg && <p>{ingredient.ingredient.errorMsg}</p>}
       </Grid>
       <Grid item xs={12}>
         <Button
