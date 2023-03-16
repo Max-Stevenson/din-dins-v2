@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import validator from "validator";
 import FormInputs from "../../components/Recipes/FormInputs";
 import GenericList from "../../components/Recipes/GenericList";
@@ -21,74 +21,87 @@ function RecipeForm() {
     tags: []
   });
 
-  const nextStep = () => {
+  const nextStep = useCallback(() => {
     const { step } = formState;
     setFormState((previous) => ({ ...previous, step: step + 1 }));
-  };
+  }, [formState]);
 
-  const previousStep = () => {
+  const previousStep = useCallback(() => {
     const { step } = formState;
     setFormState((previous) => ({ ...previous, step: step - 1 }));
-  };
+  }, [formState]);
 
-  const handleAddToList = (list, listItem) => setFormState((previous) => ({
-    ...previous,
-    [list]: [...previous[list], listItem]
-  }));
+  const handleAddToList = useCallback((list, listItem) => {
+    setFormState((previous) => ({
+      ...previous,
+      [list]: [...previous[list], listItem]
+    }));
+  }, []);
 
-  const handleChange = (input, event) => {
-    if (input === "name") {
-      if (!validator.isEmpty(event.target.value.trim())) {
-        setFormState((previous) => ({
-          ...previous,
-          [input]: {
-            value: event.target.value,
-            isValid: true,
-            errorMsg: ""
-          }
-        }));
-      } else {
-        setFormState((previous) => ({
-          ...previous,
-          [input]: {
-            value: event.target.value,
-            isValid: false,
-            errorMsg: "Recipe name cannot be empty"
-          }
-        }));
-      }
-    } else if (input === "servings" || input === "cookingTime") {
-      const value = parseInt(event.target.value, 10) || 0;
-      if (value <= 0) {
-        setFormState((previous) => ({
-          ...previous,
-          [input]: {
-            value,
-            isValid: false,
-            errorMsg: "value cannot be a negative or 0"
-          }
-        }));
-      } else {
-        setFormState((previous) => ({
-          ...previous,
-          [input]: {
-            value,
-            isValid: true,
-            errorMsg: ""
-          }
-        }));
-      }
-    } else {
-      const value = event.target.checked;
+  const handleNameChange = (event) => {
+    if (!validator.isEmpty(event.target.value.trim())) {
       setFormState((previous) => ({
         ...previous,
-        [input]: value
+        name: {
+          value: event.target.value,
+          isValid: true,
+          errorMsg: ""
+        }
+      }));
+    } else {
+      setFormState((previous) => ({
+        ...previous,
+        name: {
+          value: event.target.value,
+          isValid: false,
+          errorMsg: "Recipe name cannot be empty"
+        }
       }));
     }
   };
 
-  const handleFileUpload = async (event) => {
-    // TODO filesize and type check
+  const handleServingsOrCookingTimeChange = (input, event) => {
+    const value = parseInt(event.target.value, 10) || 0;
+    if (value <= 0) {
+      setFormState((previous) => ({
+        ...previous,
+        [input]: {
+          value,
+          isValid: false,
+          errorMsg: "value cannot be a negative or 0"
+        }
+      }));
+    } else {
+      setFormState((previous) => ({
+        ...previous,
+        [input]: {
+          value,
+          isValid: true,
+          errorMsg: ""
+        }
+      }));
+    }
+  };
+
+  const handleIsVegetarianChange = (event) => {
+    const value = event.target.checked;
+    setFormState((previous) => ({
+      ...previous,
+      isVegetarian: value
+    }));
+  };
+
+  const handleChange = (input, event) => {
+    if (input === "name") {
+      handleNameChange(event);
+    } else if (input === "servings" || input === "cookingTime") {
+      handleServingsOrCookingTimeChange(input, event);
+    } else if (input === "isVegetarian") {
+      handleIsVegetarianChange(event);
+    }
+  };
+
+  const handleFileUpload = useCallback(async (event) => {
     const image = event.target.files[0];
     setFormState((previous) => ({
       ...previous,
@@ -97,7 +110,7 @@ function RecipeForm() {
         file: image
       }
     }));
-  };
+  }, []);
 
   const genericDeleteMethod = (list, listItem) => {
     setFormState((previous) => ({
