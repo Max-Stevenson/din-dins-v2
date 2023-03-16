@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import "./DeleteConfirmationModal.scss";
 
-function DeleteConfirmationModal() {
+function DeleteConfirmationModal({ onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
   const handleDelete = () => {
+    onDelete();
     closeModal();
   };
 
@@ -33,5 +35,9 @@ function DeleteConfirmationModal() {
     </>
   );
 }
+
+DeleteConfirmationModal.propTypes = {
+  onDelete: PropTypes.func.isRequired
+};
 
 export default DeleteConfirmationModal;

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-function ProtectedRoute({ children, redirectPath = "/user" }) {
+function ProtectedRoute({ children, redirectPath = "/profile" }) {
   const auth = useAuth();
   const location = useLocation();
   const { pathname } = location;
@@ -34,7 +34,7 @@ ProtectedRoute.propTypes = {
 };
 
 ProtectedRoute.defaultProps = {
-  redirectPath: "/user"
+  redirectPath: "/profile"
 };
 
 export default ProtectedRoute;

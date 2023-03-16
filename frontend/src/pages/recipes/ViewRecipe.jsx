@@ -36,7 +36,7 @@ function ViewRecipe() {
         setFindingRecipe(false);
       } catch (err) {
         if (err.response.status === 401) {
-          navigate("/user");
+          navigate("/profile");
         }
       }
     };
@@ -62,7 +62,7 @@ function ViewRecipe() {
           <Grid item xs={12}>
             <div>
               <button type="button">Edit</button>
-              <DeleteConfirmationModal />
+              <DeleteConfirmationModal onDelete={() => console.log("bruh")} />
             </div>
           </Grid>
         </Grid>
