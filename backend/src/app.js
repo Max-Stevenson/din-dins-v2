@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
     return next(err);
   }
   res.status(err.code || 500);
-  res.json({ error: err || "An unknown error occuried" });
+  res.json({ error: err.message || "An unknown error occurred" });
   return app;
 });
 
