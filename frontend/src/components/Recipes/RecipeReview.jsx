@@ -8,6 +8,8 @@ import axios from "axios";
 import TabPanel from "../../shared/components/TabPanel";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import { useAuth } from "../../shared/context/AuthContext";
+import API_BASE_URL from "../../config";
+import { hashCode } from "../../shared/utils/hashCode";
 import "./RecipeReview.scss";
 
 function RecipeReview({ formState, previousStep }) {
@@ -42,7 +44,7 @@ function RecipeReview({ formState, previousStep }) {
     formData.append("image", formState.image.file);
     try {
       const headers = { Authorization: `Bearer ${auth.token}` };
-      const imageResponse = await axios.post("http://localhost:3000/api/v1/recipes/upload", formData, { headers });
+      const imageResponse = await axios.post(`${API_BASE_URL}/recipes/upload`, formData, { headers });
       console.log(imageResponse);
       console.log(imageResponse.data.imageUrl);
       if (imageResponse.status !== 201) {
@@ -51,14 +53,16 @@ function RecipeReview({ formState, previousStep }) {
       }
       recipe.image = imageResponse.data.imageUrl;
       console.log(recipe.image);
-      const recipeResponse = await axios.post("http://localhost:3000/api/v1/recipes", recipe, { headers });
+      const recipeResponse = await axios.post(`${API_BASE_URL}/recipes`, recipe, { headers });
       if (recipeResponse.status !== 201) {
         setIsLoading(false);
         setError("recipe creation failed");
       }
       setIsLoading(false);
     } catch (err) {
-      return err;
+      console.error(err);
+      setIsLoading(false);
+      setError(err.message || "An error occurred while submitting the recipe.");
     }
     return true;
   };
@@ -126,7 +130,7 @@ function RecipeReview({ formState, previousStep }) {
             <TabPanel value={tabValue} index={0}>
               <ul>
                 {formState.ingredients.map((i) => (
-                  <li>
+                  <li key={hashCode(`${i.quantity}${i.measure}${i.ingredient}`)}>
                     {i.quantity}
                     {" "}
                     {i.measure}
@@ -139,14 +143,14 @@ function RecipeReview({ formState, previousStep }) {
             <TabPanel value={tabValue} index={1}>
               <ol>
                 {formState.method.map((method) => (
-                  <li>{method.method}</li>
+                  <li key={hashCode(method.method)}>{method.method}</li>
                 ))}
               </ol>
             </TabPanel>
             <TabPanel value={tabValue} index={2}>
               <ul>
                 {formState.tags.map((t) => (
-                  <li>
+                  <li key={hashCode(t.tag)}>
                     {t.tag}
                   </li>
                 ))}
