@@ -19,7 +19,9 @@ function FormInputs({
   const fileInput = useRef();
 
   const handleFileSelection = () => {
-    fileInput.current.click();
+    if (fileInput.current) {
+      fileInput.current.click();
+    }
   };
 
   return (
@@ -37,7 +39,7 @@ function FormInputs({
           />
         </Grid>
         <Grid item xs={12}>
-          <img src={formState.image.preview || "/images/recipe.jpg"} alt={formState.name || "placeholder image"} />
+          <img src={formState.image.preview || "/images/recipe.jpg"} alt="Preview of the uploaded recipe" />
           <input ref={fileInput} type="file" accept={"image/*"} onChange={handleFileUpload} />
           <Button variant="contained" onClick={handleFileSelection}>Upload Image</Button>
         </Grid>
