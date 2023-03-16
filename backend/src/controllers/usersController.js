@@ -51,7 +51,7 @@ exports.authenticate = (req, res, next) => {
     const { token } = req.body;
 
     const decoded = jwt.verify(token, JWT_TOKEN);
-    res.json({ message: "Token is valid" }, decoded);
+    res.json({ message: "Token is valid", decoded });
   } catch (err) {
     next(new HttpError("Invalid Token", 401));
   }
@@ -82,10 +82,6 @@ exports.login = async (req, res, next) => {
 
     return res.status(200).json({ userId: existingUser.id, email: existingUser.email, token });
   } catch (err) {
-    // handle specific errors
-    if (err.code === 11000) {
-      return next(new HttpError("Email already exists, please try again", 422));
-    }
     if (err instanceof HttpError) {
       return next(err);
     }
