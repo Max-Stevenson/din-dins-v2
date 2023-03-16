@@ -1,4 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, {
+  useMemo, useState, lazy, Suspense
+} from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -7,17 +9,16 @@ import {
   faCalendarAlt
 } from "@fortawesome/free-solid-svg-icons";
 import "./App.scss";
-import Header from "./shared/components/Header";
-import Navbar from "./shared/components/Navbar";
-import Recipes from "./pages/recipes/Recipes";
-import Mealplanner from "./pages/mealplanner/Mealplanner";
+import { Header, Navbar, ProtectedRoute } from "./components/index";
 import Settings from "./pages/profile/Settings";
 import RecipeForm from "./pages/recipes/RecipeForm";
 import ViewRecipe from "./pages/recipes/ViewRecipe";
 import RecipesContext from "./shared/context/RecipesContext";
 import { AuthProvider } from "./shared/context/AuthContext";
-import ProtectedRoute from "./shared/components/ProtectedRoute";
 import UserPortal from "./pages/profile/UserPortal";
+
+const Recipes = lazy(() => import("./pages/recipes/Recipes"));
+const Mealplanner = lazy(() => import("./pages/mealplanner/Mealplanner"));
 
 library.add(faCog, faUtensils, faCalendarAlt);
 
@@ -33,28 +34,30 @@ function App() {
       <AuthProvider>
         <Header />
         <RecipesContext.Provider value={recipeValue}>
-          <Routes>
-            <Route
-              path="/"
-              element={(
-                <ProtectedRoute>
-                  <Recipes />
-                </ProtectedRoute>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route
+                path="/"
+                element={(
+                  <ProtectedRoute>
+                    <Recipes />
+                  </ProtectedRoute>
               )}
-            />
-            <Route
-              path="/mealplanner"
-              element={(
-                <ProtectedRoute>
-                  <Mealplanner />
-                </ProtectedRoute>
+              />
+              <Route
+                path="/mealplanner"
+                element={(
+                  <ProtectedRoute>
+                    <Mealplanner />
+                  </ProtectedRoute>
               )}
-            />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/recipes/new" element={<RecipeForm />} />
-            <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
-            <Route path="/user" element={<UserPortal />} />
-          </Routes>
+              />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/recipes/new" element={<RecipeForm />} />
+              <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
+              <Route path="/profile" element={<UserPortal />} />
+            </Routes>
+          </Suspense>
         </RecipesContext.Provider>
       </AuthProvider>
       <Navbar />
