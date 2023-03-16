@@ -1,7 +1,5 @@
 const HttpError = require("../models/httpError");
 const Recipe = require("../models/recipe");
-// eslint-disable-next-line no-unused-vars
-const ValidationError = require("../models/validationError");
 
 const handleErrors = (err, res) => {
   let status = 500;
@@ -43,7 +41,7 @@ const getRecipeById = async (req, res) => {
     }
     res.status(200).send(recipe);
   } catch (err) {
-    handleErrors(new HttpError("Could not get recipe, please try again.", 500), res);
+    handleErrors(err, res);
   }
 };
 
@@ -69,21 +67,15 @@ const editRecipe = async (req, res) => {
   } = req.body;
   const { id } = req.params;
   try {
-    const recipe = await Recipe.findById(id);
+    const recipe = await Recipe.findByIdAndUpdate(id, {
+      name, image, servings, cookingTime, isVegetarian, ingredients, method,
+    }, { new: true, runValidators: true });
     if (!recipe) {
       throw new HttpError("Could not find recipe to edit, please try again.", 404);
     }
-    recipe.name = name;
-    recipe.image = image;
-    recipe.servings = servings;
-    recipe.cookingTime = cookingTime;
-    recipe.isVegetarian = isVegetarian;
-    recipe.ingredients = ingredients;
-    recipe.method = method;
-    await recipe.save();
     res.status(200).send(recipe);
   } catch (err) {
-    handleErrors(new HttpError("Could not edit recipe, please try again.", 500), res);
+    handleErrors(err, res);
   }
 };
 
