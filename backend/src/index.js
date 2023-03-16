@@ -1,10 +1,10 @@
 const dotenv = require("dotenv");
 
 dotenv.config();
-const { DB_USERNAME } = process.env;
-const { DB_PASSWORD } = process.env;
-const { DB_NAME } = process.env;
-const PORT = process.env.PORT || 3000;
+const {
+  DB_USERNAME, DB_PASSWORD, DB_NAME, PORT: port,
+} = process.env;
+const PORT = port || 3000;
 
 const mongoose = require("mongoose");
 const app = require("./app");
@@ -17,6 +17,7 @@ mongoose
     app.listen(PORT, () => {
       console.log(`Server is up on port:${PORT}`);
     });
-  }).catch((err) => {
+  })
+  .catch((err) => {
     console.log(err);
   });
