@@ -20,6 +20,6 @@ router.post(
 
 router.post("/login", usersControllers.login);
 
-router.post("/autenticate", usersControllers.authenticate);
+router.post("/authenticate", usersControllers.authenticate);
 
 module.exports = router;
