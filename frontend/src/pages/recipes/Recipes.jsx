@@ -1,9 +1,7 @@
-/* eslint-disable no-empty */
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState, useContext } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import "./Recipes.scss";
@@ -11,12 +9,13 @@ import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import useHttpClient from "../../shared/hooks/http-hook";
 import RecipesContext from "../../shared/context/RecipesContext";
 import { useAuth } from "../../shared/context/AuthContext";
+import API_BASE_URL from "../../config";
 
 function Recipes() {
   const navigate = useNavigate();
   const auth = useAuth();
   const {
-    error, isLoading, sendRequest, clearError
+    error, isLoading, sendRequest
   } = useHttpClient();
   const [recipes, setRecipes] = useState();
   const { contextRecipes, setContextRecipes } = useContext(RecipesContext);
@@ -25,7 +24,7 @@ function Recipes() {
     const fetchRecipes = async () => {
       try {
         const response = await sendRequest(
-          "http://localhost:3000/api/v1/recipes",
+          `${API_BASE_URL}/recipes`,
           "GET",
           null,
           { Authorization: `Bearer ${auth.token}` }
@@ -46,9 +45,7 @@ function Recipes() {
   const handleRecipeSelection = (event) => {
     const selectedRecipeId = event.currentTarget.getAttribute("data-recipe-id");
     if (selectedRecipeId) {
-      const selectedRecipe = recipes.filter(
-        (element) => element._id === selectedRecipeId
-      )[0];
+      const selectedRecipe = recipes.find((element) => element._id === selectedRecipeId);
       navigate(`/recipes/view/${selectedRecipeId}`, {
         state: { recipe: selectedRecipe }
       });
@@ -74,7 +71,6 @@ function Recipes() {
         </div>
       </Grid>
     ));
-    recipeItems.push();
     return (
       <DisplayWrapper>
         <Grid container spacing={1}>
