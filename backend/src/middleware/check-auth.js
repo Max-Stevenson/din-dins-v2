@@ -6,26 +6,27 @@ const User = require("../models/user");
 dotenv.config();
 const { JWT_TOKEN } = process.env;
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     if (!token) {
-      throw new Error("Authentication failed");
+      throw new HttpError("Authentication failed: no token provided", 401);
     }
     const decodedToken = jwt.verify(token, JWT_TOKEN);
-    if (decodedToken) {
-      const decodedTokenUserId = decodedToken.userId;
-      if (decodedTokenUserId) {
-        User.findOne({ decodedTokenUserId }).then((user) => {
-          if (!user) {
-            throw new Error();
-          }
-        });
-      }
+    if (!decodedToken) {
+      throw new HttpError("Authentication failed: invalid token", 401);
     }
+    const { userId } = decodedToken;
+    if (!userId) {
+      throw new HttpError("Authentication failed: missing userId in token", 401);
+    }
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+      throw new HttpError("Authentication failed: user not found", 401);
+    }
+    req.user = user;
     return next();
   } catch (err) {
-    const error = new HttpError("Authentication failed", 401);
-    return next(error);
+    return next(err);
   }
 };

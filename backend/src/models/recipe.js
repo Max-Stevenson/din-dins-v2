@@ -1,18 +1,12 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
 
 const { Schema } = mongoose;
 
 const recipeSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: { value: true, message: "Name cannot be empty" },
     trim: true,
-    validate(value) {
-      if (validator.isEmpty(value)) {
-        throw new Error("Name cannot be empty");
-      }
-    },
   },
   image: {
     type: String,
@@ -49,13 +43,8 @@ const recipeSchema = new Schema({
       {
         method: {
           type: String,
-          required: true,
+          required: { value: true, message: "Method cannot be empty" },
           trim: true,
-          validate(value) {
-            if (validator.isEmpty(value)) {
-              throw new Error("Method cannot be empty");
-            }
-          },
         },
       },
     ],
@@ -67,13 +56,8 @@ const recipeSchema = new Schema({
       {
         tag: {
           type: String,
-          required: true,
+          required: { value: true, message: "Tag cannot be empty" },
           trim: true,
-          validate(value) {
-            if (validator.isEmpty(value)) {
-              throw new Error("Tag cannot be empty");
-            }
-          },
         },
       },
     ],
