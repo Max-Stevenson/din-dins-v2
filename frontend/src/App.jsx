@@ -53,8 +53,16 @@ function App() {
               )}
               />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/recipes/new" element={<RecipeForm />} />
+              <Route path="/recipes/new" element={<RecipeForm mode="new" />} />
               <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
+              <Route
+                path="/recipes/edit/:recipeId"
+                element={(
+                  <ProtectedRoute>
+                    <RecipeForm mode="edit" />
+                  </ProtectedRoute>
+              )}
+              />
               <Route path="/profile" element={<UserPortal />} />
             </Routes>
           </Suspense>

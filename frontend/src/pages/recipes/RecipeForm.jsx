@@ -1,4 +1,7 @@
-import React, { useState, useCallback } from "react";
+/* eslint-disable no-underscore-dangle */
+import React, { useState, useCallback, useContext } from "react";
+import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
 import validator from "validator";
 import FormInputs from "../../components/Recipes/FormInputs";
 import GenericList from "../../components/Recipes/GenericList";
@@ -6,20 +9,41 @@ import NewIngredient from "../../components/Recipes/NewIngredient";
 import NewGenericListItem from "../../components/Recipes/NewGenericListItem";
 import GenericListItem from "../../components/Recipes/GenericListItem";
 import RecipeReview from "../../components/Recipes/RecipeReview";
+import RecipesContext from "../../shared/context/RecipesContext";
 import "./RecipeForm.scss";
 
-function RecipeForm() {
-  const [formState, setFormState] = useState({
-    step: 1,
-    name: { value: "", isValid: false, errorMsg: "" },
-    image: { preview: "", file: {} },
-    servings: { value: 0, isValid: false, errorMsg: "" },
-    cookingTime: { value: 0, isValid: false, errorMsg: "" },
-    isVegetarian: false,
-    ingredients: [],
-    method: [],
-    tags: []
-  });
+function RecipeForm({ mode }) {
+  const { recipeId } = useParams();
+  const { contextRecipes } = useContext(RecipesContext);
+  const recipe = mode === "edit" ? contextRecipes.find((r) => r._id === recipeId) : null;
+  const initializeFormState = () => {
+    if (recipe) {
+      return {
+        step: 1,
+        name: { value: recipe.name, isValid: true, errorMsg: "" },
+        image: { preview: recipe.image, file: {} },
+        servings: { value: recipe.servings, isValid: true, errorMsg: "" },
+        cookingTime: { value: recipe.cookingTime, isValid: true, errorMsg: "" },
+        isVegetarian: recipe.isVegetarian,
+        ingredients: recipe.ingredients,
+        method: recipe.method,
+        tags: recipe.tags
+      };
+    }
+    return {
+      step: 1,
+      name: { value: "", isValid: false, errorMsg: "" },
+      image: { preview: "", file: {} },
+      servings: { value: 0, isValid: false, errorMsg: "" },
+      cookingTime: { value: 0, isValid: false, errorMsg: "" },
+      isVegetarian: false,
+      ingredients: [],
+      method: [],
+      tags: []
+    };
+  };
+
+  const [formState, setFormState] = useState(initializeFormState);
 
   const nextStep = useCallback(() => {
     const { step } = formState;
@@ -193,5 +217,9 @@ function RecipeForm() {
       );
   }
 }
+
+RecipeForm.propTypes = {
+  mode: PropTypes.string.isRequired
+};
 
 export default RecipeForm;

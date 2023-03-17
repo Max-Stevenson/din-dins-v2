@@ -61,7 +61,9 @@ function ViewRecipe() {
           </Grid>
           <Grid item xs={12}>
             <div>
-              <button type="button">Edit</button>
+              <button type="button" onClick={() => navigate(`/recipes/edit/${recipe._id}`, { state: { recipe } })}>
+                Edit
+              </button>
               <DeleteConfirmationModal onDelete={() => console.log("bruh")} />
             </div>
           </Grid>
