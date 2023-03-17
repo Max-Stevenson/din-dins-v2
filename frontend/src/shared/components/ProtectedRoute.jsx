@@ -8,22 +8,17 @@ function ProtectedRoute({ children, redirectPath = "/profile" }) {
   const location = useLocation();
   const { pathname } = location;
 
-  const checkJwt = () => {
-    if (!auth.token) {
-      return false;
-    }
+  let jwtValid = false;
+
+  if (auth.token) {
     try {
       const payload = JSON.parse(atob(auth.token.split(".")[1]));
-      if (payload.exp * 1000 > Date.now()) {
-        return true;
-      }
-      return false;
+      jwtValid = payload.exp * 1000 > Date.now();
     } catch (error) {
-      return false;
+      jwtValid = false;
     }
-  };
+  }
 
-  const jwtValid = checkJwt();
   return jwtValid
     ? children : <Navigate to={{ pathname: redirectPath, state: { from: pathname } }} />;
 }
