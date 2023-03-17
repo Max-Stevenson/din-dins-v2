@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Header.scss";
 import { Button } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -8,11 +7,7 @@ import NavButton from "./NavButton";
 
 function Header() {
   const auth = useAuth();
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-  useEffect(() => {
-    setIsAuthenticated(!!auth.userId);
-  }, [auth.userId]);
+  const isAuthenticated = !!auth.userId;
 
   return (
     <div className="header-container">
@@ -27,9 +22,9 @@ function Header() {
         <NavButton location="settings" buttonText="Settings" icon="cog" />
       </nav>
       {isAuthenticated && (
-      <Button variant="contained" onClick={auth.logout} endIcon={<LogoutIcon />}>
-        Logout
-      </Button>
+        <Button variant="contained" onClick={auth.logout} endIcon={<LogoutIcon />}>
+          Logout
+        </Button>
       )}
     </div>
   );
