@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   Button, Grid, Container, Tab, Tabs
@@ -9,26 +9,63 @@ import axios from "axios";
 import TabPanel from "../../shared/components/TabPanel";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import { useAuth } from "../../shared/context/AuthContext";
+// import RecipesContext from "../../shared/context/RecipesContext";
 import API_BASE_URL from "../../config";
 import { hashCode } from "../../shared/utils/hashCode";
 import "./RecipeReview.scss";
 
 function RecipeReview({ formState, previousStep, mode }) {
+  // const { setContextRecipes } = useContext(RecipesContext);
+  const navigate = useNavigate();
   const { recipeId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const auth = useAuth();
+  const [isMounted, setIsMounted] = useState(true);
+
+  useEffect(() => () => {
+    setIsMounted(false);
+  }, []);
 
   const handleChange = (_event, value) => {
     setTabValue(value);
   };
 
+  const uploadImage = async () => {
+    const formData = new FormData();
+    formData.append("image", formState.image.file);
+
+    const headers = { Authorization: `Bearer ${auth.token}` };
+    const response = await axios.post(`${API_BASE_URL}/recipes/upload`, formData, { headers });
+
+    if (response.status !== 201) {
+      throw new Error("Upload failed");
+    }
+
+    return response.data.imageUrl;
+  };
+
+  const createOrUpdateRecipe = async (recipe) => {
+    const headers = { Authorization: `Bearer ${auth.token}` };
+    let response;
+
+    if (mode === "edit") {
+      response = await axios.put(`${API_BASE_URL}/recipes/${recipeId}`, recipe, { headers });
+    } else {
+      response = await axios.post(`${API_BASE_URL}/recipes`, recipe, { headers });
+    }
+
+    if (response.status !== 200 && response.status !== 201) {
+      throw new Error("Recipe creation or update failed");
+    }
+  };
+
   const submitRecipe = async () => {
-    const httpMethod = mode === "edit" ? "PUT" : "POST";
     setIsLoading(true);
     setRecipeSubmitted(true);
+
     const recipe = {
       name: formState.name.value,
       image: null,
@@ -43,32 +80,20 @@ function RecipeReview({ formState, previousStep, mode }) {
         createdBy: auth.userId
       }
     };
-    const formData = new FormData();
-    formData.append("image", formState.image.file);
+
     try {
-      const headers = { Authorization: `Bearer ${auth.token}` };
-      const imageResponse = await axios.post(`${API_BASE_URL}/recipes/upload`, formData, { headers });
-      if (imageResponse.status !== 201) {
-        setIsLoading(false);
-        setError("Upload failed");
-      }
-      recipe.image = imageResponse.data.imageUrl;
-      let recipeResponse;
-      if (httpMethod === "POST") {
-        recipeResponse = await axios.post(`${API_BASE_URL}/recipes`, recipe, { headers });
-      } else {
-        recipeResponse = await axios.put(`${API_BASE_URL}/recipes/${recipeId}`, recipe, { headers });
-      }
-      if (recipeResponse.status !== 201) {
-        setIsLoading(false);
-        setError("recipe creation failed");
-      }
-      setIsLoading(false);
+      recipe.image = await uploadImage();
+      await createOrUpdateRecipe(recipe);
+      navigate("/", {
+        state: { updateRecipes: true }
+      });
     } catch (err) {
-      setIsLoading(false);
       setError(err.message || "An error occurred while submitting the recipe.");
+    } finally {
+      if (isMounted) {
+        setIsLoading(false);
+      }
     }
-    return true;
   };
 
   if (recipeSubmitted) {

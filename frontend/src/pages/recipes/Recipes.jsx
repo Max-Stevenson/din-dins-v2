@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Grid } from "@mui/material";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import "./Recipes.scss";
@@ -13,6 +13,7 @@ import API_BASE_URL from "../../config";
 
 function Recipes() {
   const navigate = useNavigate();
+  const location = useLocation();
   const auth = useAuth();
   const {
     error, isLoading, sendRequest
@@ -35,7 +36,7 @@ function Recipes() {
         console.error(err);
       }
     };
-    if (!contextRecipes) {
+    if (!contextRecipes || (location.state && location.state.updateRecipes)) {
       fetchRecipes();
     } else {
       setRecipes(contextRecipes);

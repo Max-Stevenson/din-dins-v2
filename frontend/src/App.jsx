@@ -24,9 +24,10 @@ library.add(faCog, faUtensils, faCalendarAlt);
 
 function App() {
   const [contextRecipes, setContextRecipes] = useState(undefined);
+  const fetchRecipes = () => {};
   const recipeValue = useMemo(
-    () => ({ contextRecipes, setContextRecipes }),
-    [contextRecipes, setContextRecipes]
+    () => ({ contextRecipes, setContextRecipes, fetchRecipes }),
+    [contextRecipes, setContextRecipes, fetchRecipes]
   );
 
   return (
