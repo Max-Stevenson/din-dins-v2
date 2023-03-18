@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   Button, Grid, Container, Tab, Tabs
@@ -12,7 +13,8 @@ import API_BASE_URL from "../../config";
 import { hashCode } from "../../shared/utils/hashCode";
 import "./RecipeReview.scss";
 
-function RecipeReview({ formState, previousStep }) {
+function RecipeReview({ formState, previousStep, mode }) {
+  const { recipeId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [recipeSubmitted, setRecipeSubmitted] = useState(false);
@@ -24,6 +26,7 @@ function RecipeReview({ formState, previousStep }) {
   };
 
   const submitRecipe = async () => {
+    const httpMethod = mode === "edit" ? "PUT" : "POST";
     setIsLoading(true);
     setRecipeSubmitted(true);
     const recipe = {
@@ -45,22 +48,23 @@ function RecipeReview({ formState, previousStep }) {
     try {
       const headers = { Authorization: `Bearer ${auth.token}` };
       const imageResponse = await axios.post(`${API_BASE_URL}/recipes/upload`, formData, { headers });
-      console.log(imageResponse);
-      console.log(imageResponse.data.imageUrl);
       if (imageResponse.status !== 201) {
         setIsLoading(false);
         setError("Upload failed");
       }
       recipe.image = imageResponse.data.imageUrl;
-      console.log(recipe.image);
-      const recipeResponse = await axios.post(`${API_BASE_URL}/recipes`, recipe, { headers });
+      let recipeResponse;
+      if (httpMethod === "POST") {
+        recipeResponse = await axios.post(`${API_BASE_URL}/recipes`, recipe, { headers });
+      } else {
+        recipeResponse = await axios.put(`${API_BASE_URL}/recipes/${recipeId}`, recipe, { headers });
+      }
       if (recipeResponse.status !== 201) {
         setIsLoading(false);
         setError("recipe creation failed");
       }
       setIsLoading(false);
     } catch (err) {
-      console.error(err);
       setIsLoading(false);
       setError(err.message || "An error occurred while submitting the recipe.");
     }
@@ -207,7 +211,8 @@ RecipeReview.propTypes = {
     method: PropTypes.arrayOf(PropTypes.shape({ method: PropTypes.string })),
     tags: PropTypes.arrayOf(PropTypes.shape({ tag: PropTypes.string }))
   }).isRequired,
-  previousStep: PropTypes.func.isRequired
+  previousStep: PropTypes.func.isRequired,
+  mode: PropTypes.string.isRequired
 };
 
 export default RecipeReview;

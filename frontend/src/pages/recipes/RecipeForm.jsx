@@ -207,6 +207,7 @@ function RecipeForm({ mode }) {
         <RecipeReview
           formState={formState}
           previousStep={previousStep}
+          mode={mode}
         />
       );
     default:
