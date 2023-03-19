@@ -10,10 +10,11 @@ import RecipesContext from "../../shared/context/RecipesContext";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import DeleteConfirmationModal from "../../shared/components/DeleteConfirmationModal";
 import { useAuth } from "../../shared/context/AuthContext";
+import API_BASE_URL from "../../config";
 
 function ViewRecipe() {
   const {
-    isLoading, sendRequest
+    isLoading, sendRequest, error
   } = useHttpClient();
   const auth = useAuth();
   const navigate = useNavigate();
@@ -49,7 +50,33 @@ function ViewRecipe() {
     }
   }, [auth.token, navigate, recipeId, setRecipe, setContextRecipes, setFindingRecipe]);
 
-  if (recipe && !findingRecipe && !isLoading) {
+  const deleteRecipe = async () => {
+    try {
+      const response = await sendRequest(
+        `${API_BASE_URL}/recipes/${recipe._id}`,
+        "DELETE",
+        null,
+        { Authorization: `Bearer ${auth.token}` }
+      );
+
+      if (response.status === 200) {
+        navigate("/", { state: { updateRecipes: true } });
+      }
+    } catch (err) {
+      // Show an error message
+      // ...
+    }
+  };
+
+  if (error) {
+    return (
+      <DisplayWrapper>
+        <h2>error</h2>
+      </DisplayWrapper>
+    );
+  }
+
+  if (recipe && !findingRecipe && !isLoading && !error) {
     return (
       <DisplayWrapper>
         <Grid container spacing={2}>
@@ -64,7 +91,7 @@ function ViewRecipe() {
               <button type="button" onClick={() => navigate(`/recipes/edit/${recipe._id}`, { state: { recipe } })}>
                 Edit
               </button>
-              <DeleteConfirmationModal onDelete={() => console.log("bruh")} />
+              <DeleteConfirmationModal onDelete={deleteRecipe} />
             </div>
           </Grid>
         </Grid>
