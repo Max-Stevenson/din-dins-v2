@@ -3,13 +3,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
-import { Grid } from "@mui/material";
+import { Grid, Tab, Tabs } from "@mui/material";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import useHttpClient from "../../shared/hooks/http-hook";
 import RecipesContext from "../../shared/context/RecipesContext";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import DeleteConfirmationModal from "../../shared/components/DeleteConfirmationModal";
+import TabPanel from "../../shared/components/TabPanel";
 import { useAuth } from "../../shared/context/AuthContext";
+import { hashCode } from "../../shared/utils/hashCode";
 import API_BASE_URL from "../../config";
 
 function ViewRecipe() {
@@ -21,6 +23,7 @@ function ViewRecipe() {
   const [findingRecipe, setFindingRecipe] = useState(true);
   const [recipe, setRecipe] = useState();
   const { recipeId } = useParams();
+  const [tabValue, setTabValue] = useState(0);
   const { contextRecipes, setContextRecipes } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -49,6 +52,10 @@ function ViewRecipe() {
       setFindingRecipe(false);
     }
   }, [auth.token, navigate, recipeId, setRecipe, setContextRecipes, setFindingRecipe]);
+
+  const handleChange = (_event, value) => {
+    setTabValue(value);
+  };
 
   const deleteRecipe = async () => {
     try {
@@ -85,6 +92,42 @@ function ViewRecipe() {
           </Grid>
           <Grid item xs={12}>
             <img src={recipe.image} alt={recipe.name} />
+          </Grid>
+          <Grid item xs={12}>
+            <Tabs value={tabValue} onChange={handleChange}>
+              <Tab label="Ingredients" />
+              <Tab label="Method" />
+              <Tab label="Tags" />
+            </Tabs>
+            <TabPanel value={tabValue} index={0}>
+              <ul>
+                {recipe.ingredients.map((i) => (
+                  <li key={hashCode(`${i.quantity}${i.measure}${i.ingredient}`)}>
+                    {i.quantity}
+                    {" "}
+                    {i.measure}
+                    {" "}
+                    {i.ingredient}
+                  </li>
+                ))}
+              </ul>
+            </TabPanel>
+            <TabPanel value={tabValue} index={1}>
+              <ol>
+                {recipe.method.map((method) => (
+                  <li key={hashCode(method.method)}>{method.method}</li>
+                ))}
+              </ol>
+            </TabPanel>
+            <TabPanel value={tabValue} index={2}>
+              <ul>
+                {recipe.tags.map((t) => (
+                  <li key={hashCode(t.tag)}>
+                    {t.tag}
+                  </li>
+                ))}
+              </ul>
+            </TabPanel>
           </Grid>
           <Grid item xs={12}>
             <div>
