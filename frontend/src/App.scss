@@ -2,6 +2,12 @@ body {
   overscroll-behavior: none;
 }
 
+body .display-wrapper .MuiGrid-container {
+  margin-top: 0;
+  width: 100%;
+  // margin-left: 0;
+}
+
 body #root {
   height: 100vh;
 }
