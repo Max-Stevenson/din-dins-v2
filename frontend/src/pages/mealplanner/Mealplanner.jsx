@@ -7,6 +7,7 @@ import useHttpClient from "../../shared/hooks/http-hook";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 
 import RecipesContext from "../../shared/context/RecipesContext";
+import DateRangePicker from "../../components/Mealplanner/DateRangePicker";
 
 function Mealplanner() {
   const auth = useAuth();
@@ -46,6 +47,7 @@ function Mealplanner() {
 
   return (
     <DisplayWrapper>
+      <DateRangePicker />
       <Grid container spacing={1}>
         <h2>Mealplanner</h2>
         <button type="button" onClick={generateMealplan}>

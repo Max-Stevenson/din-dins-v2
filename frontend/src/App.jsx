@@ -16,6 +16,7 @@ import ViewRecipe from "./pages/recipes/ViewRecipe";
 import RecipesContext from "./shared/context/RecipesContext";
 import { AuthProvider } from "./shared/context/AuthContext";
 import UserPortal from "./pages/profile/UserPortal";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Recipes = lazy(() => import("./pages/recipes/Recipes"));
 const Mealplanner = lazy(() => import("./pages/mealplanner/Mealplanner"));
