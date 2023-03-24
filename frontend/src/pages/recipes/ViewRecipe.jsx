@@ -13,6 +13,7 @@ import TabPanel from "../../shared/components/TabPanel";
 import { useAuth } from "../../shared/context/AuthContext";
 import { hashCode } from "../../shared/utils/hashCode";
 import API_BASE_URL from "../../config";
+import "./viewRecipe.scss";
 
 function ViewRecipe() {
   const {
@@ -87,11 +88,11 @@ function ViewRecipe() {
     return (
       <DisplayWrapper>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <h2>{recipe.name}</h2>
+          <Grid className="view-recipe__name-container" item xs={12}>
+            <h2 className="view-recipe__name">{recipe.name}</h2>
           </Grid>
-          <Grid item xs={12}>
-            <img src={recipe.image} alt={recipe.name} />
+          <Grid className="view-recipe__image-container" item xs={12}>
+            <img className="view-recipe__image" src={recipe.image} alt={recipe.name} />
           </Grid>
           <Grid item xs={12}>
             <Tabs value={tabValue} onChange={handleChange}>
@@ -100,9 +101,9 @@ function ViewRecipe() {
               <Tab label="Tags" />
             </Tabs>
             <TabPanel value={tabValue} index={0}>
-              <ul>
+              <ul className="view-recipe__ingredient-list">
                 {recipe.ingredients.map((i) => (
-                  <li key={hashCode(`${i.quantity}${i.measure}${i.ingredient}`)}>
+                  <li className="view-recipe__ingredient" key={hashCode(`${i.quantity}${i.measure}${i.ingredient}`)}>
                     {i.quantity}
                     {" "}
                     {i.measure}
@@ -113,25 +114,25 @@ function ViewRecipe() {
               </ul>
             </TabPanel>
             <TabPanel value={tabValue} index={1}>
-              <ol>
+              <ol className="view-recipe__method-list">
                 {recipe.method.map((method) => (
-                  <li key={hashCode(method.method)}>{method.method}</li>
+                  <li className="view-recipe__method" key={hashCode(method.method)}>{method.method}</li>
                 ))}
               </ol>
             </TabPanel>
             <TabPanel value={tabValue} index={2}>
-              <ul>
+              <ul className="view-recipe__tag-list">
                 {recipe.tags.map((t) => (
-                  <li key={hashCode(t.tag)}>
+                  <li className="view-recipe__tag" key={hashCode(t.tag)}>
                     {t.tag}
                   </li>
                 ))}
               </ul>
             </TabPanel>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="view-recipe__button-container">
             <div>
-              <button type="button" onClick={() => navigate(`/recipes/edit/${recipe._id}`, { state: { recipe } })}>
+              <button className="view-recipe__edit-button" type="button" onClick={() => navigate(`/recipes/edit/${recipe._id}`, { state: { recipe } })}>
                 Edit
               </button>
               <DeleteConfirmationModal onDelete={deleteRecipe} />
