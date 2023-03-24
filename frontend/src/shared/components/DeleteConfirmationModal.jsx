@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./DeleteConfirmationModal.scss";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Button } from "@mui/material";
 
 function DeleteConfirmationModal({ onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +17,7 @@ function DeleteConfirmationModal({ onDelete }) {
 
   return (
     <>
-      <button type="button" onClick={openModal}>Delete</button>
+      <Button variant="outlined" startIcon={<DeleteIcon />} type="button" onClick={openModal}>Delete</Button>
 
       {isOpen && (
         <div className="modal">

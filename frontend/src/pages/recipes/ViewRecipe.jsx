@@ -3,7 +3,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
-import { Grid, Tab, Tabs } from "@mui/material";
+import {
+  Button, Grid, Tab, Tabs
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import useHttpClient from "../../shared/hooks/http-hook";
 import RecipesContext from "../../shared/context/RecipesContext";
@@ -130,11 +133,11 @@ function ViewRecipe() {
               </ul>
             </TabPanel>
           </Grid>
-          <Grid item xs={12} className="view-recipe__button-container">
-            <div>
-              <button className="view-recipe__edit-button" type="button" onClick={() => navigate(`/recipes/edit/${recipe._id}`, { state: { recipe } })}>
+          <Grid item xs={12}>
+            <div className="view-recipe__button-container">
+              <Button startIcon={<EditIcon />} variant="contained" className="view-recipe__edit-button" type="button" onClick={() => navigate(`/recipes/edit/${recipe._id}`, { state: { recipe } })}>
                 Edit
-              </button>
+              </Button>
               <DeleteConfirmationModal onDelete={deleteRecipe} />
             </div>
           </Grid>
