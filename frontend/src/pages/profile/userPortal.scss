@@ -1,3 +1,5 @@
+@import "../../variables";
+
 form {
   width: 50%;
   margin: 0 auto;
@@ -40,9 +42,32 @@ form {
   border-radius: 5px;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+@media only screen and (min-device-width: $small-screen) and (max-device-width: $medium-screen) {
   form {
     margin-top: 25%;
     width: auto;
+  }
+}
+
+@media only screen and (max-width: $small-screen) {
+  // styles for small screens (e.g. smartphones)
+}
+
+@media only screen and (min-width: $medium-screen) {
+  // styles for medium screens (e.g. larger smartphones)
+}
+
+@media only screen and (min-width: $tablet-screen) {
+  // styles for tablets and small desktop screens
+}
+
+@media only screen and (min-width: $desktop-screen) {
+  // styles for larger desktop screens
+}
+
+@media only screen and (min-width: $large-screen) {
+  // styles for extra-large screens (e.g. large desktop screens)
+  form {
+    width: 30%;
   }
 }
