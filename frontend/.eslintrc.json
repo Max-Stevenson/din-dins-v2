@@ -21,6 +21,7 @@
         "comma-dangle": ["error", "never"],
         "quotes": [2, "double", { "avoidEscape": true }],
         "func-names": ["error", "never"],
-        "react/jsx-props-no-spreading": "off"
+        "react/jsx-props-no-spreading": "off",
+        "linebreak-style": ["error", "unix", "windows"]
     }
 }
