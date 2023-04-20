@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useEffect } from "react";
 import { Grid } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useAuth } from "../../shared/context/AuthContext";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import useHttpClient from "../../shared/hooks/http-hook";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
-
 import RecipesContext from "../../shared/context/RecipesContext";
-import DateRangePicker from "../../components/Mealplanner/DateRangePicker";
 
 function Mealplanner() {
   const auth = useAuth();
@@ -47,9 +46,9 @@ function Mealplanner() {
 
   return (
     <DisplayWrapper>
-      <DateRangePicker />
       <Grid container spacing={1}>
         <h2>Mealplanner</h2>
+        <DatePicker />
         <button type="button" onClick={generateMealplan}>
           Generate Mealplan
         </button>

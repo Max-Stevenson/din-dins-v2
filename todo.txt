@@ -1,8 +1,17 @@
-1. Update recipe model to include metadata.
-  - metadata should include: dateLastConsumed
-2. MVP for mealplanner should be 4 recipes drawn at random.
-3. 2 recipes drawn from dateLastConsumed.
-4. Mealplan should be saved and dateLastConsumed updated for each recipe.
-5. Ability to switch out a single recipe.
-6. Mealplan drawn from dateLastConsumed and tags.
-7. Mealplan drawn from dateLastConsumed, tags and veg / meat.
+Mealplanner flow:
+
+on single page?
+- pick date range
+- pick how many people eating
+- pick leftovers / double up on portions
+- pick veggie split / balance
+- pick not recent meals
+
+next page
+- loading spinner while creating
+- building state to keep spinner while fetching api
+- mealplan preview by days
+- Able to swap days / rearrange.
+- option to swap out recipe by day - would need data set of unselected recipes.
+- Finalize mealplan - update date last consumed on each recipe.
+- mealplan visible and saved - new database?

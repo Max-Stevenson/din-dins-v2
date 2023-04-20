@@ -9,6 +9,8 @@ import {
   faCalendarAlt
 } from "@fortawesome/free-solid-svg-icons";
 import "./App.scss";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Header, Navbar, ProtectedRoute } from "./components/index";
 import Settings from "./pages/profile/Settings";
 import RecipeForm from "./pages/recipes/RecipeForm";
@@ -35,40 +37,48 @@ function App() {
     <Router>
       <AuthProvider>
         <Header />
-        <RecipesContext.Provider value={recipeValue}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route
-                path="/"
-                element={(
-                  <ProtectedRoute>
-                    <Recipes />
-                  </ProtectedRoute>
-              )}
-              />
-              <Route
-                path="/mealplanner"
-                element={(
-                  <ProtectedRoute>
-                    <Mealplanner />
-                  </ProtectedRoute>
-              )}
-              />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/recipes/new" element={<RecipeForm mode="new" />} />
-              <Route path="/recipes/view/:recipeId" element={<ViewRecipe />} />
-              <Route
-                path="/recipes/edit/:recipeId"
-                element={(
-                  <ProtectedRoute>
-                    <RecipeForm mode="edit" />
-                  </ProtectedRoute>
-              )}
-              />
-              <Route path="/profile" element={<UserPortal />} />
-            </Routes>
-          </Suspense>
-        </RecipesContext.Provider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <RecipesContext.Provider value={recipeValue}>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route
+                  path="/"
+                  element={(
+                    <ProtectedRoute>
+                      <Recipes />
+                    </ProtectedRoute>
+                  )}
+                />
+                <Route
+                  path="/mealplanner"
+                  element={(
+                    <ProtectedRoute>
+                      <Mealplanner />
+                    </ProtectedRoute>
+                  )}
+                />
+                <Route path="/settings" element={<Settings />} />
+                <Route
+                  path="/recipes/new"
+                  element={<RecipeForm mode="new" />}
+                />
+                <Route
+                  path="/recipes/view/:recipeId"
+                  element={<ViewRecipe />}
+                />
+                <Route
+                  path="/recipes/edit/:recipeId"
+                  element={(
+                    <ProtectedRoute>
+                      <RecipeForm mode="edit" />
+                    </ProtectedRoute>
+                  )}
+                />
+                <Route path="/profile" element={<UserPortal />} />
+              </Routes>
+            </Suspense>
+          </RecipesContext.Provider>
+        </LocalizationProvider>
       </AuthProvider>
       <Navbar />
     </Router>
