@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useEffect } from "react";
 import { Grid } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import DatePicker from "react-datepicker";
 import { useAuth } from "../../shared/context/AuthContext";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import useHttpClient from "../../shared/hooks/http-hook";
+import "react-datepicker/dist/react-datepicker.css";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import RecipesContext from "../../shared/context/RecipesContext";
 
@@ -16,6 +17,13 @@ function Mealplanner() {
     error, isLoading, sendRequest, clearError
   } = useHttpClient();
   const [recipes, setRecipes] = useState();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(null);
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
 
   const generateMealplan = () => {
     const randomRecipes = recipes.sort(() => 0.5 - Math.random()).slice(0, 2);
@@ -48,7 +56,14 @@ function Mealplanner() {
     <DisplayWrapper>
       <Grid container spacing={1}>
         <h2>Mealplanner</h2>
-        <DatePicker />
+        <DatePicker
+          selected={startDate}
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline
+        />
         <button type="button" onClick={generateMealplan}>
           Generate Mealplan
         </button>
