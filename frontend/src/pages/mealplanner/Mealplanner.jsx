@@ -1,7 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useEffect } from "react";
-import { Grid } from "@mui/material";
 import DatePicker from "react-datepicker";
+import {
+  TextField,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  Container
+} from "@mui/material";
 import { useAuth } from "../../shared/context/AuthContext";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import useHttpClient from "../../shared/hooks/http-hook";
@@ -19,6 +26,10 @@ function Mealplanner() {
   const [recipes, setRecipes] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
+  const [numberOfPeople, setNumberOfPeople] = useState(2);
+  const [doubleUp, setDoubleUp] = useState(false);
+  const [vegetarianMeals, setVegetarianMeals] = useState(0);
+
   const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
@@ -26,47 +37,64 @@ function Mealplanner() {
   };
 
   const generateMealplan = () => {
-    const randomRecipes = recipes.sort(() => 0.5 - Math.random()).slice(0, 2);
-    setMealplan(randomRecipes);
+    console.log("burh");
   };
 
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const response = await sendRequest(
-          "http://localhost:3000/api/v1/recipes",
-          "GET",
-          null,
-          { Authorization: `Bearer ${auth.user}` }
-        );
-        setRecipes(response.data);
-        setContextRecipes(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    if (!contextRecipes) {
-      fetchRecipes();
-    } else {
-      setRecipes(contextRecipes);
+  const handleNumberOfPeopleChange = (e) => {
+    const { value } = e.target;
+    if (value >= 1 && value <= 20) {
+      setNumberOfPeople(value);
     }
-  }, [sendRequest]);
+  };
 
   return (
     <DisplayWrapper>
       <Grid container spacing={1}>
-        <h2>Mealplanner</h2>
-        <DatePicker
-          selected={startDate}
-          onChange={onChange}
-          startDate={startDate}
-          endDate={endDate}
-          selectsRange
-          inline
-        />
-        <button type="button" onClick={generateMealplan}>
-          Generate Mealplan
-        </button>
+        <Grid item xs={12}>
+          <h2>Mealplanner</h2>
+        </Grid>
+        <Grid item xs={12}>
+          <DatePicker
+            selected={startDate}
+            onChange={onChange}
+            startDate={startDate}
+            endDate={endDate}
+            selectsRange
+            inline
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            type="number"
+            label="Number of People"
+            value={numberOfPeople}
+            onChange={(e) => setNumberOfPeople(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={(
+              <Checkbox
+                checked={doubleUp}
+                onChange={(e) => setDoubleUp(e.target.checked)}
+              />
+            )}
+            label="Double up on meals"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            type="number"
+            label="Vegetarian Meals"
+            value={vegetarianMeals}
+            onChange={(e) => setVegetarianMeals(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <button type="button" onClick={generateMealplan}>
+            Generate Mealplan
+          </button>
+        </Grid>
         {mealplan !== null && (
           <div>
             {mealplan.map(({ name, _id }) => (
