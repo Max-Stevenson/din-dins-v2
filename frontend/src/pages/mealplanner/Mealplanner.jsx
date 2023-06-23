@@ -61,6 +61,19 @@ function Mealplanner() {
     }
   }, [sendRequest]);
 
+  // Create an array of dates between the start and end dates
+  const getDatesArray = (start, end) => {
+    const datesArray = [];
+    const currentDate = start;
+
+    while (currentDate <= end) {
+      datesArray.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return datesArray;
+  };
+
   const generateMealplan = () => {
     // Split into two lists: vegetarian and non-vegetarian
     const vegetarianRecipes = recipes.filter((recipe) => recipe.isVegetarian);
@@ -68,8 +81,18 @@ function Mealplanner() {
       (recipe) => !recipe.isVegetarian
     );
 
-    if (vegetarianRecipes.length < vegetarianMeals
-      || nonVegetarianRecipes.length < (totalDays - vegetarianMeals)) {
+    // Calculate adjusted meal count based on double up option
+    const adjustedVegetarianMeals = doubleUp
+      ? Math.ceil(vegetarianMeals / 2)
+      : vegetarianMeals;
+    const adjustedNonVegetarianMeals = doubleUp
+      ? Math.ceil((totalDays - vegetarianMeals) / 2)
+      : totalDays - vegetarianMeals;
+
+    if (
+      vegetarianRecipes.length < adjustedVegetarianMeals
+      || nonVegetarianRecipes.length < adjustedNonVegetarianMeals
+    ) {
       setDialogOpen(true);
       return;
     }
@@ -83,39 +106,50 @@ function Mealplanner() {
     );
 
     // Initialize meal plan
-    const mealPlan = [];
+    const selectedRecipes = [];
 
     // Loop over each day
     for (let i = 0; i < totalDays; i += 1) {
       // Check if leftovers should be used and it's a leftovers day
       if (doubleUp && i % 2 === 1) {
-        mealPlan.push(mealPlan[mealPlan.length - 1]); // Add last recipe again
+        selectedRecipes.push(selectedRecipes[selectedRecipes.length - 1]); // Add last recipe again
       } else {
         // Check if a vegetarian meal is required
         if (
-          mealPlan.filter((recipe) => recipe.isVegetarian).length
+          selectedRecipes.filter((recipe) => recipe.isVegetarian).length
           < vegetarianMeals
         ) {
           if (vegetarianRecipes.length > 0) {
             // Add the least recently consumed vegetarian recipe
-            mealPlan.push(vegetarianRecipes.shift());
+            selectedRecipes.push(vegetarianRecipes.shift());
           } else {
             // no vegetarian recipes are left, add the least recently consumed non-vegetarian recipe
-            mealPlan.push(nonVegetarianRecipes.shift());
+            selectedRecipes.push(nonVegetarianRecipes.shift());
           }
         } else {
           // If no vegetarian meal is required, add the least recently consumed recipe
           if (nonVegetarianRecipes.length > 0) {
-            mealPlan.push(nonVegetarianRecipes.shift());
+            selectedRecipes.push(nonVegetarianRecipes.shift());
           } else {
-            mealPlan.push(vegetarianRecipes.shift());
+            selectedRecipes.push(vegetarianRecipes.shift());
           }
         }
       }
     }
 
-    // Update the state with the new meal plan
-    setMealplan(mealPlan);
+    // Initialize meal plan object
+    const mealPlanObj = {
+      selectedRecipes, // Array of recipes for the meal plan
+      startDate, // Meal plan start date
+      endDate, // Meal plan end date
+      totalDays, // Duration of meal plan
+      doubleUp, // Boolean value whether to double up on meals or not
+      vegetarianMeals, // Number of vegetarian meals
+      numberOfPeople // Total number of people for the meal
+    };
+
+    // Update the state with the new meal plan object
+    setMealplan(mealPlanObj);
   };
 
   const onDateChange = (dates) => {
@@ -198,7 +232,7 @@ function Mealplanner() {
         </Grid>
         {mealplan !== null && (
           <div>
-            {mealplan.map(({ name, _id }) => (
+            {mealplan.selectedRecipes.map(({ name, _id }) => (
               <div key={_id}>
                 <h3>{name}</h3>
               </div>
