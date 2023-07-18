@@ -20,6 +20,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import RecipesContext from "../../shared/context/RecipesContext";
 import API_BASE_URL from "../../config";
+import { hashCode } from "../../shared/utils/hashCode";
 
 function Mealplanner() {
   const navigate = useNavigate();
@@ -232,8 +233,8 @@ function Mealplanner() {
         </Grid>
         {mealplan !== null && (
           <div>
-            {mealplan.selectedRecipes.map(({ name, _id }) => (
-              <div key={_id}>
+            {mealplan.selectedRecipes.map(({ name, _id }, index) => (
+              <div key={hashCode(`${_id}-${index}`)}>
                 <h3>{name}</h3>
               </div>
             ))}
