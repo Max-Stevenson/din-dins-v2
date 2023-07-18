@@ -1,0 +1,39 @@
+.mealplanner-day {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 15px;
+  overflow: hidden;
+
+  @media(min-width: 768px) {
+    width: calc(100% / 3 - 30px);
+  }
+
+  &__content {
+    padding: 20px;
+    flex-grow: 1;
+
+    & .mealplanner-day__day-title {
+      color: #333333;
+      margin-bottom: 10px;
+    }
+
+    & .mealplanner-day__date {
+      color: #999999;
+      margin-bottom: 20px;
+    }
+
+    & .mealplanner-day__recipe-title {
+      color: #333333;
+      margin-bottom: 10px;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    object-fit: cover;
+  }
+}

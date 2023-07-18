@@ -21,6 +21,7 @@ import DisplayWrapper from "../../shared/components/DisplayWrapper";
 import RecipesContext from "../../shared/context/RecipesContext";
 import API_BASE_URL from "../../config";
 import { hashCode } from "../../shared/utils/hashCode";
+import MealplannerDay from "../../components/Mealplanner/MealplannerDay";
 
 function Mealplanner() {
   const navigate = useNavigate();
@@ -238,6 +239,7 @@ function Mealplanner() {
                 <h3>{name}</h3>
               </div>
             ))}
+            <MealplannerDay dayTitle="Monday" date="24th" recipe={mealplan.selectedRecipes[0]} />
           </div>
         )}
       </Grid>
