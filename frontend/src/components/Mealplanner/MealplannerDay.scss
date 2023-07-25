@@ -18,11 +18,13 @@
 
     & .mealplanner-day__day-title {
       color: #333333;
-      margin-bottom: 10px;
+      display: inline; // Display day title inline
+      margin-right: 10px; // Add margin to separate the title and date
     }
 
     & .mealplanner-day__date {
       color: #999999;
+      display: inline; // Display date inline
       margin-bottom: 20px;
     }
 

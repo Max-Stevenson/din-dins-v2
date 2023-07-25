@@ -233,13 +233,21 @@ function Mealplanner() {
           </button>
         </Grid>
         {mealplan !== null && (
-          <div>
-            {mealplan.selectedRecipes.map(({ name, _id }, index) => (
-              <div key={hashCode(`${_id}-${index}`)}>
-                <h3>{name}</h3>
-              </div>
-            ))}
-            <MealplannerDay dayTitle="Monday" date="24th" recipe={mealplan.selectedRecipes[0]} />
+          <div className="mealplanner">
+            {mealplan.selectedRecipes.map((recipe, index) => {
+              const date = new Date(mealplan.startDate);
+              date.setDate(date.getDate() + index);
+              return (
+                <MealplannerDay
+                  // eslint-disable-next-line no-underscore-dangle
+                  key={hashCode(`${recipe._id}-${index}`)}
+                  dayTitle={date.toLocaleDateString("en-US", { weekday: "long" })}
+                  date={date.toLocaleDateString("en-US", { day: "numeric", month: "long" })}
+                  recipe={recipe}
+                  imageUrl={recipe.image}
+                />
+              );
+            })}
           </div>
         )}
       </Grid>
