@@ -1,0 +1,34 @@
+.mealplanner-page {
+  a {
+    text-decoration: none;
+  }
+
+  &__tile {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.03);
+      transition: transform 0.2s ease-in-out;
+    }
+  }
+
+  .mealplanner-tile {
+    &__current-mealplan {
+      color: #3f51b5; // Material-UI's primary color
+      &:hover {
+        color: #1e88e5; // Material-UI's secondary color
+      }
+    }
+
+    &__new-mealplan {
+      color: #f50057; // Material-UI's secondary color
+      &:hover {
+        color: #c51162; // Material-UI's secondary dark color
+      }
+    }
+  }
+}
