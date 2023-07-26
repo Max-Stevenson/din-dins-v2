@@ -3,15 +3,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
+import TaskIcon from "@mui/icons-material/Task";
 import {
   TextField,
-  FormGroup,
   FormControlLabel,
   Checkbox,
   Grid,
-  Container,
   Dialog,
-  DialogContent
+  DialogContent,
+  Button
 } from "@mui/material";
 import { useAuth } from "../../shared/context/AuthContext";
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
@@ -62,19 +63,6 @@ function Mealplanner() {
       setRecipes(contextRecipes);
     }
   }, [sendRequest]);
-
-  // Create an array of dates between the start and end dates
-  const getDatesArray = (start, end) => {
-    const datesArray = [];
-    const currentDate = start;
-
-    while (currentDate <= end) {
-      datesArray.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    return datesArray;
-  };
 
   const generateMealplan = () => {
     // Split into two lists: vegetarian and non-vegetarian
@@ -176,80 +164,112 @@ function Mealplanner() {
     }
   };
 
+  const handleReturn = (e) => {
+    setMealplan(null);
+  };
+
+  const handleSubmit = (e) => {
+
+  };
+
+  if (mealplan == null) {
+    return (
+      <DisplayWrapper>
+        <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+          <DialogContent>
+            <p>
+              There are not enough recipes to fulfill your meal plan request.
+              Please adjust your parameters and try again.
+            </p>
+          </DialogContent>
+        </Dialog>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <h2>Mealplanner</h2>
+          </Grid>
+          <Grid item xs={12}>
+            <DatePicker
+              selected={startDate}
+              onChange={onDateChange}
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              inline
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              type="number"
+              label="Number of People"
+              value={numberOfPeople}
+              onChange={handleNumberOfPeopleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={(
+                <Checkbox
+                  checked={doubleUp}
+                  onChange={(e) => setDoubleUp(e.target.checked)}
+                />
+              )}
+              label="Double up on meals"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              type="number"
+              label="Vegetarian Meals"
+              value={vegetarianMeals}
+              onChange={handleVegetarianMealsChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <button type="button" onClick={generateMealplan}>
+              Generate Mealplan
+            </button>
+          </Grid>
+        </Grid>
+      </DisplayWrapper>
+    );
+  }
   return (
     <DisplayWrapper>
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <DialogContent>
-          <p>
-            There are not enough recipes to fulfill your meal plan request.
-            Please adjust your parameters and try again.
-          </p>
-        </DialogContent>
-      </Dialog>
       <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <h2>Mealplanner</h2>
-        </Grid>
-        <Grid item xs={12}>
-          <DatePicker
-            selected={startDate}
-            onChange={onDateChange}
-            startDate={startDate}
-            endDate={endDate}
-            selectsRange
-            inline
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            type="number"
-            label="Number of People"
-            value={numberOfPeople}
-            onChange={handleNumberOfPeopleChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={(
-              <Checkbox
-                checked={doubleUp}
-                onChange={(e) => setDoubleUp(e.target.checked)}
+        <Grid item xs={12} className="mealplanner">
+          {mealplan.selectedRecipes.map((recipe, index) => {
+            const date = new Date(mealplan.startDate);
+            date.setDate(date.getDate() + index);
+            return (
+              <MealplannerDay
+                    // eslint-disable-next-line no-underscore-dangle
+                key={hashCode(`${recipe._id}-${index}`)}
+                dayTitle={date.toLocaleDateString("en-US", { weekday: "long" })}
+                date={date.toLocaleDateString("en-US", { day: "numeric", month: "long" })}
+                recipe={recipe}
+                imageUrl={recipe.image}
               />
-            )}
-            label="Double up on meals"
-          />
+            );
+          })}
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            type="number"
-            label="Vegetarian Meals"
-            value={vegetarianMeals}
-            onChange={handleVegetarianMealsChange}
-          />
+        <Grid item xs={12} className="recipe-form__nav-button__container">
+          <Button
+            aria-label="previous step"
+            variant="contained"
+            startIcon={<ArrowBackIosOutlinedIcon />}
+            onClick={handleReturn}
+          >
+            Return
+          </Button>
+          <Button
+            aria-label="next step"
+            variant="contained"
+            endIcon={<TaskIcon />}
+            onClick={handleSubmit}
+          >
+            Accept
+          </Button>
         </Grid>
-        <Grid item xs={12}>
-          <button type="button" onClick={generateMealplan}>
-            Generate Mealplan
-          </button>
-        </Grid>
-        {mealplan !== null && (
-          <div className="mealplanner">
-            {mealplan.selectedRecipes.map((recipe, index) => {
-              const date = new Date(mealplan.startDate);
-              date.setDate(date.getDate() + index);
-              return (
-                <MealplannerDay
-                  // eslint-disable-next-line no-underscore-dangle
-                  key={hashCode(`${recipe._id}-${index}`)}
-                  dayTitle={date.toLocaleDateString("en-US", { weekday: "long" })}
-                  date={date.toLocaleDateString("en-US", { day: "numeric", month: "long" })}
-                  recipe={recipe}
-                  imageUrl={recipe.image}
-                />
-              );
-            })}
-          </div>
-        )}
       </Grid>
     </DisplayWrapper>
   );
