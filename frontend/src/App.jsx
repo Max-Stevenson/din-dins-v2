@@ -19,6 +19,8 @@ import UserPortal from "./pages/profile/UserPortal";
 
 const Recipes = lazy(() => import("./pages/recipes/Recipes"));
 const Mealplanner = lazy(() => import("./pages/mealplanner/Mealplanner"));
+const CurrentMealplan = lazy(() => import("./pages/mealplanner/CurrentMealplan"));
+const NewMealplan = lazy(() => import("./pages/mealplanner/NewMealplan"));
 
 library.add(faCog, faUtensils, faCalendarAlt);
 
@@ -50,6 +52,22 @@ function App() {
                 element={(
                   <ProtectedRoute>
                     <Mealplanner />
+                  </ProtectedRoute>
+                  )}
+              />
+              <Route
+                path="/mealplanner/current"
+                element={(
+                  <ProtectedRoute>
+                    <CurrentMealplan />
+                  </ProtectedRoute>
+                  )}
+              />
+              <Route
+                path="/mealplanner/new"
+                element={(
+                  <ProtectedRoute>
+                    <NewMealplan />
                   </ProtectedRoute>
                   )}
               />
