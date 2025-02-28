@@ -11,7 +11,7 @@ const app = require("./app");
 
 mongoose
   .connect(
-    `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@dindins-cluster-rxgr4.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+    `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@dindins.rxgr4.mongodb.net/?retryWrites=true&w=majority&appName=${DB_NAME}`,
   )
   .then(() => {
     app.listen(PORT, () => {

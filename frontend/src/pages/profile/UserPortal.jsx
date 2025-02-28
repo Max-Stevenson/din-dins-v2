@@ -19,12 +19,14 @@ function UserPortal() {
   } = useHttpClient();
 
   const [input, setInput] = useState({
+    name: "",
     email: "",
     password: "",
     confirmPassword: ""
   });
 
   const [inputError, setInputError] = useState({
+    name: "",
     email: "",
     password: "",
     confirmPassword: null
@@ -87,8 +89,8 @@ function UserPortal() {
     }
   };
 
-  const authenticate = async (email, password, navLocation) => {
-    const body = { email, password };
+  const authenticate = async (name, email, password, navLocation) => {
+    const body = { name, email, password };
     const headers = {
       "Content-Type": "application/json"
     };
@@ -108,7 +110,7 @@ function UserPortal() {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    authenticate(input.email, input.password, location);
+    authenticate(input.name, input.email, input.password, location);
   };
 
   if (isLoading) {
@@ -232,6 +234,20 @@ function UserPortal() {
                 value={input.email}
               />
               {inputError.email && <span className="err">{inputError.email}</span>}
+            </label>
+          </div>
+          <div className="user-portal__input-container">
+            <label htmlFor="name">
+              <input
+                id="name"
+                type="text"
+                name="name"
+                className="form-control"
+                placeholder="Name"
+                onChange={onInputChange}
+                value={input.name}
+              />
+              {inputError.name && <span className="err">{inputError.name}</span>}
             </label>
           </div>
           <div className="user-portal__input-container">
