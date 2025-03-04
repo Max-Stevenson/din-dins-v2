@@ -17,14 +17,7 @@ const userSchema = new Schema({
       message: (props) => `${props.value} is not a valid email address!`,
     },
   },
-  password: { type: String, required: true, minlength: 6 },
-});
-
-userSchema.pre("save", async function hashPassword(next) {
-  if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-  next();
+  password: { type: String, required: true, minlength: 60 },
 });
 
 userSchema.plugin(uniqueValidator);
