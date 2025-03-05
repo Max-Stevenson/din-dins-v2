@@ -46,7 +46,12 @@ const getRecipeById = async (req, res) => {
 };
 
 const createRecipe = async (req, res) => {
-  const recipe = new Recipe(req.body);
+  const { image, ...recipeData } = req.body;
+
+  // Set a default image if none is provided
+  const imageUrl = image || `/images/recipe.jpg`;
+
+  const recipe = new Recipe({ image: imageUrl, ...recipeData });
   try {
     await recipe.save();
     res.status(201).send(recipe);
@@ -57,7 +62,7 @@ const createRecipe = async (req, res) => {
 
 const uploadImage = async (req, res) => {
   const { file } = req;
-  const imageUrl = `${req.protocol}://${req.get("host")}/images/${file.filename}`;
+  const imageUrl = file.isEmpty ? "/images/recipe.jpg" : `${req.protocol}://${req.get("host")}/images/${file.filename}`;
   res.status(201).json({ imageUrl });
 };
 

@@ -14,7 +14,14 @@ router.post("/", recipesController.createRecipe);
 router.post("/upload", fileUpload.single("image"), (req, res, next) => {
   const { file } = req;
   if (!file) {
-    return res.status(400).json({ message: "No image provided" });
+    // Use the default image if no image is provided
+    req.file = {
+      filename: "recipe.jpg",
+      path: "/images/recipe.jpg",
+      destination: "C:/Projects/din-dins-v2/frontend/public/images",
+      mimetype: "image/jpeg",
+      isEmpty: true,
+    };
   }
   return next();
 }, handleFileUploadErrors, recipesController.uploadImage);
