@@ -19,7 +19,6 @@ function Recipes() {
     error, isLoading, sendRequest
   } = useHttpClient();
   const [recipes, setRecipes] = useState();
-  const { contextRecipes, setContextRecipes } = useContext(RecipesContext);
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -31,17 +30,12 @@ function Recipes() {
           { Authorization: `Bearer ${auth.token}` }
         );
         setRecipes(response.data);
-        setContextRecipes(response.data);
       } catch (err) {
         console.error(err);
       }
     };
-    if (!contextRecipes || (location.state && location.state.updateRecipes)) {
-      fetchRecipes();
-    } else {
-      setRecipes(contextRecipes);
-    }
-  }, [sendRequest]);
+    fetchRecipes();
+  }, [sendRequest, auth.token]);
 
   const handleRecipeSelection = (event) => {
     const selectedRecipeId = event.currentTarget.getAttribute("data-recipe-id");
